@@ -107,26 +107,104 @@ public class Game {
 		this.railRoads = railRoads;
 	}
 	
-	public void printDistrictMap(District[][] district, int row, int column) {
+	public void printDistrictMap(District[][] district, int width, int height) {
 		
-		for(int i =0; i<row; i++) {
-			for(int j=0; j<column; j++) {
+		for(int i =0; i<width; i++) {
+			for(int j=0; j<height; j++) {
 				System.out.print("|"+district[i][j].type+"|");
 			}
 			System.out.println("\n------------------------------");
 		}
+		
+		System.out.println("\nmoney:" +money+"\n"+ 
+				"monthlyRevenues:" +monthlyRevenues+"\n" + 
+				"nbHab: "+nbHab+"\n" + 
+				"nbResidence: "+nbResidence+"\n" + 
+				"nbCommercial: "+nbCommercial+"\n" + 
+				"nbAdministration: "+nbAdministration+"\n" + 
+				"maxMoney: "+maxMoney+"\n" + 
+				"nbStations: "+nbStations+"\n");
 	}
 	
-	public District[][] initDistrictMap(int row, int column){
-		District[][] district = new District[row][column]; 
+	public District[][] initDistrictMap(int width, int height){
+		District[][] district = new District[width][height]; 
 	
-		for(int i =0; i<row; i++) {
-			for(int j=0; j<column; j++) {
-				district[i][j] = new Wilderness();
+		for(int column =0; column<height; column++) {
+			for(int row=0; row<width; row++) {
+				if(((column*height)+row+1) == ((height*height/2)+(width/2))) // get the center of the map , +1 because it begins at 0
+					district[column][row] = new Administrative(30, 100, 0, 100); // put the town center at the center
+				else
+				district[column][row] = new Wilderness();
 			}
 		}
 		
 		return district;
+	}
+	
+	public void addResidence(District[][] district, int width, int height) {
+		if(district[width][height].getType() != 0)
+			System.out.println("This spot isnt empty!");
+		else
+		{
+			district[width][height] = new Residence(10, 0, 30);
+			nbHab+=((Residence)district[width][height]).getNbHab();
+			nbResidence++;
+			
+			System.out.println("nbHab: "+nbHab);
+		}	
+	}
+	
+	public void destroyResidence(District[][] district, int width, int height) {
+		if(district[width][height].getType() != 2)
+			System.out.println("This spot isnt a Residence!");
+		else
+		{
+			nbResidence--;
+			nbHab -= ((Residence) district[width][height]).getNbHab(); //voir pour virer le cast
+			district[width][height] = new Wilderness();
+			System.out.println("nbHab: "+nbHab);
+			
+		}
+	}
+	
+	public void addAdministration(District[][] district, int width, int height) {
+		if(district[width][height].getType() != 0)
+			System.out.println("This spot isnt empty!");
+		else
+		{
+			district[width][height] = new Administrative(10, 30, 0, 30);
+			nbAdministration++;
+		}	
+	}
+	
+	public void destroyAdministration(District[][] district, int width, int height) {
+		if(district[width][height].getType() != 1)
+			System.out.println("This spot isnt an Adminitrative District!");
+		else
+		{
+			nbAdministration--;
+			district[width][height] = new Wilderness();
+		}
+	}
+	
+	public void addCommercial(District[][] district, int width, int height) {
+		if(district[width][height].getType() != 0)
+			System.out.println("This spot isnt empty!");
+		else
+		{
+			district[width][height] = new Commercial(0, 30);
+			nbCommercial++;
+		}	
+	}
+	
+	public void destroyCommercial(District[][] district, int width, int height) {
+		if(district[width][height].getType() != 3)
+			System.out.println("This spot isnt a Commercial District!");
+		else
+		{
+			nbCommercial--;
+			district[width][height] = new Wilderness();
+		}
 	}
 
 }
