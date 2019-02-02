@@ -1,12 +1,12 @@
 package engine;
 
 public abstract class District {
-	 int type;
-	 String typeName;
-	 int price;
-	 int revenues;
-	 int usingTime;
-	 int satisfaction;
+	 private int type;
+	 private String typeName;
+	 private int price;
+	 private int revenues;
+	 private int usingTime;
+	 private int satisfaction;
 	 
 	public int getType() {
 		return type;

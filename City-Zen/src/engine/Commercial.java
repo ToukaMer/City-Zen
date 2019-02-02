@@ -6,7 +6,8 @@ public class Commercial extends District{
 	
 	public Commercial(int currentNbWorkers, int nbMaxWorkers) {
 		super();
-		this.type=3;
+		this.setType(3);
+		this.setTypeName("Commercial");
 		this.nbMaxWorkers = nbMaxWorkers;
 		this.currentNbWorkers = currentNbWorkers;
 	}

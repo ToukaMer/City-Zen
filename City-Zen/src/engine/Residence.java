@@ -7,8 +7,8 @@ public class Residence extends District{
 	
 	public Residence(int nbHab, int administrationWorkers, int nbResidentMax) {
 		super();
-		this.type = 2;
-		this.typeName = "Residence";
+		this.setType(2);
+		this.setTypeName("Residence");
 		this.nbHab = nbHab;
 		this.administrationWorkers = administrationWorkers;
 		this.nbResidentMax = nbResidentMax;

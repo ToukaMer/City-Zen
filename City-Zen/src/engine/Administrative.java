@@ -8,7 +8,8 @@ public class Administrative extends District{
 	
 	public Administrative(int currentHab, int nbUserMax, int currentNumberUsers, int nbMaxWorkers) {
 		super();
-		this.type=1;
+		this.setType(1);
+		this.setTypeName("Administrative");
 		this.currentHab = currentHab;
 		this.nbUserMax = nbUserMax;
 		this.currentNumberUsers = currentNumberUsers;
