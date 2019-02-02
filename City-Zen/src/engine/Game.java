@@ -107,7 +107,26 @@ public class Game {
 		this.railRoads = railRoads;
 	}
 	
+	public void printDistrictMap(District[][] district, int row, int column) {
+		
+		for(int i =0; i<row; i++) {
+			for(int j=0; j<column; j++) {
+				System.out.print("|"+district[i][j].type+"|");
+			}
+			System.out.println("\n------------------------------");
+		}
+	}
 	
+	public District[][] initDistrictMap(int row, int column){
+		District[][] district = new District[row][column]; 
 	
-	
+		for(int i =0; i<row; i++) {
+			for(int j=0; j<column; j++) {
+				district[i][j] = new Wilderness();
+			}
+		}
+		
+		return district;
+	}
+
 }
