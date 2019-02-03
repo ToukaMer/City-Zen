@@ -12,53 +12,69 @@ public class Game {
 		District[][] district = districtmanager.initDistrictMap(width, height);//cree une map 
 		
 		Scanner sc = new Scanner(System.in);
-		String scan;
+		String scan="";
 		int widthScan;
 		int heightScan;
+		
 	while(true) {
 
 		districtmanager.printDistrictMap(district, width, height);
-		scan = sc.nextLine();
+		
+			scan = sc.nextLine();
+			
+			//logs System.out.println("input :"+scan+"\n");
+		
+		
 		switch(scan) {
 			case "addResidence": System.out.println("width?");
 									widthScan = sc.nextInt();
 									System.out.println("height?");
 									heightScan = sc.nextInt();
 									districtmanager.addResidence(district, widthScan, heightScan);
+									scan = sc.nextLine();
 									break;
 			case "destroyResidence": System.out.println("width?");
 										widthScan = sc.nextInt();
 										System.out.println("height?");
 										heightScan = sc.nextInt();
 										districtmanager.destroyResidence(district, widthScan, heightScan);
+										scan = sc.nextLine();
 										break;
 			case "addCommercial": System.out.println("width?");
 										widthScan = sc.nextInt();
 										System.out.println("height?");
 										heightScan = sc.nextInt();
 										districtmanager.addCommercial(district, widthScan, heightScan);
+										scan = sc.nextLine();
 										break;
 			case "destroyCommercial": System.out.println("width?");
 										widthScan = sc.nextInt();
 										System.out.println("height?");
 										heightScan = sc.nextInt();
 										districtmanager.destroyCommercial(district, widthScan, heightScan);
+										scan = sc.nextLine();
 										break;
 			case "addAdministrative": System.out.println("width?");
 										widthScan = sc.nextInt();
 										System.out.println("height?");
 										heightScan = sc.nextInt();
 										districtmanager.addAdministrative(district, widthScan, heightScan);
+										scan = sc.nextLine();
 										break;
 			case "destroyAdministrative": System.out.println("width?");
 										widthScan = sc.nextInt();
 										System.out.println("height?");
 										heightScan = sc.nextInt();
 										districtmanager.destroyAdministrative(district, widthScan, heightScan);
+										scan = sc.nextLine();
 										break;
 		
 								
 		}
+		
+		
+		districtmanager.updateDistrict(district, width, height);
+		moneyManager();
 	}
 		
 	/*// tests pour residence creation + deletion
@@ -89,6 +105,12 @@ public class Game {
 		districtmanager.printDistrictMap(district, width, height);
 		districtmanager.destroyAdministrative(district, 8, 1);
 		districtmanager.printDistrictMap(district, width, height);*/
+	}
+	
+	public void moneyManager() {
+		Stats.monthlyRevenues=Stats.nbHab*Stats.moneyAmountPerHab;
+		Stats.monthlyExpences=Stats.nbAdministrative*Stats.expencesAmountPerAdministrative;
+		Stats.money+=(Stats.monthlyRevenues-Stats.monthlyExpences);
 	}
 
 	

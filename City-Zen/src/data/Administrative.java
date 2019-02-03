@@ -1,27 +1,27 @@
 package data;
 
 public class Administrative extends District{
-	private int currentHab;
+	private int currentNbWorkers;
 	private int nbUserMax;
 	private int currentNumberUsers;
 	private int nbMaxWorkers;
 	
-	public Administrative(int currentHab, int nbUserMax, int currentNumberUsers, int nbMaxWorkers) {
+	public Administrative(int currentNbWorkers, int nbUserMax, int currentNumberUsers, int nbMaxWorkers) {
 		super();
 		this.setType(1);
 		this.setTypeName("Administrative");
-		this.currentHab = currentHab;
+		this.currentNbWorkers = currentNbWorkers;
 		this.nbUserMax = nbUserMax;
 		this.currentNumberUsers = currentNumberUsers;
 		this.nbMaxWorkers = nbMaxWorkers;
 	}
 
-	public int getCurrentHab() {
-		return currentHab;
+	public int getcurrentNbWorkers() {
+		return currentNbWorkers;
 	}
 
-	public void setCurrentHab(int currentHab) {
-		this.currentHab = currentHab;
+	public void setcurrentNbWorkers(int currentNbWorkers) {
+		this.currentNbWorkers = currentNbWorkers;
 	}
 
 	public int getNbUserMax() {

@@ -99,5 +99,24 @@ public void printDistrictMap(District[][] district, int width, int height) {
 			district[width][height] = new Wilderness();
 		}
 	}
+	
+	public void updateDistrict(District[][] district, int width, int height) {
+		for(int column =0; column<height; column++) {
+			for(int row=0; row<width; row++) {
+				switch(district[column][row].getTypeName()) {
+					case "Residence" : 
+						((Residence)district[column][row]).incrementTurnCount();
+						break;
+					case "Administrative" :
+						break;
+					case "Commercial" :
+						break;
+					case "Wilderness" :
+						break;
+				}
+			}
+		}
+	}
+	
 
 }
