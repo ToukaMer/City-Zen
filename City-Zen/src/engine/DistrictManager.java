@@ -15,6 +15,8 @@ public void printDistrictMap(District[][] district, int width, int height) {
 		}
 		
 		Stats.printStats();
+		
+		
 	}
 	
 	public District[][] initDistrictMap(int width, int height){

@@ -7,10 +7,10 @@ public abstract class Stats {
 	public static int nbResidence=0;
 	public static int nbCommercial=0;
 	public static int nbAdministrative=1;
-	public static int maxMoney;
-	public static int nbStations;
-	public static District districts [] [];
-	public static RailRoad railRoads [] [];
+	public static int maxMoney=10000000;
+	public static int nbStations=0;
+	//public static District districts [] [];
+	//public static RailRoad railRoads [] [];
 	
 	public static void printStats() {
 		System.out.println("\nmoney:" +money+"\n"+ 
@@ -22,4 +22,5 @@ public abstract class Stats {
 				"maxMoney: "+maxMoney+"\n" + 
 				"nbStations: "+nbStations+"\n");
 	}
+	
 }
