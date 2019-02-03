@@ -1,4 +1,4 @@
-package engine;
+package data;
 
 public class Station extends RailRoad{
 	private int nbUsers;

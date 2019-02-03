@@ -1,4 +1,4 @@
-package engine;
+package data;
 
 public class Residence extends District{
 	private int nbHab;

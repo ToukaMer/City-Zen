@@ -1,4 +1,4 @@
-package engine;
+package data;
 
 public class RailWay extends RailRoad{
 	private Coordinates tab[] [];

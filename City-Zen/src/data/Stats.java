@@ -1,4 +1,4 @@
-package engine;
+package data;
 
 public abstract class Stats {
 	public static int money=0;

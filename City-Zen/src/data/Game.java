@@ -1,4 +1,4 @@
-package engine;
+package data;
 
 import java.util.Scanner;
 

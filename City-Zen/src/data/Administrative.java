@@ -1,4 +1,4 @@
-package engine;
+package data;
 
 public class Administrative extends District{
 	private int currentHab;

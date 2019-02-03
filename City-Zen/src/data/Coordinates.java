@@ -1,4 +1,4 @@
-package engine;
+package data;
 
 public class Coordinates {
 	private int row;

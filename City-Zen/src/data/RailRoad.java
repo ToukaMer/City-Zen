@@ -1,4 +1,4 @@
-package engine;
+package data;
 
 public abstract class RailRoad {
 	private int type;
