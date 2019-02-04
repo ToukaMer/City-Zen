@@ -1,19 +1,25 @@
 package data;
 
+import java.util.Random;
+
+//NEED PATH FINDING
+
 public class Residence extends District{
 	private int nbHab=0;
 	private int administrationWorkers=0;
+	private int commercialWorkers=0;
 	private int nbResidentMax=0;
 	private int turnCount=0;
 	
-	public Residence(int nbHab, int administrationWorkers, int nbResidentMax) {
+	public Residence(int nbHab, int administrationWorkers, int commercialWorkers, int nbResidentMax, int turnCount) {
 		super();
 		this.setType(2);
 		this.setTypeName("Residence");
+		this.commercialWorkers=commercialWorkers;
 		this.nbHab = nbHab;
 		this.administrationWorkers = administrationWorkers;
 		this.nbResidentMax = nbResidentMax;
-		this.turnCount=turnCount;
+		this.turnCount = turnCount;
 	}
 	
 	public int getTurnCount() {
@@ -37,6 +43,39 @@ public class Residence extends District{
 		{
 			nbHab += 1;
 			Stats.nbHab +=1;
+			
+			// each new citizen must find a job either in a commercial or administrative district
+			//first i check if not all administrative and commercial buildings are full
+			if(Stats.nbWorkersAdministrative<Stats.nbMaxWorkersAdministrative && Stats.nbWorkersCommercial<Stats.nbMaxWorkersCommercial) {
+				Random ran = new Random();
+				int x = ran.nextInt(2);
+				
+				if(x==1) {
+					administrationWorkers++;
+					Stats.nbWorkersAdministrative++;
+					// ici je dois incrementer la valeur de workers du bloc administratif le plus proche non maxé
+				}
+				else {
+					commercialWorkers++;
+					Stats.nbWorkersCommercial++;
+					// ici je dois incrementer la valeur de workers du bloc administratif le plus proche non maxé
+				}
+			}
+			
+			else if(Stats.nbWorkersAdministrative<Stats.nbMaxWorkersAdministrative){
+				administrationWorkers++;
+				Stats.nbWorkersAdministrative++;
+				// ici je dois incrementer la valeur de workers du bloc administratif le plus proche non maxé
+			}
+			
+			else if(Stats.nbWorkersCommercial<Stats.nbMaxWorkersCommercial) {
+				commercialWorkers++;
+				Stats.nbWorkersCommercial++;
+				// ici je dois incrementer la valeur de workers du bloc administratif le plus proche non maxé
+			}
+			else
+				System.out.println("Everything is full , build more commercial/administrative districts !!\n");
+			
 		}
 		
 	}

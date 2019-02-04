@@ -3,24 +3,59 @@ package data;
 public class Administrative extends District{
 	private int currentNbWorkers;
 	private int nbUserMax;
-	private int currentNumberUsers;
+	private int currentNbUsers;
 	private int nbMaxWorkers;
+	private int turnCount=0;
 	
-	public Administrative(int currentNbWorkers, int nbUserMax, int currentNumberUsers, int nbMaxWorkers) {
+	public Administrative(int currentNbWorkers, int nbUserMax, int currentNbUsers, int nbMaxWorkers, int turnCount) {
 		super();
 		this.setType(1);
 		this.setTypeName("Administrative");
 		this.currentNbWorkers = currentNbWorkers;
 		this.nbUserMax = nbUserMax;
-		this.currentNumberUsers = currentNumberUsers;
+		this.currentNbUsers = currentNbUsers;
 		this.nbMaxWorkers = nbMaxWorkers;
+		this.turnCount=turnCount;
+	}
+	
+	public int getTurnCount() {
+		return turnCount;
 	}
 
-	public int getcurrentNbWorkers() {
+	public void setTurnCount(int turnCount) {
+		this.turnCount = turnCount;
+	}
+	
+	public void incrementTurnCount() {
+		turnCount += 1;
+		/*if((turnCount%5)==0) //for testing only
+			incrementNbWorkers();*/
+	}
+	
+	public void incrementNbWorkers() {
+		if(currentNbWorkers<nbMaxWorkers)
+		{
+			currentNbWorkers += 1;
+			Stats.nbWorkersAdministrative++;
+		}
+		
+	}
+	
+	public void decrementNbWorkers() {
+		if(currentNbWorkers>0)
+		{
+			currentNbWorkers -= 1;
+			Stats.nbWorkersAdministrative--;
+		}
+		
+	}
+	
+
+	public int getCurrentNbWorkers() {
 		return currentNbWorkers;
 	}
 
-	public void setcurrentNbWorkers(int currentNbWorkers) {
+	public void setCurrentNbWorkers(int currentNbWorkers) {
 		this.currentNbWorkers = currentNbWorkers;
 	}
 
@@ -32,12 +67,12 @@ public class Administrative extends District{
 		this.nbUserMax = nbUserMax;
 	}
 
-	public int getCurrentNumberUsers() {
-		return currentNumberUsers;
+	public int getCurrentNbUsers() {
+		return currentNbUsers;
 	}
 
-	public void setCurrentNumberUsers(int currentNumberUsers) {
-		this.currentNumberUsers = currentNumberUsers;
+	public void setCurrentNbUsers(int currentNumberUsers) {
+		this.currentNbUsers = currentNumberUsers;
 	}
 
 	public int getNbMaxWorkers() {

@@ -11,12 +11,20 @@ public class Game {
 		DistrictManager districtmanager = new DistrictManager();
 		District[][] district = districtmanager.initDistrictMap(width, height);//cree une map 
 		
+		//il faut update les depenses du à la mairie ainsi que le nb max de workers ----------------------------------
+		
+		Stats.monthlyExpences=(Stats.nbAdministrative*Stats.expencesPerAdministrativeBuildings)
+				+(Stats.nbWorkersAdministrative*Stats.expencesPerAdministrativeWorker);
+		districtmanager.updateDistrict(district, width, height);
+		
+		//-----------------------------------------------------------------------------
+		
 		Scanner sc = new Scanner(System.in);
 		String scan="";
 		int widthScan;
 		int heightScan;
 		
-	while(true) {
+	while(!scan.equals("endGame")) {
 
 		districtmanager.printDistrictMap(district, width, height);
 		
@@ -68,6 +76,8 @@ public class Game {
 										districtmanager.destroyAdministrative(district, widthScan, heightScan);
 										scan = sc.nextLine();
 										break;
+			case "endGame" :	System.out.println("Closing Game\n");	
+								break;
 		
 								
 		}
@@ -76,6 +86,8 @@ public class Game {
 		districtmanager.updateDistrict(district, width, height);
 		moneyManager();
 	}
+	
+	sc.close();
 		
 	/*// tests pour residence creation + deletion
 		districtmanager.printDistrictMap(district, width, height);
@@ -108,8 +120,9 @@ public class Game {
 	}
 	
 	public void moneyManager() {
-		Stats.monthlyRevenues=Stats.nbHab*Stats.moneyAmountPerHab;
-		Stats.monthlyExpences=Stats.nbAdministrative*Stats.expencesAmountPerAdministrative;
+		Stats.monthlyRevenues=(Stats.nbHab*Stats.moneyAmountPerHab)+(Stats.nbWorkersCommercial*Stats.moneyAmountPerCommercialWorker);
+		Stats.monthlyExpences=(Stats.nbAdministrative*Stats.expencesPerAdministrativeBuildings)
+				+(Stats.nbWorkersAdministrative*Stats.expencesPerAdministrativeWorker);
 		Stats.money+=(Stats.monthlyRevenues-Stats.monthlyExpences);
 	}
 
