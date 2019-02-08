@@ -1,31 +1,11 @@
 package data;
 
-public class RailWay extends RailRoad{
-	private Coordinates tab[] [];
-	private int maxLenght;
-	
-	public RailWay(Coordinates[][] tab, int maxLenght) {
+public class RailWay extends RailRoad
+{
+	public RailWay() 
+	{
 		super();
-		this.tab = tab;
-		this.maxLenght = maxLenght;
+		this.setType(1);
 	}
 
-	public Coordinates[][] getTab() {
-		return tab;
-	}
-
-	public void setTab(Coordinates[][] tab) {
-		this.tab = tab;
-	}
-
-	public int getMaxLenght() {
-		return maxLenght;
-	}
-
-	public void setMaxLenght(int maxLenght) {
-		this.maxLenght = maxLenght;
-	}
-	
-	
-	
 }

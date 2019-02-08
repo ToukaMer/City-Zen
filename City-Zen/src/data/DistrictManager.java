@@ -2,7 +2,8 @@ package data;
 
 public class DistrictManager {
 	private int nbResidentsInit =0;
-public void printDistrictMap(District[][] district, int width, int height) {
+public void printDistrictMap(District[][] district, int width, int height) 
+{
 		
 		for(int i =0; i<width; i++) {
 			for(int j=0; j<height; j++) {
@@ -16,7 +17,8 @@ public void printDistrictMap(District[][] district, int width, int height) {
 		
 	}
 	
-	public District[][] initDistrictMap(int width, int height){
+	public District[][] initDistrictMap(int width, int height)
+	{
 		District[][] district = new District[width][height]; 
 	
 		for(int column =0; column<height; column++) {
@@ -36,7 +38,8 @@ public void printDistrictMap(District[][] district, int width, int height) {
 		return district;
 	}
 	
-	public void addResidence(District[][] district, int width, int height) {
+	public void addResidence(District[][] district, int width, int height) 
+	{
 		if(district[width][height].getType() != 0)
 			System.out.println("This spot isnt empty!");
 		else
@@ -49,7 +52,8 @@ public void printDistrictMap(District[][] district, int width, int height) {
 		}	
 	}
 	
-	public void destroyResidence(District[][] district, int width, int height) {
+	public void destroyResidence(District[][] district, int width, int height) 
+	{
 		if(district[width][height].getType() != 2)
 			System.out.println("This spot isnt a Residence!");
 		else
