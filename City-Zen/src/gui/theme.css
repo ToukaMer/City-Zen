@@ -1,3 +1,12 @@
+/* B L O C K S */
+TrackingZone{
+	-fx-background-color: rgb(0,0,0);
+}
+GameBlock{
+	-fx-background-color: rgb(255, 0, 0);
+}
+
+/* O T H E R*/
 .root {
 	-fx-spacing :30;
 	-fx-background-color : #0e3a6b;
@@ -15,7 +24,7 @@
 }
 .label{
 	-fx-font-size: 32px;
-   -fx-font-family: "Courier New";
-   -fx-fill: white;
-   -fx-effect: innershadow( three-pass-box , rgba(255,255,255,0.9) , 6, 0.0 , 0 , 2 );
+   	-fx-font-family: "Courier New";
+   	-fx-fill: white;
+   	-fx-effect: innershadow( three-pass-box , rgba(255,255,255,0.9) , 6, 0.0 , 0 , 2 );
 }
