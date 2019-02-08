@@ -61,7 +61,8 @@ public class RailWayMapManager
 		//Add railway line
 			railRoadMap[row][column] = new Station(1,1,1);
 			Stats.nbStations++;
-			System.out.println("station added");
+			
+			System.out.println("station added, value : "+railRoadMap[row][column].getType());
 
 			//Il faut definir les caractéristique de la station
 
@@ -82,7 +83,7 @@ public class RailWayMapManager
 		{
 			for(int row=0; row<width; row++) 
 			{
-				railRoadMap[column][row] = new WildernessRR();
+				//railRoadMap[column][row] = new WildernessRR();
 			}
 		}
 	}

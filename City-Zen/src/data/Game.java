@@ -51,10 +51,12 @@ public class Game {
 	{
 		System.out.println("Print DistrictMap\n");
 		districtmanager.printDistrictMap(district, width, height);
+		
 		 System.out.println("Print RailWayNetwork Map\n");
 		railwaymanager.printRailWayMap(railroad, width, height);
+		
 			scan = sc.nextLine();
-			railwaymanager.addStation(railroad, 3, 3);
+			//railwaymanager.addStation(railroad, 3, 3);
 			
 			//logs System.out.println("input :"+scan+"\n");
 		
