@@ -11,25 +11,19 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class MainMenu extends Application{
+public class StartMenu extends Application{
 	
 	Label lbl_cityzen;
 	Button startButton;
 	Button loadButton;
 	Button quitButton;
 	Button guideButton;
-	
-	public static void main(String[] args) {
-		launch(args);
-
-	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -60,13 +54,6 @@ public class MainMenu extends Application{
 		VBox root = new VBox();
 		root.getChildren().addAll(lbl_cityzen,startButton,loadButton,hbox);
 		root.setAlignment(Pos.CENTER);
-		
-		Scene scene = new Scene(root,400,300);
-		
-		stage.setScene(scene);
-		scene.getStylesheets().add(getClass().getResource("sheet.css").toExternalForm());
-		stage.show();
-		
 		
 	}
 
