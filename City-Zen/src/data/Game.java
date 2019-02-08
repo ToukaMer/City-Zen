@@ -29,7 +29,10 @@ public class Game {
 		int widthScan;
 		int heightScan;
 		
+		System.out.println("newGame or loadGame?\n");
+		
 		scan = sc.nextLine();
+		
 		
 		do {
 			switch(scan) {
