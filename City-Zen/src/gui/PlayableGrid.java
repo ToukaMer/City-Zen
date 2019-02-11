@@ -12,6 +12,7 @@ public class PlayableGrid extends GridPane {
 	private final static double MIN_HEIGHT_BOX = 0.03;
 	
 	private BlockSize blockSize;
+	private CameraPosition tracking;
 	private CameraPosition cameraPosition;
 
 	private TrackingZone northWestTracking;
@@ -30,18 +31,19 @@ public class PlayableGrid extends GridPane {
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
+		setTracking(new CameraPosition());
 		setCameraPosition(new CameraPosition());
 
-		setNorthWestTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, -1, 1, getCameraPosition()));
-		setNorthTracking(new TrackingZone(getBlockSize().getWidth()*MAX_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, 0, 1, getCameraPosition()));
-		setNorthEastTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, 1, 1, getCameraPosition()));
-		setEastTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MAX_HEIGHT_BOX, 1, 0, getCameraPosition()));
-		setSouthEastTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, 1, -1, getCameraPosition()));
-		setSouthTracking(new TrackingZone(getBlockSize().getWidth()*MAX_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, 0, -1, getCameraPosition()));
-		setSouthWestTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, -1, -1, getCameraPosition()));
-		setWestTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MAX_HEIGHT_BOX, -1, 0, getCameraPosition()));
+		setNorthWestTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, -1, -1, getTracking()));
+		setNorthTracking(new TrackingZone(getBlockSize().getWidth()*MAX_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, 0, -1, getTracking()));
+		setNorthEastTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, 1, -1, getTracking()));
+		setEastTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MAX_HEIGHT_BOX, 1, 0, getTracking()));
+		setSouthEastTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, 1, 1, getTracking()));
+		setSouthTracking(new TrackingZone(getBlockSize().getWidth()*MAX_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, 0, 1, getTracking()));
+		setSouthWestTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, -1, 1, getTracking()));
+		setWestTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MAX_HEIGHT_BOX, -1, 0, getTracking()));
 	
-		setGameBlock(new GameBlock(getBlockSize().getWidth()*MAX_WIDTH_BOX, getBlockSize().getHeight()*MAX_HEIGHT_BOX, getCameraPosition()));
+		setGameBlock(new GameBlock(getBlockSize().getWidth()*MAX_WIDTH_BOX, getBlockSize().getHeight()*MAX_HEIGHT_BOX, this));
 
 		add(getNorthWestTracking(), 0, 0);
 		add(getNorthTracking(), 1, 0);
@@ -56,6 +58,16 @@ public class PlayableGrid extends GridPane {
 	}
 	
 	
+	public CameraPosition getTracking() {
+		return tracking;
+	}
+
+
+	public void setTracking(CameraPosition tracking) {
+		this.tracking = tracking;
+	}
+
+
 	public GameBlock getGameBlock() {
 		return gameBlock;
 	}
@@ -71,12 +83,6 @@ public class PlayableGrid extends GridPane {
 	}
 	public void setBlockSize(BlockSize blockSize) {
 		this.blockSize = blockSize;
-	}
-	public CameraPosition getCameraPosition() {
-		return cameraPosition;
-	}
-	public void setCameraPosition(CameraPosition cameraPosition) {
-		this.cameraPosition = cameraPosition;
 	}
 
 
@@ -157,6 +163,16 @@ public class PlayableGrid extends GridPane {
 
 	public void setWestTracking(TrackingZone westTracking) {
 		this.westTracking = westTracking;
+	}
+
+
+	public CameraPosition getCameraPosition() {
+		return cameraPosition;
+	}
+
+
+	public void setCameraPosition(CameraPosition cameraPosition) {
+		this.cameraPosition = cameraPosition;
 	}
 	
 }
