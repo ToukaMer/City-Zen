@@ -29,14 +29,14 @@ public class DistrictsMapCanvas extends Canvas {
 	
 	int[][] area;
 	
-	public DistrictsMapCanvas(double width, double height, PlayableGrid playableGrid) {
+	public DistrictsMapCanvas(double width, double height,Root root) {
 		super();
 		setBlockSize(new BlockSize(width, height));
 		setWidth(getBlockSize().getWidth());
 		setHeight(getBlockSize().getHeight());
 
-		setTracking(playableGrid.getTracking());
-		setCameraPosition(playableGrid.getCameraPosition());
+		setTracking(root.getPlayableGrid().getTracking());
+		setCameraPosition(root.getPlayableGrid().getCameraPosition());
 		setDistrictSprite(new Image(getClass().getResource("\\sprites\\district.png").toString()));
 		
 		setMap(getGraphicsContext2D());

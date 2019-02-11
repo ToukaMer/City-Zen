@@ -14,13 +14,13 @@ public class GameBlock extends VBox {
 	private Toolbar toolbar;
 	private MapZone mapZone;
 
-	public GameBlock(double width, double height, PlayableGrid playableGrid) {
+	public GameBlock(double width, double height, Root root) {
 		super();
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 
 		setToolbar(new Toolbar(getBlockSize().getWidth()*MAX_WIDTH, getBlockSize().getHeight()*TOOLBAR_HEIGHT));
-		setMapZone(new MapZone(getBlockSize().getWidth()*MAX_WIDTH, getBlockSize().getHeight()*MAP_ZONE_HEIGHT, playableGrid));
+		setMapZone(new MapZone(getBlockSize().getWidth()*MAX_WIDTH, getBlockSize().getHeight()*MAP_ZONE_HEIGHT, root));
 	
 		getChildren().add(getToolbar());
 		getChildren().add(getMapZone());

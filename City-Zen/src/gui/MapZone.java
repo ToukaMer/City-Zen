@@ -13,12 +13,12 @@ public class MapZone extends HBox {
 	private Maps maps;
 	private InteractivityZone interactivityZone;
 
-	public MapZone(double width, double height, PlayableGrid playableGrid) {
+	public MapZone(double width, double height, Root root) {
 		super();
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
-		setMaps(new Maps(getBlockSize().getWidth()*MAPS_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT, playableGrid));
+		setMaps(new Maps(getBlockSize().getWidth()*MAPS_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT, root));
 		setInteractivityZone(new InteractivityZone(getBlockSize().getWidth()*INTERACTIVITY_ZONE_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT));
 		
 		getChildren().add(getMaps());
