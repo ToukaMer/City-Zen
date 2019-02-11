@@ -10,13 +10,13 @@ public class Maps extends StackPane {
 	private DistrictsMapCanvas districtsMap;
 	private RailNetworkMapCanvas railNetworkMap;
 
-	public Maps(double width, double height, Root root) {
+	public Maps(double width, double height, Root root, PlayableGrid playableGrid) {
 		super();
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
-		setDistrictsMap(new DistrictsMapCanvas(getBlockSize().getWidth(), getBlockSize().getHeight(), root));
-		setRailNetworkMap(new RailNetworkMapCanvas(getBlockSize().getWidth(), getBlockSize().getHeight(), root));
+		setDistrictsMap(new DistrictsMapCanvas(getBlockSize().getWidth(), getBlockSize().getHeight(), playableGrid));
+		setRailNetworkMap(new RailNetworkMapCanvas(getBlockSize().getWidth(), getBlockSize().getHeight(), playableGrid));
 		
 		getChildren().add(getDistrictsMap());
 		getChildren().add(getRailNetworkMap());

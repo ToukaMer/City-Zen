@@ -14,14 +14,14 @@ public class RailNetworkMapCanvas extends Canvas{
 		private CameraPosition cameraPosition;
 		private int numberOfSquares;
 		
-		public RailNetworkMapCanvas(double width, double height, Root root) {
+		public RailNetworkMapCanvas(double width, double height, PlayableGrid playableGrid) {
 			super();
 			setBlockSize(new BlockSize(width, height));
 			setWidth(getBlockSize().getWidth());
 			setHeight(getBlockSize().getHeight());
 
-			setTracking(root.getPlayableGrid().getTracking());
-			setCameraPosition(root.getPlayableGrid().getCameraPosition());
+			setTracking(playableGrid.getTracking());
+			setCameraPosition(playableGrid.getCameraPosition());
 			
 			setMap(getGraphicsContext2D());
 		}

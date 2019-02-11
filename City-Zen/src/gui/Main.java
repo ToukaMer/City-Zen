@@ -15,7 +15,7 @@ public class Main extends Application {
 	public final static double HEIGHT = 600;
 	
 	private BlockSize screenSize;
-	private PlayableGrid playableGrid;
+	private Root root;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -36,8 +36,8 @@ public class Main extends Application {
 
 			primaryStage.setScene(scene);
 			
-			setPlayableGrid(new PlayableGrid(getScreenSize().getWidth(), getScreenSize().getHeight()));
-			root.getChildren().add(getPlayableGrid());
+			setRoot(new Root(getScreenSize().getWidth(), getScreenSize().getHeight()));
+			root.getChildren().add(getRoot());
 			
 			primaryStage.show();
 			//primaryStage.setFullScreen(true);
@@ -55,12 +55,13 @@ public class Main extends Application {
 		this.screenSize = screenSize;
 	}
 
-	public PlayableGrid getPlayableGrid() {
-		return playableGrid;
+	public Root getRoot() {
+		return root;
 	}
 
-	public void setPlayableGrid(PlayableGrid playableGrid) {
-		this.playableGrid = playableGrid;
+	public void setRoot(Root root) {
+		this.root = root;
 	}
+
 
 }

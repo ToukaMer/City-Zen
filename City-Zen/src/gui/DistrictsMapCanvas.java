@@ -3,9 +3,11 @@ package gui;
 import gui_data.BlockSize;
 import gui_data.CameraPosition;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class DistrictsMapCanvas extends Canvas {
@@ -29,14 +31,14 @@ public class DistrictsMapCanvas extends Canvas {
 	
 	int[][] area;
 	
-	public DistrictsMapCanvas(double width, double height,Root root) {
+	public DistrictsMapCanvas(double width, double height, PlayableGrid playableGrid) {
 		super();
 		setBlockSize(new BlockSize(width, height));
 		setWidth(getBlockSize().getWidth());
 		setHeight(getBlockSize().getHeight());
 
-		setTracking(root.getPlayableGrid().getTracking());
-		setCameraPosition(root.getPlayableGrid().getCameraPosition());
+		setTracking(playableGrid.getTracking());
+		setCameraPosition(playableGrid.getCameraPosition());
 		setDistrictSprite(new Image(getClass().getResource("\\sprites\\district.png").toString()));
 		
 		setMap(getGraphicsContext2D());
@@ -91,8 +93,29 @@ public class DistrictsMapCanvas extends Canvas {
 					currentRow++;
 					rowPosition += SQUARE_HEIGHT;
 				}
+				
+				initializeSquareClicks(firstRow, firstColumn, rowModulus, columnModulus);
 			}
 		}.start();
+	}
+	
+	public void initializeSquareClicks(int firstRow, int firstColumn, double rowModulus, double columnModulus) {
+		setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent mouseEvent) {
+				double mouseX = mouseEvent.getX();
+				double mouseY = mouseEvent.getY();
+
+				//Calculate the coordinates of the clicked square
+				int squareX = (int)(mouseX-columnModulus)/SQUARE_WIDTH;
+				int squareY = (int)(mouseY-rowModulus)/SQUARE_HEIGHT;
+				
+				//Take into account the coordinates differences due to scrolling
+				squareX += firstColumn;
+				squareY += firstRow;
+				
+				System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
+			}
+		});
 	}
 	
 	public CameraPosition getCameraPosition() {

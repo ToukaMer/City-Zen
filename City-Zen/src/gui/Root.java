@@ -15,6 +15,8 @@ public class Root extends StackPane {
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
 		setPlayableGrid(new PlayableGrid(width, height, this));
+		
+		getChildren().add(getPlayableGrid());
 	}
 
 	public BlockSize getBlockSize() {

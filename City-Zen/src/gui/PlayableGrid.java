@@ -43,7 +43,7 @@ public class PlayableGrid extends GridPane {
 		setSouthWestTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, -1, 1, getTracking()));
 		setWestTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MAX_HEIGHT_BOX, -1, 0, getTracking()));
 	
-		setGameBlock(new GameBlock(getBlockSize().getWidth()*MAX_WIDTH_BOX, getBlockSize().getHeight()*MAX_HEIGHT_BOX, root));
+		setGameBlock(new GameBlock(getBlockSize().getWidth()*MAX_WIDTH_BOX, getBlockSize().getHeight()*MAX_HEIGHT_BOX, root, this));
 
 		add(getNorthWestTracking(), 0, 0);
 		add(getNorthTracking(), 1, 0);
