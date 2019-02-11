@@ -105,15 +105,20 @@ public class DistrictsMapCanvas extends Canvas {
 				double mouseX = mouseEvent.getX();
 				double mouseY = mouseEvent.getY();
 
-				//Calculate the coordinates of the clicked square
-				int squareX = (int)(mouseX-columnModulus)/SQUARE_WIDTH;
-				int squareY = (int)(mouseY-rowModulus)/SQUARE_HEIGHT;
+				//Calculate the coordinates of the click on the canvas
+				double positionX = getCameraPosition().getX()+mouseX;
+				double positionY = getCameraPosition().getY()+mouseY;
 				
-				//Take into account the coordinates differences due to scrolling
-				squareX += firstColumn;
-				squareY += firstRow;
-				
-				System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
+				if(positionX >= 0 && positionY >= 0) {
+
+					//Calculate the coordinates of the clicked square
+					int squareX = (int)(positionX/SQUARE_WIDTH);
+					int squareY = (int)(positionY/SQUARE_HEIGHT);
+
+					if(squareX < SQUARE_PER_ROW && squareY < SQUARE_PER_COLUMN) {
+						System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
+					}
+				}
 			}
 		});
 	}
