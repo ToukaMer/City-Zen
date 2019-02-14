@@ -6,6 +6,7 @@ public class Wilderness extends District{
 		super();
 		this.setType(0);
 		this.setTypeName("Wilderness");
+		this.setUsingTime(10);
 	}
 	
 	

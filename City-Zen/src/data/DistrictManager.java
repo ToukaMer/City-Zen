@@ -2,8 +2,9 @@ package data;
 
 public class DistrictManager {
 	private int nbResidentsInit =0;
-public void printDistrictMap(District[][] district, int width, int height) 
-{
+	
+	public void printDistrictMap(District[][] district, int width, int height) 
+	{
 		
 		for(int i =0; i<width; i++) {
 			for(int j=0; j<height; j++) {

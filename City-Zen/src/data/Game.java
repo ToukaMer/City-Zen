@@ -13,12 +13,67 @@ public class Game {
 	public Game(int width, int height) {
 		super();
 
+		
+	}
+	
+	public void initMaps(int width, int height) {
 		DistrictManager districtmanager = new DistrictManager();
 		RailWayMapManager railwaymanager = new RailWayMapManager();
 		District[][] district = districtmanager.initDistrictMap(width, height);//cree une map de la surface 
 		RailRoad[][] railroad = railwaymanager.initRailWayMap(width, height);//-- du metro
-		//il faut update les depenses du à la mairie ainsi que le nb max de workers ----------------------------------
+	}
+	
+	public void Turn(int firstTurn, String command, int xCoord, int yCoord, DistrictManager districtmanager, RailWayMapManager railwaymanager, int width, int height, District[][] district, RailRoad[][] railroad) {
 		
+		if(firstTurn ==1) {
+			Stats.monthlyExpences=(Stats.nbAdministrative*Stats.expencesPerAdministrativeBuildings)+(Stats.nbWorkersAdministrative*Stats.expencesPerAdministrativeWorker);
+			districtmanager.updateDistrict(district, width, height);
+		}
+		
+		switch(command) {
+		case "addResidence":
+								districtmanager.addResidence(district, xCoord, yCoord);
+								break;
+		case "destroyResidence":
+									districtmanager.destroyResidence(district, xCoord, yCoord);
+									break;
+		case "addCommercial":
+									districtmanager.addCommercial(district, xCoord, yCoord);
+									break;
+		case "destroyCommercial": 
+									districtmanager.destroyCommercial(district, xCoord, yCoord);
+									break;
+		case "addAdministrative":
+									districtmanager.addAdministrative(district, xCoord, yCoord);
+									break;
+		case "destroyAdministrative": 
+									districtmanager.destroyAdministrative(district, xCoord, yCoord);
+									break;
+		case "buildRailWay": 
+									railwaymanager.addRailWay(railroad, xCoord, yCoord);
+									break;
+		case "buildStation": 
+									railwaymanager.addStation(railroad, xCoord, yCoord);
+									break;
+		case "destroyRailRoad": 
+									railwaymanager.destroyRailRoad(railroad, xCoord, yCoord);
+									break;
+		case "save" :								save();
+									break;
+		default: break;
+	
+							
+	}
+				
+		
+		
+		districtmanager.updateDistrict(district, width, height);
+		railwaymanager.updateRailRoadMap(railroad, width, height);
+		moneyManager();
+	}
+	
+	public void consoleTest(DistrictManager districtmanager, RailWayMapManager railwaymanager, int width, int height, District[][] district, RailRoad[][] railroad) {
+
 		Stats.monthlyExpences=(Stats.nbAdministrative*Stats.expencesPerAdministrativeBuildings)
 				+(Stats.nbWorkersAdministrative*Stats.expencesPerAdministrativeWorker);
 		districtmanager.updateDistrict(district, width, height);
@@ -141,37 +196,7 @@ public class Game {
 	}
 	
 	sc.close();
-		
-	/*// tests pour residence creation + deletion
-		districtmanager.printDistrictMap(district, width, height);
-		districtmanager.addResidence(district, 3, 3);
-		districtmanager.printDistrictMap(district, width, height);
-		districtmanager.addResidence(district, 3, 4);
-		districtmanager.printDistrictMap(district, width, height);
-		districtmanager.destroyResidence(district, 3, 3);
-		districtmanager.printDistrictMap(district, width, height);
-		
-		// tests pour Commercial creation + deletion
-		
-		districtmanager.printDistrictMap(district, width, height);
-		districtmanager.addCommercial(district, 6, 3);
-		districtmanager.printDistrictMap(district, width, height);
-		districtmanager.addCommercial(district, 7, 4);
-		districtmanager.printDistrictMap(district, width, height);
-		districtmanager.destroyCommercial(district, 6, 3);
-		districtmanager.printDistrictMap(district, width, height);
-		
-		// tests pour Administration creation + deletion
-		
-		districtmanager.printDistrictMap(district, width, height);
-		districtmanager.addAdministrative(district, 2, 8);
-		districtmanager.printDistrictMap(district, width, height);
-		districtmanager.addAdministrative(district, 8, 1);
-		districtmanager.printDistrictMap(district, width, height);
-		districtmanager.destroyAdministrative(district, 8, 1);
-		districtmanager.printDistrictMap(district, width, height);*/
 	}
-	
 	public void moneyManager() {
 		Stats.monthlyRevenues=(Stats.nbHab*Stats.moneyAmountPerHab)+(Stats.nbWorkersCommercial*Stats.moneyAmountPerCommercialWorker);
 		Stats.monthlyExpences=(Stats.nbAdministrative*Stats.expencesPerAdministrativeBuildings)
