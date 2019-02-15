@@ -6,7 +6,7 @@ public class Commercial extends District{
 	private int turnCount=0;
 	 private int inConstruction;
 	 private int constructionTime;
-	 private int constructionTImeLeft;
+	 private int constructionTimeLeft;
 	 
 	 public Commercial(int currentNbWorkers, int nbMaxWorkers, int turnCount) {
 			super();
@@ -17,6 +17,10 @@ public class Commercial extends District{
 			this.turnCount = turnCount;
 		}
 	
+	 public void decrementconstructionTimeLeft() {
+			constructionTimeLeft --;
+		}
+	 
 	public int getInConstruction() {
 		return inConstruction;
 	}
@@ -37,13 +41,13 @@ public class Commercial extends District{
 	}
 
 
-	public int getConstructionTImeLeft() {
-		return constructionTImeLeft;
+	public int getconstructionTimeLeft() {
+		return constructionTimeLeft;
 	}
 
 
-	public void setConstructionTImeLeft(int constructionTImeLeft) {
-		this.constructionTImeLeft = constructionTImeLeft;
+	public void setconstructionTimeLeft(int constructionTimeLeft) {
+		this.constructionTimeLeft = constructionTimeLeft;
 	}
 	
 	public int getTurnCount() {

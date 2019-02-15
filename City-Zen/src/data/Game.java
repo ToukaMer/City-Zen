@@ -15,6 +15,17 @@ public class Game {
 	private int width;
 	private int height;
 	
+	public Game(int width, int height) {
+		super();
+		this.width = width;
+		this.height = height;
+		
+		initDistrictManager();
+		initRailWayManager();
+		
+		initDistrictMap(width,height);
+		initRailRoadMap(width,height);
+	}
 	
 	public Game(int width, int height, District[][] district, RailRoad[][] railroad, DistrictManager districtManager, RailWayMapManager railWayMapManager) {
 		super();
@@ -24,19 +35,14 @@ public class Game {
 		this.railroad = railroad;
 		this.districtManager = districtManager;
 		this.railWayMapManager = railWayMapManager;
-		
-		initDistrictManager();
-		initRailWayManager();
 	}
 
-	public District[][] initDistrictMap(int width, int height) {
-		District[][] district = districtManager.initDistrictMap(width, height);//cree une map de la surface 
-		return district;
+	public void initDistrictMap(int width, int height) {
+		 district = districtManager.initDistrictMap(width, height);//cree une map de la surface 
 	}
 	
-	public RailRoad[][] initRailRoadMap(int width, int height) {
-		RailRoad[][] railroad = railWayMapManager.initRailWayMap(width, height);//-- du metro
-		return railroad;
+	public void initRailRoadMap(int width, int height) {
+		railroad = railWayMapManager.initRailWayMap(width, height);//-- du metro
 	}
 	
 	public void initDistrictManager() {
