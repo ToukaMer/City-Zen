@@ -2,9 +2,9 @@ package gui;
 
 import gui_data.BlockSize;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-public class DataDisplayer extends HBox {
+public class DataDisplayer extends VBox {
 	
 	private BlockSize blockSize;
 	private Label lbl_dataDisplayer;
