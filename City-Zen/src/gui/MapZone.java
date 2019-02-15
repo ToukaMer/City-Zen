@@ -1,7 +1,6 @@
 package gui;
 
 import gui_data.BlockSize;
-import gui_data.CameraPosition;
 import javafx.scene.layout.HBox;
 
 public class MapZone extends HBox {
@@ -14,12 +13,12 @@ public class MapZone extends HBox {
 	private Maps maps;
 	private InteractivityZone interactivityZone;
 
-	public MapZone(double width, double height, CameraPosition cameraPosition) {
+	public MapZone(double width, double height, Root root, PlayableGrid playableGrid) {
 		super();
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
-		setMaps(new Maps(getBlockSize().getWidth()*MAPS_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT, cameraPosition));
+		setMaps(new Maps(getBlockSize().getWidth()*MAPS_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT, root, playableGrid));
 		setInteractivityZone(new InteractivityZone(getBlockSize().getWidth()*INTERACTIVITY_ZONE_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT));
 		
 		getChildren().add(getMaps());

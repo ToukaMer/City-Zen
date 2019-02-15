@@ -10,6 +10,7 @@ public class Station extends RailRoad{
 		this.nbUsers = nbUsers;
 		this.nbMaxUsers = nbMaxUsers;
 		this.revenues = revenues;
+		this.setType(2);
 	}
 
 	public int getNbUsers() {

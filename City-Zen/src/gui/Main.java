@@ -64,4 +64,8 @@ public class Main extends Application {
 	}
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ba6b8a76b1187335d2d9711cec262022e902d6d9
