@@ -19,11 +19,11 @@ import javafx.stage.Stage;
 
 public class StartMenu extends Application{
 	
-	Label lbl_cityzen;
-	Button startButton;
-	Button loadButton;
-	Button quitButton;
-	Button guideButton;
+	private Label lbl_cityzen;
+	private Button startButton;
+	private Button loadButton;
+	private Button quitButton;
+	private Button guideButton;
 
 	@Override
 	public void start(Stage stage) throws Exception {
