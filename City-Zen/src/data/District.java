@@ -7,6 +7,7 @@ public abstract class District {
 	 private int revenues;
 	 private int usingTime;
 	 private int satisfaction;
+	
 	 
 	public int getType() {
 		return type;

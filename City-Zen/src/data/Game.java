@@ -10,26 +10,75 @@ import java.util.Scanner;
 public class Game {
 	private District[][] district;
 	private RailRoad[][] railroad;
+	private DistrictManager districtManager;
+	private RailWayMapManager railWayMapManager;
+	private int width;
+	private int height;
 	
 	
-	public Game(int width, int height) {
+	public Game(int width, int height, District[][] district, RailRoad[][] railroad, DistrictManager districtManager, RailWayMapManager railWayMapManager) {
 		super();
-
+		this.width = width;
+		this.height = height;
+		this.district = district;
+		this.railroad = railroad;
+		this.districtManager = districtManager;
+		this.railWayMapManager = railWayMapManager;
 		
+		initDistrictManager();
+		initRailWayManager();
 	}
-	
+
 	public District[][] initDistrictMap(int width, int height) {
-		DistrictManager districtmanager = new DistrictManager();
-		District[][] district = districtmanager.initDistrictMap(width, height);//cree une map de la surface 
+		District[][] district = districtManager.initDistrictMap(width, height);//cree une map de la surface 
 		return district;
 	}
 	
 	public RailRoad[][] initRailRoadMap(int width, int height) {
-		RailWayMapManager railwaymanager = new RailWayMapManager();
-		RailRoad[][] railroad = railwaymanager.initRailWayMap(width, height);//-- du metro
+		RailRoad[][] railroad = railWayMapManager.initRailWayMap(width, height);//-- du metro
 		return railroad;
 	}
 	
+	public void initDistrictManager() {
+		districtManager = new DistrictManager();
+	}
+	
+	public void initRailWayManager() {
+		railWayMapManager = new RailWayMapManager();
+	}
+	
+	public DistrictManager getDistrictManager() {
+		return districtManager;
+	}
+
+	public void setDistrictManager(DistrictManager districtManager) {
+		this.districtManager = districtManager;
+	}
+
+	public RailWayMapManager getRailwayManager() {
+		return railWayMapManager;
+	}
+
+	public void setRailwayManager(RailWayMapManager railwayManager) {
+		this.railWayMapManager = railwayManager;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
 	public District[][] getDistrict() {
 		return district;
 	}
@@ -46,13 +95,13 @@ public class Game {
 		this.railroad = railroad;
 	}
 	 
-	 public void buildDistrict(int type, DistrictManager districtmanager, District[][] district, int xCoord, int yCoord) {
+	 public void buildDistrict(int type, DistrictManager districtManager, District[][] district, int xCoord, int yCoord) {
 		 switch(type) { //admin = 1, wilderness = 0 ,commercial = 3, residenciel = 2
-			 case 1: districtmanager.addAdministrative(district, xCoord, yCoord);
+			 case 1: districtManager.addAdministrative(district, xCoord, yCoord);
 				break;
-			 case 2: districtmanager.addResidence(district, xCoord, yCoord);
+			 case 2: districtManager.addResidence(district, xCoord, yCoord);
 				break;
-			 case 3: districtmanager.addCommercial(district, xCoord, yCoord);
+			 case 3: districtManager.addCommercial(district, xCoord, yCoord);
 			 	break;
 			 default: break;
 		 }
@@ -62,13 +111,13 @@ public class Game {
 		 
 	 }
 	 
-	 public void destroyDistrict(int type, DistrictManager districtmanager, District[][] district, int xCoord, int yCoord) {
+	 public void destroyDistrict(int type, DistrictManager districtManager, District[][] district, int xCoord, int yCoord) {
 		 switch(type) { //admin = 1, wilderness = 0 ,commercial = 3, residenciel = 2
-			 case 1: districtmanager.destroyAdministrative(district, xCoord, yCoord);
+			 case 1: districtManager.destroyAdministrative(district, xCoord, yCoord);
 				break;
-			 case 2: districtmanager.destroyResidence(district, xCoord, yCoord);
+			 case 2: districtManager.destroyResidence(district, xCoord, yCoord);
 				break;
-			 case 3: districtmanager.destroyCommercial(district, xCoord, yCoord);
+			 case 3: districtManager.destroyCommercial(district, xCoord, yCoord);
 			 	break;
 			 default: break;
 		 }

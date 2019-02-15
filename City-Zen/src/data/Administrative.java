@@ -6,6 +6,10 @@ public class Administrative extends District{
 	private int currentNbUsers;
 	private int nbMaxWorkers;
 	private int turnCount=0;
+	 private int inConstruction;
+	 private int constructionTime;
+	 private int constructionTimeLeft;
+	
 	
 	public Administrative(int currentNbWorkers, int nbUserMax, int currentNbUsers, int nbMaxWorkers, int turnCount) {
 		super();
@@ -18,6 +22,34 @@ public class Administrative extends District{
 		this.turnCount=turnCount;
 	}
 	
+	public void decrementconstructionTimeLeft() {
+		constructionTimeLeft --;
+	}
+	
+	public int getInConstruction() {
+		return inConstruction;
+	}
+
+	public void setInConstruction(int inConstruction) {
+		this.inConstruction = inConstruction;
+	}
+
+	public int getConstructionTime() {
+		return constructionTime;
+	}
+
+	public void setConstructionTime(int constructionTime) {
+		this.constructionTime = constructionTime;
+	}
+
+	public int getconstructionTimeLeft() {
+		return constructionTimeLeft;
+	}
+
+	public void setconstructionTimeLeft(int constructionTimeLeft) {
+		this.constructionTimeLeft = constructionTimeLeft;
+	}
+
 	public int getTurnCount() {
 		return turnCount;
 	}

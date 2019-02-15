@@ -4,16 +4,47 @@ public class Commercial extends District{
 	private int nbMaxWorkers=0;
 	private int currentNbWorkers=0;
 	private int turnCount=0;
+	 private int inConstruction;
+	 private int constructionTime;
+	 private int constructionTImeLeft;
+	 
+	 public Commercial(int currentNbWorkers, int nbMaxWorkers, int turnCount) {
+			super();
+			this.setType(3);
+			this.setTypeName("Commercial");
+			this.nbMaxWorkers = nbMaxWorkers;
+			this.currentNbWorkers = currentNbWorkers;
+			this.turnCount = turnCount;
+		}
 	
-	public Commercial(int currentNbWorkers, int nbMaxWorkers, int turnCount) {
-		super();
-		this.setType(3);
-		this.setTypeName("Commercial");
-		this.nbMaxWorkers = nbMaxWorkers;
-		this.currentNbWorkers = currentNbWorkers;
-		this.turnCount = turnCount;
+	public int getInConstruction() {
+		return inConstruction;
 	}
-	
+
+
+	public void setInConstruction(int inConstruction) {
+		this.inConstruction = inConstruction;
+	}
+
+
+	public int getConstructionTime() {
+		return constructionTime;
+	}
+
+
+	public void setConstructionTime(int constructionTime) {
+		this.constructionTime = constructionTime;
+	}
+
+
+	public int getConstructionTImeLeft() {
+		return constructionTImeLeft;
+	}
+
+
+	public void setConstructionTImeLeft(int constructionTImeLeft) {
+		this.constructionTImeLeft = constructionTImeLeft;
+	}
 	
 	public int getTurnCount() {
 		return turnCount;

@@ -10,6 +10,10 @@ public class Residence extends District{
 	private int commercialWorkers=0;
 	private int nbResidentMax=0;
 	private int turnCount=0;
+	 private int inConstruction;
+	 private int constructionTime;
+	 private int constructionTImeLeft;
+	
 	
 	public Residence(int nbHab, int administrationWorkers, int commercialWorkers, int nbResidentMax, int turnCount) {
 		super();
@@ -22,6 +26,47 @@ public class Residence extends District{
 		this.turnCount = turnCount;
 	}
 	
+	
+	public int getCommercialWorkers() {
+		return commercialWorkers;
+	}
+
+
+	public void setCommercialWorkers(int commercialWorkers) {
+		this.commercialWorkers = commercialWorkers;
+	}
+
+
+	public int getInConstruction() {
+		return inConstruction;
+	}
+
+
+	public void setInConstruction(int inConstruction) {
+		this.inConstruction = inConstruction;
+	}
+
+
+	public int getConstructionTime() {
+		return constructionTime;
+	}
+
+
+	public void setConstructionTime(int constructionTime) {
+		this.constructionTime = constructionTime;
+	}
+
+
+	public int getConstructionTImeLeft() {
+		return constructionTImeLeft;
+	}
+
+
+	public void setConstructionTImeLeft(int constructionTImeLeft) {
+		this.constructionTImeLeft = constructionTImeLeft;
+	}
+
+
 	public int getTurnCount() {
 		return turnCount;
 	}
