@@ -8,21 +8,140 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class Game {
-	
+	private District[][] district;
+	private RailRoad[][] railroad;
+	private DistrictManager districtManager;
+	private RailWayMapManager railWayMapManager;
+	private int width;
+	private int height;
 	
 	public Game(int width, int height) {
 		super();
-
+		this.width = width;
+		this.height = height;
 		
+		initDistrictManager();
+		initRailWayManager();
+		
+		initDistrictMap(width,height);
+		initRailRoadMap(width,height);
 	}
 	
-	public void initMaps(int width, int height) {
-		DistrictManager districtmanager = new DistrictManager();
-		RailWayMapManager railwaymanager = new RailWayMapManager();
-		District[][] district = districtmanager.initDistrictMap(width, height);//cree une map de la surface 
-		RailRoad[][] railroad = railwaymanager.initRailWayMap(width, height);//-- du metro
+	public Game(int width, int height, District[][] district, RailRoad[][] railroad, DistrictManager districtManager, RailWayMapManager railWayMapManager) {
+		super();
+		this.width = width;
+		this.height = height;
+		this.district = district;
+		this.railroad = railroad;
+		this.districtManager = districtManager;
+		this.railWayMapManager = railWayMapManager;
+	}
+
+	public void initDistrictMap(int width, int height) {
+		 district = districtManager.initDistrictMap(width, height);//cree une map de la surface 
 	}
 	
+	public void initRailRoadMap(int width, int height) {
+		railroad = railWayMapManager.initRailWayMap(width, height);//-- du metro
+	}
+	
+	public void initDistrictManager() {
+		districtManager = new DistrictManager();
+	}
+	
+	public void initRailWayManager() {
+		railWayMapManager = new RailWayMapManager();
+	}
+	
+	public DistrictManager getDistrictManager() {
+		return districtManager;
+	}
+
+	public void setDistrictManager(DistrictManager districtManager) {
+		this.districtManager = districtManager;
+	}
+
+	public RailWayMapManager getRailwayManager() {
+		return railWayMapManager;
+	}
+
+	public void setRailwayManager(RailWayMapManager railwayManager) {
+		this.railWayMapManager = railwayManager;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public District[][] getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District[][] district) {
+		this.district = district;
+	}
+
+	public RailRoad[][] getRailroad() {
+		return railroad;
+	}
+
+	public void setRailroad(RailRoad[][] railroad) {
+		this.railroad = railroad;
+	}
+	 
+	 public void buildDistrict(int type, DistrictManager districtManager, District[][] district, int xCoord, int yCoord) {
+		 switch(type) { //admin = 1, wilderness = 0 ,commercial = 3, residenciel = 2
+			 case 1: districtManager.addAdministrative(district, xCoord, yCoord);
+				break;
+			 case 2: districtManager.addResidence(district, xCoord, yCoord);
+				break;
+			 case 3: districtManager.addCommercial(district, xCoord, yCoord);
+			 	break;
+			 default: break;
+		 }
+	 }
+	 
+	 public void buildStation() {
+		 
+	 }
+	 
+	 public void destroyDistrict(int type, DistrictManager districtManager, District[][] district, int xCoord, int yCoord) {
+		 switch(type) { //admin = 1, wilderness = 0 ,commercial = 3, residenciel = 2
+			 case 1: districtManager.destroyAdministrative(district, xCoord, yCoord);
+				break;
+			 case 2: districtManager.destroyResidence(district, xCoord, yCoord);
+				break;
+			 case 3: districtManager.destroyCommercial(district, xCoord, yCoord);
+			 	break;
+			 default: break;
+		 }
+	 }
+
+	public void destroyStation() {
+		 
+	 }
+	 
+	 public void buildRailway() {
+		 
+	 }
+	 
+	 public void firstTurnChecks(int type, DistrictManager districtmanager, District[][] district, int xCoord, int yCoord) {
+		 Stats.monthlyExpences=(Stats.nbAdministrative*Stats.expencesPerAdministrativeBuildings)+(Stats.nbWorkersAdministrative*Stats.expencesPerAdministrativeWorker);
+			districtmanager.updateDistrict(district, xCoord, yCoord);
+	 }
+	 
 	public void Turn(int firstTurn, String command, int xCoord, int yCoord, DistrictManager districtmanager, RailWayMapManager railwaymanager, int width, int height, District[][] district, RailRoad[][] railroad) {
 		
 		if(firstTurn ==1) {
