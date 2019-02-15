@@ -8,6 +8,8 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class Game {
+	private District[][] district;
+	private RailRoad[][] railroad;
 	
 	
 	public Game(int width, int height) {
@@ -16,13 +18,75 @@ public class Game {
 		
 	}
 	
-	public void initMaps(int width, int height) {
+	public District[][] initDistrictMap(int width, int height) {
 		DistrictManager districtmanager = new DistrictManager();
-		RailWayMapManager railwaymanager = new RailWayMapManager();
 		District[][] district = districtmanager.initDistrictMap(width, height);//cree une map de la surface 
-		RailRoad[][] railroad = railwaymanager.initRailWayMap(width, height);//-- du metro
+		return district;
 	}
 	
+	public RailRoad[][] initRailRoadMap(int width, int height) {
+		RailWayMapManager railwaymanager = new RailWayMapManager();
+		RailRoad[][] railroad = railwaymanager.initRailWayMap(width, height);//-- du metro
+		return railroad;
+	}
+	
+	public District[][] getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District[][] district) {
+		this.district = district;
+	}
+
+	public RailRoad[][] getRailroad() {
+		return railroad;
+	}
+
+	public void setRailroad(RailRoad[][] railroad) {
+		this.railroad = railroad;
+	}
+	 
+	 public void buildDistrict(int type, DistrictManager districtmanager, District[][] district, int xCoord, int yCoord) {
+		 switch(type) { //admin = 1, wilderness = 0 ,commercial = 3, residenciel = 2
+			 case 1: districtmanager.addAdministrative(district, xCoord, yCoord);
+				break;
+			 case 2: districtmanager.addResidence(district, xCoord, yCoord);
+				break;
+			 case 3: districtmanager.addCommercial(district, xCoord, yCoord);
+			 	break;
+			 default: break;
+		 }
+	 }
+	 
+	 public void buildStation() {
+		 
+	 }
+	 
+	 public void destroyDistrict(int type, DistrictManager districtmanager, District[][] district, int xCoord, int yCoord) {
+		 switch(type) { //admin = 1, wilderness = 0 ,commercial = 3, residenciel = 2
+			 case 1: districtmanager.destroyAdministrative(district, xCoord, yCoord);
+				break;
+			 case 2: districtmanager.destroyResidence(district, xCoord, yCoord);
+				break;
+			 case 3: districtmanager.destroyCommercial(district, xCoord, yCoord);
+			 	break;
+			 default: break;
+		 }
+	 }
+
+	public void destroyStation() {
+		 
+	 }
+	 
+	 public void buildRailway() {
+		 
+	 }
+	 
+	 public void firstTurnChecks(int type, DistrictManager districtmanager, District[][] district, int xCoord, int yCoord) {
+		 Stats.monthlyExpences=(Stats.nbAdministrative*Stats.expencesPerAdministrativeBuildings)+(Stats.nbWorkersAdministrative*Stats.expencesPerAdministrativeWorker);
+			districtmanager.updateDistrict(district, xCoord, yCoord);
+	 }
+	 
 	public void Turn(int firstTurn, String command, int xCoord, int yCoord, DistrictManager districtmanager, RailWayMapManager railwaymanager, int width, int height, District[][] district, RailRoad[][] railroad) {
 		
 		if(firstTurn ==1) {
