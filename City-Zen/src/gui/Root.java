@@ -8,6 +8,7 @@ public class Root extends StackPane {
 	private BlockSize blockSize;
 	
 	private PlayableGrid playableGrid;
+	private Pause pause;
 	
 	public Root(double width, double height) {
 		super();
@@ -17,6 +18,14 @@ public class Root extends StackPane {
 		setPlayableGrid(new PlayableGrid(width, height, this));
 		
 		getChildren().add(getPlayableGrid());
+		
+		initPause();
+		getChildren().add(getPause());
+		
+	}
+
+	public void initPause() {
+		setPause(new Pause());
 	}
 
 	public BlockSize getBlockSize() {
@@ -33,6 +42,14 @@ public class Root extends StackPane {
 
 	public void setPlayableGrid(PlayableGrid playableGrid) {
 		this.playableGrid = playableGrid;
+	}
+
+	public Pause getPause() {
+		return this.pause;
+	}
+
+	public void setPause(Pause pause) {
+		this.pause = pause;
 	}
 
 }
