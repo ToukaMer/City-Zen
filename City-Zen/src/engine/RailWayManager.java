@@ -2,12 +2,9 @@ package engine;
 
 import data.*;
 
-public class RailWayMapManager 
+public class RailWayManager 
 {
-	public RailWayMapManager()
-	{
-	}
-	public void printRailWayMap(RailRoad[][] railRoadMap, int width, int height)
+	public void printRailWay(RailRoad[][] railRoadMap, int width, int height)
 	{//Trace la carte des métro sous terrain.
 		for(int i =0; i<width; i++) 
 		{
@@ -18,7 +15,8 @@ public class RailWayMapManager
 			System.out.println("\n------------------------------");
 		}
 	}
-	public RailRoad[][] initRailWayMap(int width, int height)
+	
+	public RailRoad[][] initRailWay(int width, int height)
 	{//Fonction d'initialisation de la carte du métro.
 		//La carte est initialement vide, donc on la parcours en 2D et on la rempli de WildernessRR
 		RailRoad[][] railRoadMap = new RailRoad[width][height]; 
@@ -32,16 +30,41 @@ public class RailWayMapManager
 		
 		return railRoadMap;
 	}
-	public void addRailWay (RailRoad[][] railRoadMap, int row, int column)
-	{//Fonction d'ajout d'un RailWay à la carte 
-		if(railRoadMap[row][column].getType() != 0)
-			System.out.println("This spot isnt empty!");
+	
+	public void addRailWay (RailRoad[][] railRoadMap, Coordinates [] coord)
+	{
+		if((railRoadMap[coord[0].getRow()][coord[0].getColumns()].getType() != 2)&&(railRoadMap[coord[coord.length].getRow()][coord[coord.length].getColumns()].getType() != 2)) {
+			
+			int bool=0;
+			
+			for(int i=1; i<coord.length-1; i++) {
+				if(railRoadMap[coord[i].getRow()][coord[i].getColumns()].getType() != 0)
+					bool =1;
+			}
+			
+			if(bool == 0) {
+				for(int i=1; i<coord.length-1; i++) {
+					railRoadMap[coord[i].getRow()][coord[i].getColumns()] = new RailWay();
+				}
+			}
+			else System.out.println("There is an obstacle on the path\n");
+			
+		}
+		else {
+			System.out.println("That railway isnt connected to 2 stations\n");
+		}
+	}
+	
+	public void destroyRailWay(RailRoad[][] railRoadMap, int row, int column) {
+		if(railRoadMap[row][column].getType() != 1)
+			System.out.println("This spot isnt a RailWay!");
 		else
 		{
-		//Add railway line
-			railRoadMap[row][column] = new RailWay();
-		}	
+			railRoadMap[row][column]= new WildernessRR();
+			
+		}
 	}
+	
 	public void addStation(RailRoad[][] railRoadMap, int row, int column)
 	{//Fonction d'ajout d'une station.
 		if(railRoadMap[row][column].getType() != 0 )
@@ -70,6 +93,7 @@ public class RailWayMapManager
 
 		}	
 	}
+	
 	public void destroyRailRoad(RailRoad[][] railRoadMap, int row, int column) 
 	{//Detruit un élément de la carte
 		if(railRoadMap[row][column].getType() == 0)
@@ -79,6 +103,7 @@ public class RailWayMapManager
 			railRoadMap[row][column] = new WildernessRR();
 		}
 	}
+	
 	public void updateRailRoadMap(RailRoad[][] railRoadMap, int width, int height)
 	{//Fonction d'actualisation de la RailRoadMap.
 		for(int column =0; column<height; column++) 

@@ -1,8 +1,8 @@
 package data;
 
 public class Coordinates {
-	private int row;
-	private int columns;
+	private int row; //X
+	private int columns; //y
 	
 	public Coordinates(int row, int columns) {
 		super();

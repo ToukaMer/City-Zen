@@ -13,9 +13,10 @@ public class Game {
 	private District[][] districtMap;
 	private RailRoad[][] railRoadMap;
 	private DistrictManager districtManager;
-	private RailWayMapManager railWayMapManager;
+	private RailWayManager railWayManager;
 	private int width;
 	private int height;
+	private Coordinates [] railWayCoord;
 	
 	public Game(int width, int height) {
 		super();
@@ -23,20 +24,20 @@ public class Game {
 		this.height = height;
 		
 		initDistrictManager();
-		initRailWayManager();
+		initrailWayManager();
 		
 		initDistrictMap(width,height);
 		initRailRoadMap(width,height);
 	}
 	
-	public Game(int width, int height, District[][] districtMap, RailRoad[][] railRoadMap, DistrictManager districtManager, RailWayMapManager railWayMapManager) {
+	public Game(int width, int height, District[][] districtMap, RailRoad[][] railRoadMap, DistrictManager districtManager, RailWayManager railWayManager) {
 		super();
 		setWidth(width);
 		setHeight(height);
 		setDistrictMap(districtMap);
 		setRailRoadMap(railRoadMap);
 		setDistrictManager(districtManager);
-		setRailwayManager(railWayMapManager);
+		setRailWayManager(railWayManager);
 	}
 
 	public void initDistrictMap(int width, int height) {
@@ -44,15 +45,15 @@ public class Game {
 	}
 	
 	public void initRailRoadMap(int width, int height) {
-		setRailRoadMap(getRailwayManager().initRailWayMap(width, height));//-- du metro
+		setRailRoadMap(getRailWayManager().initRailWay(width, height));//-- du metro
 	}
 	
 	public void initDistrictManager() {
 		districtManager = new DistrictManager();
 	}
 	
-	public void initRailWayManager() {
-		railWayMapManager = new RailWayMapManager();
+	public void initrailWayManager() {
+		railWayManager = new RailWayManager();
 	}
 	
 	public DistrictManager getDistrictManager() {
@@ -63,12 +64,12 @@ public class Game {
 		this.districtManager = districtManager;
 	}
 
-	public RailWayMapManager getRailwayManager() {
-		return railWayMapManager;
+	public RailWayManager getRailWayManager() {
+		return railWayManager;
 	}
 
-	public void setRailwayManager(RailWayMapManager railwayManager) {
-		this.railWayMapManager = railwayManager;
+	public void setRailWayManager(RailWayManager railWayManager) {
+		this.railWayManager = railWayManager;
 	}
 
 	public int getWidth() {
@@ -144,7 +145,7 @@ public class Game {
 			districtmanager.updateDistrict(district, xCoord, yCoord);
 	 }
 	 
-	public void Turn(int firstTurn, String command, int xCoord, int yCoord, DistrictManager districtmanager, RailWayMapManager railwaymanager, int width, int height, District[][] district, RailRoad[][] railRoad) {
+	public void Turn(int firstTurn, String command, int xCoord, int yCoord, DistrictManager districtmanager, RailWayManager railWayManager, int width, int height, District[][] district, RailRoad[][] railRoad) {
 		
 		if(firstTurn ==1) {
 			Stats.monthlyExpences=(Stats.nbAdministrative*Stats.expencesPerAdministrativeBuildings)+(Stats.nbWorkersAdministrative*Stats.expencesPerAdministrativeWorker);
@@ -171,13 +172,13 @@ public class Game {
 									districtmanager.destroyAdministrative(district, xCoord, yCoord);
 									break;
 		case "buildRailWay": 
-									railwaymanager.addRailWay(railRoad, xCoord, yCoord);
+									railWayManager.addRailWay(railRoad,railWayCoord);
 									break;
 		case "buildStation": 
-									railwaymanager.addStation(railRoad, xCoord, yCoord);
+									railWayManager.addStation(railRoad, xCoord, yCoord);
 									break;
 		case "destroyRailRoad": 
-									railwaymanager.destroyRailRoad(railRoad, xCoord, yCoord);
+									railWayManager.destroyRailRoad(railRoad, xCoord, yCoord);
 									break;
 		case "save" :								save();
 									break;
@@ -189,11 +190,11 @@ public class Game {
 		
 		
 		districtmanager.updateDistrict(district, width, height);
-		railwaymanager.updateRailRoadMap(railRoad, width, height);
+		railWayManager.updateRailRoadMap(railRoad, width, height);
 		moneyManager();
 	}
 	
-	public void consoleTest(DistrictManager districtmanager, RailWayMapManager railwaymanager, int width, int height, District[][] district, RailRoad[][] railRoad) {
+	public void consoleTest(DistrictManager districtmanager, RailWayManager railWayManager, int width, int height, District[][] district, RailRoad[][] railRoad) {
 
 		Stats.monthlyExpences=(Stats.nbAdministrative*Stats.expencesPerAdministrativeBuildings)
 				+(Stats.nbWorkersAdministrative*Stats.expencesPerAdministrativeWorker);
@@ -229,10 +230,10 @@ public class Game {
 		districtmanager.printDistrictMap(district, width, height);
 		
 		 System.out.println("Print RailWayNetwork Map\n");
-		railwaymanager.printRailWayMap(railRoad, width, height);
+		railWayManager.printRailWay(railRoad, width, height);
 		
 			scan = sc.nextLine();
-			//railwaymanager.addStation(railRoad, 3, 3);
+			//railWayManager.addStation(railRoad, 3, 3);
 			
 			//logs System.out.println("input :"+scan+"\n");
 		
@@ -284,21 +285,21 @@ public class Game {
 										widthScan = sc.nextInt();
 										System.out.println("height?");
 										heightScan = sc.nextInt();
-										railwaymanager.addRailWay(railRoad, widthScan, heightScan);
+										railWayManager.addRailWay(railRoad,railWayCoord);
 										scan = sc.nextLine();
 										break;
 			case "buildStation": System.out.println("width?");
 										widthScan = sc.nextInt();
 										System.out.println("height?");
 										heightScan = sc.nextInt();
-										railwaymanager.addStation(railRoad, widthScan, heightScan);
+										railWayManager.addStation(railRoad, widthScan, heightScan);
 										scan = sc.nextLine();
 										break;
 			case "destroyRailRoad": System.out.println("width?");
 										widthScan = sc.nextInt();
 										System.out.println("height?");
 										heightScan = sc.nextInt();
-										railwaymanager.destroyRailRoad(railRoad, widthScan, heightScan);
+										railWayManager.destroyRailRoad(railRoad, widthScan, heightScan);
 										scan = sc.nextLine();
 										break;
 			case "save" :	System.out.println("Game Saved");
@@ -312,7 +313,7 @@ public class Game {
 		
 		
 		districtmanager.updateDistrict(district, width, height);
-		railwaymanager.updateRailRoadMap(railRoad, width, height);
+		railWayManager.updateRailRoadMap(railRoad, width, height);
 		moneyManager();
 	}
 	
