@@ -10,24 +10,31 @@ public class Residence extends District{
 	private int commercialWorkers=0;
 	private int nbResidentMax=0;
 	private int turnCount=0;
-	 private int inConstruction;
-	 private int constructionTime;
-	 private int constructionTimeLeft;
+	 private int inConstruction=1;
+	 private int constructionTime=30;
+	 private int constructionTimeLeft=30;
 	
-	
-	public Residence(int nbHab, int administrationWorkers, int commercialWorkers, int nbResidentMax, int turnCount) {
+	public Residence(int nbHab, int administrationWorkers, int commercialWorkers, int nbResidentMax, int turnCount,
+			int inConstruction, int constructionTime, int constructionTimeLeft) {
 		super();
 		this.setType(2);
 		this.setTypeName("Residence");
-		this.commercialWorkers=commercialWorkers;
 		this.nbHab = nbHab;
 		this.administrationWorkers = administrationWorkers;
+		this.commercialWorkers = commercialWorkers;
 		this.nbResidentMax = nbResidentMax;
 		this.turnCount = turnCount;
+		this.inConstruction = inConstruction;
+		this.constructionTime = constructionTime;
+		this.constructionTimeLeft = constructionTimeLeft;
 	}
-	
-	public void decrementconstructionTimeLeft() {
-		constructionTimeLeft --;
+
+	public void decrementConstructionTimeLeft() {
+		if(constructionTimeLeft>1)
+			setConstructionTimeLeft(getConstructionTimeLeft()-1);
+		else {
+			setInConstruction(0);
+		}
 	}
 	
 	
@@ -61,12 +68,12 @@ public class Residence extends District{
 	}
 
 
-	public int getconstructionTimeLeft() {
+	public int getConstructionTimeLeft() {
 		return constructionTimeLeft;
 	}
 
 
-	public void setconstructionTimeLeft(int constructionTimeLeft) {
+	public void setConstructionTimeLeft(int constructionTimeLeft) {
 		this.constructionTimeLeft = constructionTimeLeft;
 	}
 

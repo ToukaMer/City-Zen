@@ -8,16 +8,22 @@ public class Commercial extends District{
 	 private int constructionTime;
 	 private int constructionTimeLeft;
 	 
-	 public Commercial(int currentNbWorkers, int nbMaxWorkers, int turnCount) {
-			super();
-			this.setType(3);
-			this.setTypeName("Commercial");
-			this.nbMaxWorkers = nbMaxWorkers;
-			this.currentNbWorkers = currentNbWorkers;
-			this.turnCount = turnCount;
-		}
+
 	
-	 public void decrementconstructionTimeLeft() {
+	 public Commercial(int nbMaxWorkers, int currentNbWorkers, int turnCount, int inConstruction, int constructionTime,
+			int constructionTimeLeft) {
+		super();
+		this.setType(3);
+		this.setTypeName("Commercial");
+		this.nbMaxWorkers = nbMaxWorkers;
+		this.currentNbWorkers = currentNbWorkers;
+		this.turnCount = turnCount;
+		this.inConstruction = inConstruction;
+		this.constructionTime = constructionTime;
+		this.constructionTimeLeft = constructionTimeLeft;
+	}
+
+	public void decrementconstructionTimeLeft() {
 			constructionTimeLeft --;
 		}
 	 

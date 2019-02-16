@@ -11,6 +11,7 @@ public class InteractivityZone extends VBox {
 	
 	private BlockSize blockSize;
 	private DataDisplayer dataDisplayer;
+	private ToolBox toolBox;
 	
 	public InteractivityZone(double width, double height) {
 		super();
@@ -19,8 +20,10 @@ public class InteractivityZone extends VBox {
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
 		setDataDisplayer(new DataDisplayer(getBlockSize().getWidth()*DATA_DISPLAYER_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT));
+		setToolBox(new ToolBox(getBlockSize().getWidth()*TOOLBOX_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT));
 		
 		getChildren().add(getDataDisplayer());
+		getChildren().add(getToolBox());
 	}
 
 	public BlockSize getBlockSize() {
@@ -37,5 +40,13 @@ public class InteractivityZone extends VBox {
 	
 	public void setDataDisplayer(DataDisplayer dataDisplayer) {
 		this.dataDisplayer = dataDisplayer;
+	}
+	
+	public ToolBox getToolBox() {
+		return toolBox;
+	}
+	
+	public void setToolBox(ToolBox toolBox) {
+		this.toolBox = toolBox;
 	}
 }

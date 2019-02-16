@@ -11,7 +11,10 @@ public class Administrative extends District{
 	 private int constructionTimeLeft;
 	
 	
-	public Administrative(int currentNbWorkers, int nbUserMax, int currentNbUsers, int nbMaxWorkers, int turnCount) {
+
+	
+	public Administrative(int currentNbWorkers, int nbUserMax, int currentNbUsers, int nbMaxWorkers, int turnCount,
+			int inConstruction, int constructionTime, int constructionTimeLeft) {
 		super();
 		this.setType(1);
 		this.setTypeName("Administrative");
@@ -19,9 +22,12 @@ public class Administrative extends District{
 		this.nbUserMax = nbUserMax;
 		this.currentNbUsers = currentNbUsers;
 		this.nbMaxWorkers = nbMaxWorkers;
-		this.turnCount=turnCount;
+		this.turnCount = turnCount;
+		this.inConstruction = inConstruction;
+		this.constructionTime = constructionTime;
+		this.constructionTimeLeft = constructionTimeLeft;
 	}
-	
+
 	public void decrementconstructionTimeLeft() {
 		constructionTimeLeft --;
 	}

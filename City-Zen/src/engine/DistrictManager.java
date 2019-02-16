@@ -1,4 +1,6 @@
-package data;
+package engine;
+
+import data.*;
 
 public class DistrictManager {
 	private int nbResidentsInit =0;
@@ -27,7 +29,7 @@ public class DistrictManager {
 				if(((column*height)+row+1) == ((height*height/2)+(width/2))) { // get the center of the map , +1 because it begins at 0
 					
 					// put the town center at the center
-					district[column][row] = new Administrative(0, 30, 0, 30, 0);
+					district[column][row] = new Administrative(0, 30, 0, 30, 0, 1, 30, 30);
 					Stats.nbWorkersAdministrative+=((Administrative)district[column][row]).getCurrentNbWorkers();
 					Stats.nbAdministrative++;
 					
@@ -45,7 +47,7 @@ public class DistrictManager {
 			System.out.println("This spot isnt empty!");
 		else
 		{
-			district[width][height] = new Residence(nbResidentsInit, 0, 0, 30, 0);
+			district[width][height] = new Residence(nbResidentsInit, 0, 0, 30, 0, 1, 30, 30);
 			Stats.nbHab+=((Residence)district[width][height]).getNbHab();
 			Stats.nbResidence++;
 			
@@ -72,7 +74,7 @@ public class DistrictManager {
 			System.out.println("This spot isnt empty!");
 		else
 		{
-			district[width][height] = new Administrative(0, 30, 0, 30, 0);
+			district[width][height] = new Administrative(0, 30, 0, 30, 0, 1, 30, 30);
 			Stats.nbWorkersAdministrative+=((Administrative)district[width][height]).getCurrentNbWorkers();
 			Stats.nbAdministrative++;
 		}	
@@ -94,7 +96,7 @@ public class DistrictManager {
 			System.out.println("This spot isnt empty!");
 		else
 		{
-			district[width][height] = new Commercial(0, 30, 0);
+			district[width][height] = new Commercial(0, 30, 0, 1, 30, 30);
 			Stats.nbWorkersCommercial+=((Commercial)district[width][height]).getCurrentNbWorkers();
 			Stats.nbCommercial++;
 		}	
