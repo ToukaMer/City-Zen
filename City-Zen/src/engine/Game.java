@@ -28,7 +28,7 @@ public class Game {
 		this.height = height;
 		
 		initDistrictManager();
-		initrailWayManager();
+		initRailWayManager();
 		
 		initDistrictMap(width,height);
 		initRailRoadMap(width,height);
@@ -56,7 +56,7 @@ public class Game {
 		districtManager = new DistrictManager();
 	}
 	
-	public void initrailWayManager() {
+	public void initRailWayManager() {
 		railWayManager = new RailWayManager();
 	}
 	
@@ -122,10 +122,11 @@ public class Game {
 	 
 	 public void buildStation() {
 		 
+		 // POUR KIERIAN 
 	 }
 	 
-	 public void destroyDistrict(int type, DistrictManager districtManager, District[][] district, int xCoord, int yCoord) {
-		 switch(type) { //wilderness = 0, admin = 1, residential = 2, commercial = 3
+	 public void destroyDistrict(DistrictManager districtManager, District[][] district, int xCoord, int yCoord) {
+		 switch(district[xCoord][yCoord].getType()) { //wilderness = 0, admin = 1, residential = 2, commercial = 3
 			 case 1: districtManager.destroyAdministrative(district, xCoord, yCoord);
 				break;
 			 case 2: districtManager.destroyResidence(district, xCoord, yCoord);
@@ -138,10 +139,12 @@ public class Game {
 
 	public void destroyStation() {
 		 
+		// POUR KIERIAN
 	 }
 	 
 	 public void buildRailway() {
-		 
+		
+		 // POUR KIERIAN
 	 }
 	 
 	 public void firstTurnChecks(int type, DistrictManager districtmanager, District[][] district, int xCoord, int yCoord) {
