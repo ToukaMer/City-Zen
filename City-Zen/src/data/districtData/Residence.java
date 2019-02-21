@@ -1,6 +1,8 @@
-package data;
+package data.districtData;
 
 import java.util.Random;
+
+import data.Stats;
 
 //NEED PATH FINDING
 

@@ -1,6 +1,11 @@
-package engine;
+package engine.managers;
 
 import data.*;
+import data.districtData.Administrative;
+import data.districtData.Commercial;
+import data.districtData.District;
+import data.districtData.Residence;
+import data.districtData.Wilderness;
 
 public class DistrictManager {
 	private int nbResidentsInit =0;

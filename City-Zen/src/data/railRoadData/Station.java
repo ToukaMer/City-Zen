@@ -1,4 +1,4 @@
-package data;
+package data.railRoadData;
 
 public class Station extends RailRoad{
 	private int nbUsers;

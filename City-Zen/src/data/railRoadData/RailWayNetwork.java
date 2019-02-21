@@ -1,4 +1,6 @@
-package data;
+package data.railRoadData;
+
+import data.Coordinates;
 
 public class RailWayNetwork 
 {

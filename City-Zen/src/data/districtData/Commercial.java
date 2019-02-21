@@ -1,27 +1,24 @@
-package data;
+package data.districtData;
 
-public class Administrative extends District{
-	private int currentNbWorkers;
-	private int nbUserMax;
-	private int currentNbUsers;
-	private int nbMaxWorkers;
+import data.Stats;
+
+public class Commercial extends District{
+	private int nbMaxWorkers=0;
+	private int currentNbWorkers=0;
 	private int turnCount=0;
 	 private int inConstruction;
 	 private int constructionTime;
 	 private int constructionTimeLeft;
-	
-	
+	 
 
 	
-	public Administrative(int currentNbWorkers, int nbUserMax, int currentNbUsers, int nbMaxWorkers, int turnCount,
-			int inConstruction, int constructionTime, int constructionTimeLeft) {
+	 public Commercial(int nbMaxWorkers, int currentNbWorkers, int turnCount, int inConstruction, int constructionTime,
+			int constructionTimeLeft) {
 		super();
-		this.setType(1);
-		this.setTypeName("Administrative");
-		this.currentNbWorkers = currentNbWorkers;
-		this.nbUserMax = nbUserMax;
-		this.currentNbUsers = currentNbUsers;
+		this.setType(3);
+		this.setTypeName("Commercial");
 		this.nbMaxWorkers = nbMaxWorkers;
+		this.currentNbWorkers = currentNbWorkers;
 		this.turnCount = turnCount;
 		this.inConstruction = inConstruction;
 		this.constructionTime = constructionTime;
@@ -29,33 +26,38 @@ public class Administrative extends District{
 	}
 
 	public void decrementconstructionTimeLeft() {
-		constructionTimeLeft --;
-	}
-	
+			constructionTimeLeft --;
+		}
+	 
 	public int getInConstruction() {
 		return inConstruction;
 	}
+
 
 	public void setInConstruction(int inConstruction) {
 		this.inConstruction = inConstruction;
 	}
 
+
 	public int getConstructionTime() {
 		return constructionTime;
 	}
+
 
 	public void setConstructionTime(int constructionTime) {
 		this.constructionTime = constructionTime;
 	}
 
+
 	public int getconstructionTimeLeft() {
 		return constructionTimeLeft;
 	}
 
+
 	public void setconstructionTimeLeft(int constructionTimeLeft) {
 		this.constructionTimeLeft = constructionTimeLeft;
 	}
-
+	
 	public int getTurnCount() {
 		return turnCount;
 	}
@@ -74,7 +76,7 @@ public class Administrative extends District{
 		if(currentNbWorkers<nbMaxWorkers)
 		{
 			currentNbWorkers += 1;
-			Stats.nbWorkersAdministrative++;
+			Stats.nbWorkersCommercial++;
 		}
 		
 	}
@@ -83,34 +85,9 @@ public class Administrative extends District{
 		if(currentNbWorkers>0)
 		{
 			currentNbWorkers -= 1;
-			Stats.nbWorkersAdministrative--;
+			Stats.nbWorkersCommercial--;
 		}
 		
-	}
-	
-
-	public int getCurrentNbWorkers() {
-		return currentNbWorkers;
-	}
-
-	public void setCurrentNbWorkers(int currentNbWorkers) {
-		this.currentNbWorkers = currentNbWorkers;
-	}
-
-	public int getNbUserMax() {
-		return nbUserMax;
-	}
-
-	public void setNbUserMax(int nbUserMax) {
-		this.nbUserMax = nbUserMax;
-	}
-
-	public int getCurrentNbUsers() {
-		return currentNbUsers;
-	}
-
-	public void setCurrentNbUsers(int currentNumberUsers) {
-		this.currentNbUsers = currentNumberUsers;
 	}
 
 	public int getNbMaxWorkers() {
@@ -120,9 +97,16 @@ public class Administrative extends District{
 	public void setNbMaxWorkers(int nbMaxWorkers) {
 		this.nbMaxWorkers = nbMaxWorkers;
 	}
-	
-	
-	
-	
 
+	public int getCurrentNbWorkers() {
+		return currentNbWorkers;
+	}
+
+	public void setCurrentNbWorkers(int currentHab) {
+		this.currentNbWorkers = currentHab;
+	}
+	
+	
+	
+	
 }

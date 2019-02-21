@@ -8,6 +8,10 @@ import java.util.Properties;
 import java.util.Scanner;
 
 import data.*;
+import data.districtData.District;
+import data.railRoadData.RailRoad;
+import engine.managers.DistrictManager;
+import engine.managers.RailWayManager;
 
 public class Game {
 	private District[][] districtMap;

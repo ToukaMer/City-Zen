@@ -1,4 +1,4 @@
-package data;
+package data.railRoadData;
 
 public class RailWay extends RailRoad
 {

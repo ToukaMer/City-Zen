@@ -1,4 +1,4 @@
-package data;
+package data.districtData;
 
 public abstract class District {
 	 private int type;

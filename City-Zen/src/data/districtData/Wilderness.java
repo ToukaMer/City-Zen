@@ -1,4 +1,4 @@
-package data;
+package data.districtData;
 
 public class Wilderness extends District{
 

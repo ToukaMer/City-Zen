@@ -1,4 +1,4 @@
-package data;
+package data.railRoadData;
 
 public abstract class RailRoad {
 	private int type;
