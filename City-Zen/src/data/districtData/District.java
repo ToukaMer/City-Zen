@@ -1,5 +1,7 @@
 package data.districtData;
 
+import data.Coordinates;
+
 public abstract class District {
 	 private int type;
 	 private String typeName;
@@ -7,8 +9,15 @@ public abstract class District {
 	 private int revenues;
 	 private int usingTime;
 	 private int satisfaction;
+	 private Coordinates coordinates;
 	
 	 
+	public Coordinates getCoordinates() {
+		return coordinates;
+	}
+	public void setCoordinates(Coordinates coordinates) {
+		this.coordinates = coordinates;
+	}
 	public int getType() {
 		return type;
 	}
