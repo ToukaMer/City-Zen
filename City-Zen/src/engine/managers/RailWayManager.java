@@ -37,18 +37,18 @@ public class RailWayManager
 	
 	public void addRailWay (RailRoad[][] railRoadMap, Coordinates [] coord)
 	{
-		if((railRoadMap[coord[0].getRow()][coord[0].getColumns()].getType() != 2)&&(railRoadMap[coord[coord.length].getRow()][coord[coord.length].getColumns()].getType() != 2)) {
+		if((railRoadMap[coord[0].getRow()][coord[0].getColumns()].getType() != Constants.STATION)&&(railRoadMap[coord[coord.length].getRow()][coord[coord.length].getColumns()].getType() != Constants.STATION)) {
 			
 			int bool=0;
 			
 			for(int i=1; i<coord.length-1; i++) {
-				if(railRoadMap[coord[i].getRow()][coord[i].getColumns()].getType() != 0)
+				if(railRoadMap[coord[i].getRow()][coord[i].getColumns()].getType() != Constants.WILDERNESSRR)
 					bool =1;
 			}
 			
 			if(bool == 0) {
 				for(int i=1; i<coord.length-1; i++) {
-					railRoadMap[coord[i].getRow()][coord[i].getColumns()] = new RailWay();
+					//railRoadMap[coord[i].getRow()][coord[i].getColumns()] = new RailWay();
 				}
 			}
 			else System.out.println("There is an obstacle on the path\n");

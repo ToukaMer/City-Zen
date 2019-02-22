@@ -1,7 +1,8 @@
 package data;
 
-public abstract class Stats {
-	public static int money=3000; //begin game with 100 to buy shit
+public class Stats {
+
+	public static int money=3000; //begin game with 100 to buy STUFF
 	public static int monthlyRevenues=0;
 	public static int monthlyExpences=0;
 	
@@ -28,6 +29,11 @@ public abstract class Stats {
 	
 	//public static District districts [] [];
 	//public static RailRoad railRoads [] [];
+	
+	public Stats() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	public static void printStats() {
 		System.out.println("\nmoney:" +money+"\n"+ 
