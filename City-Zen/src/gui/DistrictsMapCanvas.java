@@ -1,27 +1,22 @@
 package gui;
 
+import engine.Game;
 import gui_data.BlockSize;
 import gui_data.CameraPosition;
+import gui_data.GuiConstants;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 public class DistrictsMapCanvas extends Canvas {
-	private static final double OUTLAND = 100;
-	private static final int SQUARE_WIDTH = 50;
-	private static final int SQUARE_HEIGHT = 50;
-	private static final Color BACKGROUND = Color.BLACK;
-	private static final double MAX_SIZE_WIDTH = SQUARE_WIDTH*30;
-	private static final double MAX_SIZE_HEIGHT = SQUARE_HEIGHT*30;
-	private static final int SQUARE_PER_COLUMN = 30;
-	private static final int SQUARE_PER_ROW = 30;
 
 	private BlockSize blockSize;
 	private GraphicsContext map;
+	
+	private Game game;
 	
 	private CameraPosition cameraPosition;
 	private CameraPosition tracking;
@@ -29,69 +24,66 @@ public class DistrictsMapCanvas extends Canvas {
 	
 	private Image districtSprite;
 	
-	int[][] area;
-	
 	public DistrictsMapCanvas(double width, double height, PlayableGrid playableGrid) {
 		super();
 		setBlockSize(new BlockSize(width, height));
 		setWidth(getBlockSize().getWidth());
 		setHeight(getBlockSize().getHeight());
 
+		setGame(playableGrid.getGame());
 		setTracking(playableGrid.getTracking());
 		setCameraPosition(playableGrid.getCameraPosition());
 		setDistrictSprite(new Image(getClass().getResource("\\sprites\\district.png").toString()));
 		
 		setMap(getGraphicsContext2D());
-		
-		setArea(new int[SQUARE_PER_ROW][SQUARE_PER_COLUMN]);
 		animatedMap();
 	}
 	
 	public void animatedMap() {
 		new AnimationTimer() {
 			public void handle(long now) {
-				getMap().setFill(BACKGROUND);
+				getMap().setFill(GuiConstants.BACKGROUND);
 				getMap().fillRect(0, 0, getWidth(), getHeight());
 				
-				if(getTracking().getX() > 0 && getCameraPosition().getX() < MAX_SIZE_WIDTH - getBlockSize().getWidth() + OUTLAND) {
+				if(getTracking().getX() > 0 && getCameraPosition().getX() < GuiConstants.MAX_SIZE_WIDTH - getBlockSize().getWidth() + GuiConstants.OUTLAND) {
 					getCameraPosition().setX(getCameraPosition().getX()+getTracking().getX());
 				}
-				else if(getTracking().getX() < 0 && getCameraPosition().getX() > 0 - OUTLAND) {
+				else if(getTracking().getX() < 0 && getCameraPosition().getX() > 0 - GuiConstants.OUTLAND) {
 					getCameraPosition().setX(getCameraPosition().getX()+getTracking().getX());
 				}
 				
-				if(getTracking().getY() > 0 && getCameraPosition().getY() < MAX_SIZE_HEIGHT - getBlockSize().getHeight() + OUTLAND) {
+				if(getTracking().getY() > 0 && getCameraPosition().getY() < GuiConstants.MAX_SIZE_HEIGHT - getBlockSize().getHeight() + GuiConstants.OUTLAND) {
 					getCameraPosition().setY(getCameraPosition().getY()+getTracking().getY());
 				}
-				else if(getTracking().getY() < 0 && getCameraPosition().getY() > 0 - OUTLAND) {
+				else if(getTracking().getY() < 0 && getCameraPosition().getY() > 0 - GuiConstants.OUTLAND) {
 					getCameraPosition().setY(getCameraPosition().getY()+getTracking().getY());
 				}
 				
-				double columnModulus = getCameraPosition().getX()%SQUARE_WIDTH;
-				double rowModulus = getCameraPosition().getY()%SQUARE_HEIGHT;
+				double columnModulus = getCameraPosition().getX()%GuiConstants.SQUARE_WIDTH;
+				double rowModulus = getCameraPosition().getY()%GuiConstants.SQUARE_HEIGHT;
 				double columnPosition = -columnModulus;
 				double rowPosition = -rowModulus;
 				
-				int firstColumn = (int)getCameraPosition().getX()/SQUARE_WIDTH;
-				int firstRow = (int)getCameraPosition().getY()/SQUARE_HEIGHT;
+				int firstColumn = (int)getCameraPosition().getX()/GuiConstants.SQUARE_WIDTH;
+				int firstRow = (int)getCameraPosition().getY()/GuiConstants.SQUARE_HEIGHT;
 				int currentRow = firstRow;
 				int currentColumn = firstColumn;
 
 				//System.out.println("trackX = "+getTracking().getX()+" trackY = "+getTracking().getY()+" | x = "+getCameraPosition().getX()+" y = "+getCameraPosition().getY()+" | columnPosition = "+columnPosition+" rowPosition = "+rowPosition+" | currentColumn = "+currentColumn+" currentRow = "+currentRow);
 				
-				while(rowPosition < getBlockSize().getHeight()-rowModulus+SQUARE_HEIGHT) {
-					while(columnPosition < getBlockSize().getWidth()-columnModulus+SQUARE_WIDTH) {
-						if(currentColumn >= 0 && currentRow >= 0 && currentColumn < SQUARE_PER_ROW && currentRow < SQUARE_PER_COLUMN) {
+				while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
+					while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
+						if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
 							getMap().drawImage(getDistrictSprite(), columnPosition, rowPosition);
 						}
 						currentColumn++;
-						columnPosition += SQUARE_WIDTH;
+						columnPosition += GuiConstants.SQUARE_WIDTH;
 						//System.out.println("columnPosition = "+columnPosition+" rowPosition = "+rowPosition+" currentColumn = "+currentColumn+" currentRow = "+currentRow);
 					}
 					currentColumn = firstColumn;
 					columnPosition = -columnModulus;
 					currentRow++;
-					rowPosition += SQUARE_HEIGHT;
+					rowPosition += GuiConstants.SQUARE_HEIGHT;
 				}
 				
 				initializeSquareClicks(firstRow, firstColumn, rowModulus, columnModulus);
@@ -112,11 +104,12 @@ public class DistrictsMapCanvas extends Canvas {
 				if(positionX >= 0 && positionY >= 0) {
 
 					//Calculate the coordinates of the clicked square
-					int squareX = (int)(positionX/SQUARE_WIDTH);
-					int squareY = (int)(positionY/SQUARE_HEIGHT);
+					int squareX = (int)(positionX/GuiConstants.SQUARE_WIDTH);
+					int squareY = (int)(positionY/GuiConstants.SQUARE_HEIGHT);
 
-					if(squareX < SQUARE_PER_ROW && squareY < SQUARE_PER_COLUMN) {
+					if(squareX < GuiConstants.SQUARE_PER_ROW && squareY < GuiConstants.SQUARE_PER_COLUMN) {
 						System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
+						System.out.println("Quartier :"+getGame().getDistrictMap()[squareX][squareY].getTypeName());
 					}
 				}
 			}
@@ -172,12 +165,12 @@ public class DistrictsMapCanvas extends Canvas {
 		this.districtSprite = districtSprite;
 	}
 
-	public int[][] getArea() {
-		return area;
+	public Game getGame() {
+		return game;
 	}
 
-	public void setArea(int[][] area) {
-		this.area = area;
+	public void setGame(Game game) {
+		this.game = game;
 	}
 
 	

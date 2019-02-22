@@ -1,7 +1,9 @@
 package gui;
 
+import engine.Game;
 import gui_data.BlockSize;
 import gui_data.CameraPosition;
+import gui_data.GuiConstants;
 import javafx.scene.layout.GridPane;
 
 public class PlayableGrid extends GridPane {
@@ -26,6 +28,8 @@ public class PlayableGrid extends GridPane {
 	
 	private GameBlock gameBlock;
 	
+	private Game game;
+	
 	public PlayableGrid(double width, double height, Root root) {
 		super();
 		setBlockSize(new BlockSize(width, height));
@@ -33,6 +37,8 @@ public class PlayableGrid extends GridPane {
 		
 		setTracking(new CameraPosition());
 		setCameraPosition(new CameraPosition());
+		
+		setGame(new Game(GuiConstants.SQUARE_PER_COLUMN, GuiConstants.SQUARE_PER_ROW));
 
 		setNorthWestTracking(new TrackingZone(getBlockSize().getWidth()*MIN_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, -1, -1, getTracking()));
 		setNorthTracking(new TrackingZone(getBlockSize().getWidth()*MAX_WIDTH_BOX, getBlockSize().getHeight()*MIN_HEIGHT_BOX, 0, -1, getTracking()));
@@ -173,6 +179,16 @@ public class PlayableGrid extends GridPane {
 
 	public void setCameraPosition(CameraPosition cameraPosition) {
 		this.cameraPosition = cameraPosition;
+	}
+
+
+	public Game getGame() {
+		return game;
+	}
+
+
+	public void setGame(Game game) {
+		this.game = game;
 	}
 	
 }
