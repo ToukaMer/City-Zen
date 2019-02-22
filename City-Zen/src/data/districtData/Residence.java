@@ -12,9 +12,9 @@ public class Residence extends District{
 	private int commercialWorkers=0;
 	private int nbResidentMax=0;
 	private int turnCount=0;
-	 private int inConstruction=1;
-	 private int constructionTime=30;
-	 private int constructionTimeLeft=30;
+	private int inConstruction=1;
+	private int constructionTime=30;
+ 	private int constructionTimeLeft=30;
 	
 	public Residence(int nbHab, int administrationWorkers, int commercialWorkers, int nbResidentMax, int turnCount,
 			int inConstruction, int constructionTime, int constructionTimeLeft) {

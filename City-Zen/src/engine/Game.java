@@ -137,9 +137,9 @@ public class Game {
 		 }
 	 }
 
-	public void destroyStation() {
+	public void destroyStation(RailWayManager railWayManager, RailRoad[][] railRoad, int xCoord, int yCoord) {
 		 
-		// POUR KIERIAN
+		//railWayManager.destr
 	 }
 	 
 	 public void buildRailway() {
