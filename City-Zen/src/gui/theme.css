@@ -15,11 +15,7 @@ DataDisplayer{
 	-fx-background-color: rgb(240, 255, 240);
 }
 /* O T H E R*/
-.root {
-	-fx-spacing :30;
-	-fx-background-color : #0e3a6b;
-	-fx-padding: 120px;
-}
+
 .button {
 	-fx-background-color : #2a78b2;
 	-fx-font-family: "Courier New";
@@ -35,14 +31,4 @@ DataDisplayer{
    	-fx-font-family: "Courier New";
    	-fx-fill: white;
    	-fx-effect: innershadow( three-pass-box , rgba(255,255,255,0.9) , 6, 0.0 , 0 , 2 );
-}
-.tooltip{
-	-fx-background: rgba(30,30,30);
-    -fx-text-fill: white;
-    -fx-background-color: rgba(30,30,30,0.8);
-    -fx-background-radius: 6px;
-    -fx-background-insets: 0;
-    -fx-padding: 0.667em 0.75em 0.667em 0.75em; /* 10px */
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 10, 0.0 , 0 , 3 );
-    -fx-font-size: 0.85em;
 }
