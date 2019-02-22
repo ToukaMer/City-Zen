@@ -4,33 +4,41 @@ import gui_data.BlockSize;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.TilePane;
 
-public class ToolBox extends HBox{
+public class ToolBox extends TilePane{
 	
 	private BlockSize blockSize;
 	private Label lbl_toolBox;
-	private Button buildResidance;
+	private Button buildResidence;
 	private Button buildCommercial;
 	private Button buildAdministrative;
+	private Button destroyResidence;
+	private Button destroyCommercial;
+	private Button destroyAdministrative;
 	
 	public ToolBox(double width, double height) {
 		super();
 		setBlockSize(new BlockSize(width, height));
+		setHgap(20);
+		setVgap(20);
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
-		VBox root = new VBox(20);
-		lbl_toolBox = new Label("ToolBox");
-		buildResidance = new Button("Build a residance");
-		buildCommercial = new Button("Build a commercial");
-		buildAdministrative = new Button("buildAdministrative");
-		
-		root.getChildren().add(lbl_toolBox);
-		root.getChildren().add(buildAdministrative);
-		root.getChildren().add(buildCommercial);
-		root.getChildren().add(buildResidance);
-		
-		getChildren().add(root);
+		//lbl_toolBox = new Label("TB");
+		buildResidence = new Button("BR");
+		buildResidence.setTooltip(new Tooltip("Build a residance"));
+		buildCommercial = new Button("BC");
+		buildAdministrative = new Button("BA");
+		destroyResidence = new Button("DR");
+		destroyCommercial = new Button("DC");
+		destroyAdministrative = new Button("DA");
+		//getChildren().add(lbl_toolBox);
+		getChildren().add(buildAdministrative);
+		getChildren().add(buildCommercial);
+		getChildren().add(buildResidence);
+		getChildren().add(destroyResidence);
+		getChildren().add(destroyCommercial);
+		getChildren().add(destroyAdministrative);
 		
 	}
 	
