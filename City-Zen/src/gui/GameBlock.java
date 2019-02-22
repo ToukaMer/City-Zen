@@ -19,7 +19,7 @@ public class GameBlock extends VBox {
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 
-		setToolbar(new Toolbar(getBlockSize().getWidth()*MAX_WIDTH, getBlockSize().getHeight()*TOOLBAR_HEIGHT, root));
+		setToolbar(new Toolbar(getBlockSize().getWidth()*MAX_WIDTH, getBlockSize().getHeight()*TOOLBAR_HEIGHT));
 		setMapZone(new MapZone(getBlockSize().getWidth()*MAX_WIDTH, getBlockSize().getHeight()*MAP_ZONE_HEIGHT, root, playableGrid));
 	
 		getChildren().add(getToolbar());
