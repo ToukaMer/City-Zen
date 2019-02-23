@@ -35,37 +35,47 @@ public class RailWayManager
 		return railRoadMap;
 	}
 	
-	public void addRailWay (RailRoad[][] railRoadMap, Coordinates [] coord)
-	{
-		if((railRoadMap[coord[0].getRow()][coord[0].getColumns()].getType() != Constants.STATION)&&(railRoadMap[coord[coord.length].getRow()][coord[coord.length].getColumns()].getType() != Constants.STATION)) {
+	public int addRailWay (RailRoad[][] railRoadMap, Coordinates [] coord)
+	{//checking if both sides of the array are stations 
+		if((railRoadMap[coord[0].getRow()][coord[0].getColumns()].getType() == Constants.STATION)&&(railRoadMap[coord[coord.length-1].getRow()][coord[coord.length-1].getColumns()].getType() == Constants.STATION)) {
 			
 			int bool=0;
 			
-			for(int i=1; i<coord.length-1; i++) {
+			for(int i=1; i<coord.length-1; i++) {//checking if there is something in the way
 				if(railRoadMap[coord[i].getRow()][coord[i].getColumns()].getType() != Constants.WILDERNESSRR)
 					bool =1;
 			}
 			
 			if(bool == 0) {
-				for(int i=1; i<coord.length-1; i++) {
-					//railRoadMap[coord[i].getRow()][coord[i].getColumns()] = new RailWay();
+				for(int j=1; j<coord.length-1; j++) {
+					railRoadMap[coord[j].getRow()][coord[j].getColumns()] = new RailWay(coord);
 				}
+				return 1;
 			}
-			else System.out.println("There is an obstacle on the path\n");
+			else {
+				System.out.println("There is an obstacle on the path\n");
+				return 2;
+			}
 			
 		}
 		else {
 			System.out.println("That railway isnt connected to 2 stations\n");
+			return 3;
 		}
 	}
 	
-	public void destroyRailWay(RailRoad[][] railRoadMap, int row, int column) {
-		if(railRoadMap[row][column].getType() != 1)
+	public int destroyRailWay(RailRoad[][] railRoadMap, int row, int column) {
+		Coordinates [] coord = ((RailWay) railRoadMap[row][column]).getCoord(); // we save the array of rails
+		if(railRoadMap[row][column].getType() != 1) { // verifying if the cliqued object is a rail
 			System.out.println("This spot isnt a RailWay!");
+			return 2;
+		}
+			
 		else
 		{
-			railRoadMap[row][column]= new WildernessRR();
-			
+			for(int i=1; i<coord.length-1; i++)
+			railRoadMap[coord[i].getRow()][coord[i].getColumns()]= new WildernessRR(); // deleting each object that are in the coordinates of the array
+			return 1;
 		}
 	}
 	
@@ -98,13 +108,27 @@ public class RailWayManager
 		}	
 	}
 	
-	public void destroyRailRoad(RailRoad[][] railRoadMap, int row, int column) 
+	public void destroyStation(RailRoad[][] railRoadMap, int width, int height) 
 	{//Detruit un élément de la carte
-		if(railRoadMap[row][column].getType() == 0)
+		if(railRoadMap[width][height].getType() == 0)
 			System.out.println("There is no Railway or station in this place!");
 		else
 		{//L'objet WildernessRR est créer à la place.
-			railRoadMap[row][column] = new WildernessRR();
+			
+				if((width-1) > 0) //left
+					if(railRoadMap[width-1][height].getType()==Constants.RAILWAY)
+						destroyRailWay(railRoadMap, width-1, height);
+				if((height+1)<Stats.HEIGHT)//bottom
+					if(railRoadMap[width][height+1].getType()==Constants.RAILWAY)
+						destroyRailWay(railRoadMap, width, height+1);
+				if((width+1)>Stats.WIDTH)//right
+					if(railRoadMap[width+1][height].getType()==Constants.RAILWAY)
+						destroyRailWay(railRoadMap, width+1, height);
+				if((height-1)>0) //top
+					if(railRoadMap[width][height-1].getType()==Constants.RAILWAY)
+						destroyRailWay(railRoadMap, width, height-1);
+				
+				railRoadMap[width][height] = new WildernessRR();
 		}
 	}
 	

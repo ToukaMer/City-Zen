@@ -20,7 +20,7 @@ public class Game {
 	private RailWayManager railWayManager;
 	private int width;
 	private int height;
-	private Coordinates [] railWayCoord;
+	private Coordinates [] railWayCoord = Coordinates.testArray();
 	
 	public Game(int width, int height) {
 		super();
@@ -185,8 +185,11 @@ public class Game {
 									railWayManager.addStation(railRoad, xCoord, yCoord);
 									break;
 		case "destroyRailRoad": 
-									railWayManager.destroyRailRoad(railRoad, xCoord, yCoord);
+									railWayManager.destroyStation(railRoad, xCoord, yCoord);
 									break;
+		case "destroyRailWay": 
+				railWayManager.destroyRailWay(railRoad, xCoord, yCoord);
+				break;
 		case "save" :								save();
 									break;
 		default: break;
@@ -288,13 +291,10 @@ public class Game {
 										districtmanager.destroyAdministrative(district, widthScan, heightScan);
 										scan = sc.nextLine();
 										break;
-			case "buildRailWay": System.out.println("width?");
-										widthScan = sc.nextInt();
-										System.out.println("height?");
-										heightScan = sc.nextInt();
+			case "buildRailWay": System.out.println("building test railway");
 										railWayManager.addRailWay(railRoad,railWayCoord);
-										scan = sc.nextLine();
 										break;
+										
 			case "buildStation": System.out.println("width?");
 										widthScan = sc.nextInt();
 										System.out.println("height?");
@@ -306,9 +306,27 @@ public class Game {
 										widthScan = sc.nextInt();
 										System.out.println("height?");
 										heightScan = sc.nextInt();
-										railWayManager.destroyRailRoad(railRoad, widthScan, heightScan);
+										railWayManager.destroyStation(railRoad, widthScan, heightScan);
 										scan = sc.nextLine();
 										break;
+			case "destroyRailWay": 
+									System.out.println("width?");
+									widthScan = sc.nextInt();
+									System.out.println("height?");
+									heightScan = sc.nextInt();
+									railWayManager.destroyRailWay(railRoad, widthScan, heightScan);
+									scan = sc.nextLine();
+									break;
+									
+			case "destroyStation": 
+				System.out.println("width?");
+				widthScan = sc.nextInt();
+				System.out.println("height?");
+				heightScan = sc.nextInt();
+				railWayManager.destroyStation(railRoad, widthScan, heightScan);
+				scan = sc.nextLine();
+				break;
+									
 			case "save" :	System.out.println("Game Saved");
 										save();
 										break;

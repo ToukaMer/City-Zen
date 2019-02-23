@@ -1,7 +1,8 @@
 package data;
 
 public class Stats {
-
+	public static int WIDTH = 10;
+	public static int HEIGHT = 10;
 	public static int money=3000; //begin game with 100 to buy STUFF
 	public static int monthlyRevenues=0;
 	public static int monthlyExpences=0;
