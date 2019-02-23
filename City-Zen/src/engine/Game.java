@@ -120,9 +120,8 @@ public class Game {
 		 }
 	 }
 	 
-	 public void buildStation() {
-		 
-		 // POUR KIERIAN 
+	 public void buildStation(RailWayManager railWayManager, District[][] district, int xCoord, int yCoord) {
+		 railWayManager.addStation(railRoadMap, xCoord, yCoord);
 	 }
 	 
 	 public void destroyDistrict(DistrictManager districtManager, District[][] district, int xCoord, int yCoord) {
@@ -139,12 +138,12 @@ public class Game {
 
 	public void destroyStation(RailWayManager railWayManager, RailRoad[][] railRoad, int xCoord, int yCoord) {
 		 
-		//railWayManager.destr
+		railWayManager.destroyStation(railRoad, xCoord, yCoord);
 	 }
 	 
-	 public void buildRailway() {
+	 public void buildRailway(RailRoad[][] railRoadMap, Coordinates [] coord) {
 		
-		 // POUR KIERIAN
+		 railWayManager.addRailWay(railRoadMap, coord);
 	 }
 	 
 	 public void firstTurnChecks(int type, DistrictManager districtmanager, District[][] district, int xCoord, int yCoord) {
