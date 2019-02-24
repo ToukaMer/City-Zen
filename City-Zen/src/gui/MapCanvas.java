@@ -4,6 +4,7 @@ import engine.Game;
 import gui_data.BlockSize;
 import gui_data.CameraPosition;
 import gui_data.GuiConstants;
+import gui_data.SpritePaths;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -11,7 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
-public class DistrictsMapCanvas extends Canvas {
+public class MapCanvas extends Canvas {
 
 	private BlockSize blockSize;
 	private GraphicsContext map;
@@ -21,10 +22,12 @@ public class DistrictsMapCanvas extends Canvas {
 	private CameraPosition cameraPosition;
 	private CameraPosition tracking;
 	private int numberOfSquares;
+	private int currentMap;
 	
 	private Image districtSprite;
+	private Image railNetworkSquareSprite;
 	
-	public DistrictsMapCanvas(double width, double height, PlayableGrid playableGrid) {
+	public MapCanvas(double width, double height,  Root root, PlayableGrid playableGrid) {
 		super();
 		setBlockSize(new BlockSize(width, height));
 		setWidth(getBlockSize().getWidth());
@@ -33,12 +36,17 @@ public class DistrictsMapCanvas extends Canvas {
 		setGame(playableGrid.getGame());
 		setTracking(playableGrid.getTracking());
 		setCameraPosition(playableGrid.getCameraPosition());
-		setDistrictSprite(new Image(getClass().getResource("\\sprites\\district.png").toString()));
+		initializeSprites();
+		setCurrentMap(GuiConstants.DISTRICT_MAP);
 		
 		setMap(getGraphicsContext2D());
 		animatedMap();
 	}
 	
+	public void initializeSprites() {
+		setDistrictSprite(new Image(getClass().getResource(SpritePaths.DISTRICT_SPRITE).toString()));
+		setRailNetworkSquareSprite(new Image(getClass().getResource(SpritePaths.RAIL_NETWORK_SQUARE_SPRITE).toString()));
+	}
 	public void animatedMap() {
 		new AnimationTimer() {
 			public void handle(long now) {
@@ -69,21 +77,35 @@ public class DistrictsMapCanvas extends Canvas {
 				int currentRow = firstRow;
 				int currentColumn = firstColumn;
 
-				//System.out.println("trackX = "+getTracking().getX()+" trackY = "+getTracking().getY()+" | x = "+getCameraPosition().getX()+" y = "+getCameraPosition().getY()+" | columnPosition = "+columnPosition+" rowPosition = "+rowPosition+" | currentColumn = "+currentColumn+" currentRow = "+currentRow);
-				
-				while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
-					while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
-						if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
-							getMap().drawImage(getDistrictSprite(), columnPosition, rowPosition);
+				if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
+					while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
+						while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
+							if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
+								displayDistrictMap(columnPosition, rowPosition, currentColumn, currentRow);
+							}
+							currentColumn++;
+							columnPosition += GuiConstants.SQUARE_WIDTH;
 						}
-						currentColumn++;
-						columnPosition += GuiConstants.SQUARE_WIDTH;
-						//System.out.println("columnPosition = "+columnPosition+" rowPosition = "+rowPosition+" currentColumn = "+currentColumn+" currentRow = "+currentRow);
+						currentColumn = firstColumn;
+						columnPosition = -columnModulus;
+						currentRow++;
+						rowPosition += GuiConstants.SQUARE_HEIGHT;
 					}
-					currentColumn = firstColumn;
-					columnPosition = -columnModulus;
-					currentRow++;
-					rowPosition += GuiConstants.SQUARE_HEIGHT;
+				}
+				else if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP) {
+					while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
+						while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
+							if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
+								displayRailNetworkMap(columnPosition, rowPosition, currentColumn, currentRow);
+							}
+							currentColumn++;
+							columnPosition += GuiConstants.SQUARE_WIDTH;
+						}
+						currentColumn = firstColumn;
+						columnPosition = -columnModulus;
+						currentRow++;
+						rowPosition += GuiConstants.SQUARE_HEIGHT;
+					}
 				}
 				
 				initializeSquareClicks(firstRow, firstColumn, rowModulus, columnModulus);
@@ -91,6 +113,12 @@ public class DistrictsMapCanvas extends Canvas {
 		}.start();
 	}
 	
+	public void displayDistrictMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
+		getMap().drawImage(getDistrictSprite(), columnPosition, rowPosition);
+	}
+	public void displayRailNetworkMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
+		getMap().drawImage(getRailNetworkSquareSprite(), columnPosition, rowPosition);
+	}
 	public void initializeSquareClicks(int firstRow, int firstColumn, double rowModulus, double columnModulus) {
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
@@ -116,6 +144,14 @@ public class DistrictsMapCanvas extends Canvas {
 		});
 	}
 	
+	public int getCurrentMap() {
+		return currentMap;
+	}
+
+	public void setCurrentMap(int currentMap) {
+		this.currentMap = currentMap;
+	}
+
 	public CameraPosition getCameraPosition() {
 		return cameraPosition;
 	}
@@ -171,6 +207,14 @@ public class DistrictsMapCanvas extends Canvas {
 
 	public void setGame(Game game) {
 		this.game = game;
+	}
+
+	public Image getRailNetworkSquareSprite() {
+		return railNetworkSquareSprite;
+	}
+
+	public void setRailNetworkSquareSprite(Image railNetworkSquareSprite) {
+		this.railNetworkSquareSprite = railNetworkSquareSprite;
 	}
 
 	

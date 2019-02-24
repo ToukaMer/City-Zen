@@ -5,12 +5,12 @@ import javafx.scene.layout.HBox;
 
 public class MapZone extends HBox {
 	private final static double MAX_HEIGHT = 1.00;
-	private final static double MAPS_WIDTH = 0.75;
+	private final static double MAP_CANVAS_WIDTH = 0.75;
 	private final static double INTERACTIVITY_ZONE_WIDTH = 0.25;
 	
 	private BlockSize blockSize;
 	
-	private Maps maps;
+	private MapCanvas mapCanvas;
 	private InteractivityZone interactivityZone;
 
 	public MapZone(double width, double height, Root root, PlayableGrid playableGrid) {
@@ -18,10 +18,10 @@ public class MapZone extends HBox {
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
-		setMaps(new Maps(getBlockSize().getWidth()*MAPS_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT, root, playableGrid));
+		setMapCanvas(new MapCanvas(getBlockSize().getWidth()*MAP_CANVAS_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT, root, playableGrid));
 		setInteractivityZone(new InteractivityZone(getBlockSize().getWidth()*INTERACTIVITY_ZONE_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT));
 		
-		getChildren().add(getMaps());
+		getChildren().add(getMapCanvas());
 		getChildren().add(getInteractivityZone());
 	}
 
@@ -33,12 +33,13 @@ public class MapZone extends HBox {
 		this.blockSize = blockSize;
 	}
 
-	public Maps getMaps() {
-		return maps;
+
+	public MapCanvas getMapCanvas() {
+		return mapCanvas;
 	}
 
-	public void setMaps(Maps maps) {
-		this.maps = maps;
+	public void setMapCanvas(MapCanvas mapCanvas) {
+		this.mapCanvas = mapCanvas;
 	}
 
 	public InteractivityZone getInteractivityZone() {

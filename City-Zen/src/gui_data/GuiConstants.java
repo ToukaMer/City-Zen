@@ -12,7 +12,8 @@ public class GuiConstants {
 	public static final int SQUARE_PER_ROW = 30;
 	public static final double MAX_SIZE_WIDTH = SQUARE_WIDTH*SQUARE_PER_COLUMN;
 	public static final double MAX_SIZE_HEIGHT = SQUARE_HEIGHT*SQUARE_PER_ROW;
-	
+	public static final int DISTRICT_MAP = 1;
+	public static final int RAIL_NETWORK_MAP = 2;
 	public GuiConstants() {
 
 	}

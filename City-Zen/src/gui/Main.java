@@ -1,13 +1,14 @@
 package gui;
 	
-import gui_data.BlockSize;
+//import java.awt.Dimension;
+//import javafx.scene.paint.Color;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
-
-
+import gui_data.BlockSize;
 
 public class Main extends Application {
 	
