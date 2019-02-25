@@ -167,30 +167,35 @@ public class MapCanvas extends Canvas {
 					if(squareX < GuiConstants.SQUARE_PER_ROW && squareY < GuiConstants.SQUARE_PER_COLUMN) {
 						System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
 						
-						if(getCurrentMap()==GuiConstants.DISTRICT_MAP)
-						System.out.println("Quartier :"+getGame().getDistrictMap()[squareX][squareY].getTypeName());
-						else
-						System.out.println("Station :"+getGame().getRailRoadMap()[squareX][squareY].getTypeName());
-						
-						if(ToolBox.getBuild()==Constants.RESIDENCE) {
-							playableGrid.getGame().buildDistrict(Constants.RESIDENCE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
-							ToolBox.setBuild(0);
+						if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
+							System.out.println("Quartier :"+getGame().getDistrictMap()[squareX][squareY].getTypeName());
+							if(ToolBox.getBuild()==Constants.RESIDENCE) {
+								playableGrid.getGame().buildDistrict(Constants.RESIDENCE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
+								ToolBox.setBuild(0);
+							}
+							else if(ToolBox.getBuild()==Constants.ADMINISTRATIVE) {
+								playableGrid.getGame().buildDistrict(Constants.ADMINISTRATIVE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
+								ToolBox.setBuild(0);
+							}
+							else if(ToolBox.getBuild()==Constants.COMMERCIAL) {
+								playableGrid.getGame().buildDistrict(Constants.COMMERCIAL,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
+								ToolBox.setBuild(0);
+							}
+							else if(ToolBox.getDestroy()==1) {
+								playableGrid.getGame().destroyDistrict(playableGrid.getGame().getDistrictManager(), playableGrid.getGame().getDistrictMap(), squareX, squareY);
+								ToolBox.setDestroy(0);
+							}
 						}
-						else if(ToolBox.getBuild()==Constants.ADMINISTRATIVE) {
-							playableGrid.getGame().buildDistrict(Constants.ADMINISTRATIVE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
-							ToolBox.setBuild(0);
-						}
-						else if(ToolBox.getBuild()==Constants.COMMERCIAL) {
-							playableGrid.getGame().buildDistrict(Constants.COMMERCIAL,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
-							ToolBox.setBuild(0);
-						}
-						else if(ToolBox.getBuild()==Constants.STATION) {
-							playableGrid.getGame().buildStation(playableGrid.getGame().getRailWayManager(),playableGrid.getGame().getRailRoadMap(), squareX, squareY);
-							ToolBox.setBuild(0);
-						}
-						else if(ToolBox.getDestroy()==1) {
-							playableGrid.getGame().destroyDistrict(playableGrid.getGame().getDistrictManager(), playableGrid.getGame().getDistrictMap(), squareX, squareY);
-							ToolBox.setDestroy(0);
+						else {
+							System.out.println("Station :"+getGame().getRailRoadMap()[squareX][squareY].getTypeName());
+							if(ToolBox.getBuild()==Constants.STATION) {
+								playableGrid.getGame().buildStation(playableGrid.getGame().getRailWayManager(),playableGrid.getGame().getRailRoadMap(), squareX, squareY);
+								ToolBox.setBuild(0);
+							}
+							else if(ToolBox.getDestroy()==1) {
+								playableGrid.getGame().destroyStation(playableGrid.getGame().getRailWayManager(), playableGrid.getGame().getRailRoadMap(), squareX, squareY);
+								ToolBox.setDestroy(0);
+							}
 						}
 					}
 				}

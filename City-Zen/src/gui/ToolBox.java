@@ -54,7 +54,7 @@ public class ToolBox extends VBox{
 		getBuildStationButton().setTooltip(BSTooltip);
 		BRWTooltip.setText("Build a railway");
 		getBuildRailWayButton().setTooltip(BRWTooltip);
-		DTooltip.setText("Destroy");
+		DTooltip.setText("Destroy a district or a station");
 		getDestroyButton().setTooltip(DTooltip);
 		getChildren().add(lbl_toolBox);
 		tilePane.getChildren().add(getBuildAdministrativeButton());
@@ -143,7 +143,7 @@ public class ToolBox extends VBox{
 		    }
 		});
 	}
-	
+		
 	public Button getBuildResidenceButton() {
 		return buildResidenceButton;
 	}
@@ -221,6 +221,4 @@ public class ToolBox extends VBox{
 		ToolBox.destroy = destroy;
 	}
 	
-	
-
 }
