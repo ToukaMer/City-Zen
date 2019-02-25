@@ -140,7 +140,7 @@ public class MapCanvas extends Canvas {
 	}
 	public void displayRailNetworkMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
 		if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP) {
-			if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.STATION) {
+			if(getGame().getRailRoadMap()[currentColumn][currentRow].getType()==Constants.STATION) {
 				getMap().drawImage(getStationSprite(), columnPosition, rowPosition);
 			}
 			else {
@@ -166,7 +166,12 @@ public class MapCanvas extends Canvas {
 
 					if(squareX < GuiConstants.SQUARE_PER_ROW && squareY < GuiConstants.SQUARE_PER_COLUMN) {
 						System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
+						
+						if(getCurrentMap()==GuiConstants.DISTRICT_MAP)
 						System.out.println("Quartier :"+getGame().getDistrictMap()[squareX][squareY].getTypeName());
+						else
+						System.out.println("Station :"+getGame().getRailRoadMap()[squareX][squareY].getTypeName());
+						
 						if(ToolBox.getBuild()==Constants.RESIDENCE) {
 							playableGrid.getGame().buildDistrict(Constants.RESIDENCE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
 							ToolBox.setBuild(0);

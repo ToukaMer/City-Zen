@@ -10,6 +10,7 @@ public class RailWay extends RailRoad
 	{
 		super();
 		this.coord=coord;
+		this.setTypeName("Rail");
 		this.setType(1);
 	}
 
