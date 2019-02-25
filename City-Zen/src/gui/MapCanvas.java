@@ -1,5 +1,7 @@
 package gui;
 
+import data.Constants;
+import data.Coordinates;
 import engine.Game;
 import gui_data.BlockSize;
 import gui_data.CameraPosition;
@@ -23,10 +25,11 @@ public class MapCanvas extends Canvas {
 	private CameraPosition tracking;
 	private int numberOfSquares;
 	private int currentMap;
-	
+
 	private Image districtSprite;
 	private Image railNetworkSquareSprite;
-	
+	private Image residenceSprite;
+
 	public MapCanvas(double width, double height,  Root root, PlayableGrid playableGrid) {
 		super();
 		setBlockSize(new BlockSize(width, height));
@@ -40,14 +43,15 @@ public class MapCanvas extends Canvas {
 		setCurrentMap(GuiConstants.DISTRICT_MAP);
 		
 		setMap(getGraphicsContext2D());
-		animatedMap();
+		animatedMap(playableGrid);
 	}
 	
 	public void initializeSprites() {
 		setDistrictSprite(new Image(getClass().getResource(SpritePaths.DISTRICT_SPRITE).toString()));
 		setRailNetworkSquareSprite(new Image(getClass().getResource(SpritePaths.RAIL_NETWORK_SQUARE_SPRITE).toString()));
+		setResidenceSprite(new Image(getClass().getResource(SpritePaths.RESIDENCE_SPRITE).toString()));
 	}
-	public void animatedMap() {
+	public void animatedMap(final PlayableGrid playableGrid) {
 		new AnimationTimer() {
 			public void handle(long now) {
 				getMap().setFill(GuiConstants.BACKGROUND);
@@ -107,19 +111,23 @@ public class MapCanvas extends Canvas {
 						rowPosition += GuiConstants.SQUARE_HEIGHT;
 					}
 				}
-				
-				initializeSquareClicks(firstRow, firstColumn, rowModulus, columnModulus);
+				initializeSquareClicks(firstRow, firstColumn, rowModulus, columnModulus, playableGrid);
 			}
 		}.start();
 	}
 	
 	public void displayDistrictMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
-		getMap().drawImage(getDistrictSprite(), columnPosition, rowPosition);
+		if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.WILDERNESS) {
+			getMap().drawImage(getDistrictSprite(), columnPosition, rowPosition);
+		}
+		else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.RESIDENCE) {
+			getMap().drawImage(getResidenceSprite(), columnPosition, rowPosition);
+		}
 	}
 	public void displayRailNetworkMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
 		getMap().drawImage(getRailNetworkSquareSprite(), columnPosition, rowPosition);
 	}
-	public void initializeSquareClicks(int firstRow, int firstColumn, double rowModulus, double columnModulus) {
+	public void initializeSquareClicks(int firstRow, int firstColumn, double rowModulus, double columnModulus, final PlayableGrid playableGrid) {
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				double mouseX = mouseEvent.getX();
@@ -138,6 +146,10 @@ public class MapCanvas extends Canvas {
 					if(squareX < GuiConstants.SQUARE_PER_ROW && squareY < GuiConstants.SQUARE_PER_COLUMN) {
 						System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
 						System.out.println("Quartier :"+getGame().getDistrictMap()[squareX][squareY].getTypeName());
+						if(ToolBox.getBuild()==Constants.RESIDENCE) {
+							playableGrid.getGame().buildDistrict(Constants.RESIDENCE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
+							ToolBox.setBuild(0);
+						}
 					}
 				}
 			}
@@ -216,6 +228,13 @@ public class MapCanvas extends Canvas {
 	public void setRailNetworkSquareSprite(Image railNetworkSquareSprite) {
 		this.railNetworkSquareSprite = railNetworkSquareSprite;
 	}
+	
+	public Image getResidenceSprite() {
+		return residenceSprite;
+	}
 
+	public void setResidenceSprite(Image residenceSprite) {
+		this.residenceSprite = residenceSprite;
+	}
 	
 }

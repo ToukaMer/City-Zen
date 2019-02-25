@@ -2,12 +2,11 @@ package data;
 
 public class Coordinates {
 	private int row; //X
-	private int columns; //y
+	private int column; //y
 	
-	public Coordinates(int row, int columns) {
-		super();
+	public Coordinates(int row, int column) {
 		this.row = row;
-		this.columns = columns;
+		this.column = column;
 	}
 
 	public int getRow() {
@@ -18,12 +17,12 @@ public class Coordinates {
 		this.row = row;
 	}
 
-	public int getColumns() {
-		return columns;
+	public int getColumn() {
+		return column;
 	}
 
-	public void setColumns(int columns) {
-		this.columns = columns;
+	public void setColumn(int column) {
+		this.column = column;
 	}
 	
 	public static Coordinates [] testArray() {

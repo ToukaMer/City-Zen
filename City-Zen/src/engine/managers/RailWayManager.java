@@ -37,18 +37,18 @@ public class RailWayManager
 	
 	public int addRailWay (RailRoad[][] railRoadMap, Coordinates [] coord)
 	{//checking if both sides of the array are stations 
-		if((railRoadMap[coord[0].getRow()][coord[0].getColumns()].getType() == Constants.STATION)&&(railRoadMap[coord[coord.length-1].getRow()][coord[coord.length-1].getColumns()].getType() == Constants.STATION)) {
+		if((railRoadMap[coord[0].getRow()][coord[0].getColumn()].getType() == Constants.STATION)&&(railRoadMap[coord[coord.length-1].getRow()][coord[coord.length-1].getColumn()].getType() == Constants.STATION)) {
 			
 			int bool=0;
 			
 			for(int i=1; i<coord.length-1; i++) {//checking if there is something in the way
-				if(railRoadMap[coord[i].getRow()][coord[i].getColumns()].getType() != Constants.WILDERNESSRR)
+				if(railRoadMap[coord[i].getRow()][coord[i].getColumn()].getType() != Constants.WILDERNESSRR)
 					bool =1;
 			}
 			
 			if(bool == 0) {
 				for(int j=1; j<coord.length-1; j++) {
-					railRoadMap[coord[j].getRow()][coord[j].getColumns()] = new RailWay(coord);
+					railRoadMap[coord[j].getRow()][coord[j].getColumn()] = new RailWay(coord);
 				}
 				return 1;
 			}
@@ -74,7 +74,7 @@ public class RailWayManager
 		else
 		{
 			for(int i=1; i<coord.length-1; i++)
-			railRoadMap[coord[i].getRow()][coord[i].getColumns()]= new WildernessRR(); // deleting each object that are in the coordinates of the array
+			railRoadMap[coord[i].getRow()][coord[i].getColumn()]= new WildernessRR(); // deleting each object that are in the coordinates of the array
 			return 1;
 		}
 	}

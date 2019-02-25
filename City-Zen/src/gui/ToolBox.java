@@ -2,19 +2,22 @@ package gui;
 
 import gui_data.BlockSize;
 import gui_data.GuiConstants;
+import gui_data.SpritePaths;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.TilePane;
+import data.Constants;
 
 public class ToolBox extends VBox{
 	
 	private BlockSize blockSize;
 	private Label lbl_toolBox;
-	private Button buildResidanceButton;
+	private Button buildResidenceButton;
 	private Button buildCommercialButton;
 	private Button buildAdministrativeButton;
 	private Button buildStationButton;
@@ -26,7 +29,8 @@ public class ToolBox extends VBox{
 	private Tooltip DTooltip = new Tooltip();
 	private Tooltip BSTooltip = new Tooltip();
 	private Tooltip BRWTooltip = new Tooltip();
-	
+	private static int build;
+
 	public ToolBox(double width, double height, Root root) {
 		super();
 		setBlockSize(new BlockSize(width, height));
@@ -34,15 +38,15 @@ public class ToolBox extends VBox{
 		TilePane tilePane = new TilePane();
 		tilePane.setHgap(20);
 		tilePane.setVgap(20);
-		initializeBuildResidanceButton(root);
+		initializeBuildResidenceButton(root);
 		initializeBuildCommercialButton(root);
 		initializeBuildAdministrativeButton(root);
 		initializeBuildStationButton(root);
 		initializeBuildRailWayButton(root);
 		initializeDestroyButton(root);
 		lbl_toolBox = new Label("TB");
-		BRTooltip.setText("Build a residance");
-		getBuildResidanceButton().setTooltip(BRTooltip);
+		BRTooltip.setText("Build a residence");
+		getBuildResidenceButton().setTooltip(BRTooltip);
 		BCTooltip.setText("Build a commercial");
 		getBuildCommercialButton().setTooltip(BCTooltip);
 		BATooltip.setText("Build an administrative");
@@ -56,7 +60,7 @@ public class ToolBox extends VBox{
 		getChildren().add(lbl_toolBox);
 		tilePane.getChildren().add(getBuildAdministrativeButton());
 		tilePane.getChildren().add(getBuildCommercialButton());
-		tilePane.getChildren().add(getBuildResidanceButton());
+		tilePane.getChildren().add(getBuildResidenceButton());
 		tilePane.getChildren().add(getBuildStationButton());
 		tilePane.getChildren().add(getBuildRailWayButton());
 		tilePane.getChildren().add(getDestroyButton());
@@ -67,17 +71,15 @@ public class ToolBox extends VBox{
 	
 
 
-	public void initializeBuildResidanceButton(final Root root) {
-		setBuildResidanceButton(new Button());
-		getBuildResidanceButton().setText("BR");
-		getBuildResidanceButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+	public void initializeBuildResidenceButton(final Root root) {
+		setBuildResidenceButton(new Button());
+		getBuildResidenceButton().setText("BR");
+		getBuildResidenceButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 				}
-				else if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
-					
-				}
+				setBuild(Constants.RESIDENCE);
 		    }
 		});
 	}
@@ -89,9 +91,6 @@ public class ToolBox extends VBox{
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
-				}
-				else if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
-					
 				}
 		    }
 		});
@@ -105,9 +104,6 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 				}
-				else if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
-					
-				}
 		    }
 		});
 	}
@@ -120,9 +116,6 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
 				}
-				else if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
-					
-				}
 		    }
 		});
 	}
@@ -134,9 +127,6 @@ public class ToolBox extends VBox{
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
-				}
-				else if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
-					
 				}
 		    }
 		});
@@ -152,12 +142,12 @@ public class ToolBox extends VBox{
 		});
 	}
 	
-	public Button getBuildResidanceButton() {
-		return buildResidanceButton;
+	public Button getBuildResidenceButton() {
+		return buildResidenceButton;
 	}
 
-	public void setBuildResidanceButton(Button buildResidanceButton) {
-		this.buildResidanceButton = buildResidanceButton;
+	public void setBuildResidenceButton(Button buildResidenceButton) {
+		this.buildResidenceButton = buildResidenceButton;
 	}
 
 	public Button getBuildCommercialButton() {
@@ -207,4 +197,14 @@ public class ToolBox extends VBox{
 	public void setBlockSize(BlockSize blockSize) {
 		this.blockSize = blockSize;
 	}
+	
+	
+	public static int getBuild() {
+		return build;
+	}
+
+	public static void setBuild(int build) {
+		ToolBox.build = build;
+	}
+
 }
