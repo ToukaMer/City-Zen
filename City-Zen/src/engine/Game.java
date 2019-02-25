@@ -120,7 +120,7 @@ public class Game {
 		 }
 	 }
 	 
-	 public void buildStation(RailWayManager railWayManager, District[][] district, int xCoord, int yCoord) {
+	 public void buildStation(RailWayManager railWayManager, RailRoad[][] railRoadMap, int xCoord, int yCoord) {
 		 railWayManager.addStation(railRoadMap, xCoord, yCoord);
 	 }
 	 

@@ -180,8 +180,12 @@ public class MapCanvas extends Canvas {
 							ToolBox.setBuild(0);
 						}
 						else if(ToolBox.getBuild()==Constants.STATION) {
-							playableGrid.getGame().buildStation(playableGrid.getGame().getRailWayManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
+							playableGrid.getGame().buildStation(playableGrid.getGame().getRailWayManager(),playableGrid.getGame().getRailRoadMap(), squareX, squareY);
 							ToolBox.setBuild(0);
+						}
+						else if(ToolBox.getDestroy()==1) {
+							playableGrid.getGame().destroyDistrict(playableGrid.getGame().getDistrictManager(), playableGrid.getGame().getDistrictMap(), squareX, squareY);
+							ToolBox.setDestroy(0);
 						}
 					}
 				}

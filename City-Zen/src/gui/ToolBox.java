@@ -2,12 +2,10 @@ package gui;
 
 import gui_data.BlockSize;
 import gui_data.GuiConstants;
-import gui_data.SpritePaths;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.TilePane;
@@ -30,6 +28,7 @@ public class ToolBox extends VBox{
 	private Tooltip BSTooltip = new Tooltip();
 	private Tooltip BRWTooltip = new Tooltip();
 	private static int build;
+	private static int destroy;
 
 	public ToolBox(double width, double height, Root root) {
 		super();
@@ -140,7 +139,7 @@ public class ToolBox extends VBox{
 		getDestroyButton().setText("D");
 		getDestroyButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
-				
+				setDestroy(1);
 		    }
 		});
 	}
@@ -209,5 +208,19 @@ public class ToolBox extends VBox{
 	public static void setBuild(int build) {
 		ToolBox.build = build;
 	}
+
+
+
+	public static int getDestroy() {
+		return destroy;
+	}
+
+
+
+	public static void setDestroy(int destroy) {
+		ToolBox.destroy = destroy;
+	}
+	
+	
 
 }
