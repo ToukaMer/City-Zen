@@ -29,6 +29,9 @@ public class MapCanvas extends Canvas {
 	private Image districtSprite;
 	private Image railNetworkSquareSprite;
 	private Image residenceSprite;
+	private Image administrativeSprite;
+	private Image commercialSprite;
+	private Image stationSprite;
 
 	public MapCanvas(double width, double height,  Root root, PlayableGrid playableGrid) {
 		super();
@@ -50,6 +53,9 @@ public class MapCanvas extends Canvas {
 		setDistrictSprite(new Image(getClass().getResource(SpritePaths.DISTRICT_SPRITE).toString()));
 		setRailNetworkSquareSprite(new Image(getClass().getResource(SpritePaths.RAIL_NETWORK_SQUARE_SPRITE).toString()));
 		setResidenceSprite(new Image(getClass().getResource(SpritePaths.RESIDENCE_SPRITE).toString()));
+		setAdministrativeSprite(new Image(getClass().getResource(SpritePaths.ADMINISTRATIVE_SPRITE).toString()));
+		setCommercialSprite(new Image(getClass().getResource(SpritePaths.COMMERCIAL_SPRITE).toString()));
+		setStationSprite(new Image(getClass().getResource(SpritePaths.STATION_SPRITE).toString()));
 	}
 	public void animatedMap(final PlayableGrid playableGrid) {
 		new AnimationTimer() {
@@ -123,9 +129,20 @@ public class MapCanvas extends Canvas {
 		else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.RESIDENCE) {
 			getMap().drawImage(getResidenceSprite(), columnPosition, rowPosition);
 		}
+		else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.ADMINISTRATIVE) {
+			getMap().drawImage(getAdministrativeSprite(), columnPosition, rowPosition);
+		}
+		else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.COMMERCIAL) {
+			getMap().drawImage(getCommercialSprite(), columnPosition, rowPosition);
+		}
 	}
 	public void displayRailNetworkMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
-		getMap().drawImage(getRailNetworkSquareSprite(), columnPosition, rowPosition);
+		if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.WILDERNESSRR) {
+			getMap().drawImage(getRailNetworkSquareSprite(), columnPosition, rowPosition);
+		}
+		else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.STATION) {
+			getMap().drawImage(getStationSprite(), columnPosition, rowPosition);
+		}
 	}
 	public void initializeSquareClicks(int firstRow, int firstColumn, double rowModulus, double columnModulus, final PlayableGrid playableGrid) {
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -148,6 +165,18 @@ public class MapCanvas extends Canvas {
 						System.out.println("Quartier :"+getGame().getDistrictMap()[squareX][squareY].getTypeName());
 						if(ToolBox.getBuild()==Constants.RESIDENCE) {
 							playableGrid.getGame().buildDistrict(Constants.RESIDENCE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
+							ToolBox.setBuild(0);
+						}
+						else if(ToolBox.getBuild()==Constants.ADMINISTRATIVE) {
+							playableGrid.getGame().buildDistrict(Constants.ADMINISTRATIVE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
+							ToolBox.setBuild(0);
+						}
+						else if(ToolBox.getBuild()==Constants.COMMERCIAL) {
+							playableGrid.getGame().buildDistrict(Constants.COMMERCIAL,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
+							ToolBox.setBuild(0);
+						}
+						else if(ToolBox.getBuild()==Constants.STATION) {
+							playableGrid.getGame().buildStation(playableGrid.getGame().getRailWayManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
 							ToolBox.setBuild(0);
 						}
 					}
@@ -236,5 +265,31 @@ public class MapCanvas extends Canvas {
 	public void setResidenceSprite(Image residenceSprite) {
 		this.residenceSprite = residenceSprite;
 	}
+
+	public Image getAdministrativeSprite() {
+		return administrativeSprite;
+	}
+
+	public void setAdministrativeSprite(Image administrativeSprite) {
+		this.administrativeSprite = administrativeSprite;
+	}
+
+	public Image getCommercialSprite() {
+		return commercialSprite;
+	}
+
+	public void setCommercialSprite(Image commercialSprite) {
+		this.commercialSprite = commercialSprite;
+	}
+
+	public Image getStationSprite() {
+		return stationSprite;
+	}
+
+	public void setStationSprite(Image stationSprite) {
+		this.stationSprite = stationSprite;
+	}
+	
+	
 	
 }

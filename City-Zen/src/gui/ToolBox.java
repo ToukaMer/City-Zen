@@ -92,6 +92,7 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 				}
+				setBuild(Constants.COMMERCIAL);
 		    }
 		});
 	}
@@ -104,6 +105,7 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 				}
+				setBuild(Constants.ADMINISTRATIVE);
 		    }
 		});
 	}
@@ -116,6 +118,7 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
 				}
+				setBuild(Constants.STATION);
 		    }
 		});
 	}
