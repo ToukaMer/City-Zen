@@ -123,25 +123,29 @@ public class MapCanvas extends Canvas {
 	}
 	
 	public void displayDistrictMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
-		if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.WILDERNESS) {
-			getMap().drawImage(getDistrictSprite(), columnPosition, rowPosition);
-		}
-		else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.RESIDENCE) {
-			getMap().drawImage(getResidenceSprite(), columnPosition, rowPosition);
-		}
-		else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.ADMINISTRATIVE) {
-			getMap().drawImage(getAdministrativeSprite(), columnPosition, rowPosition);
-		}
-		else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.COMMERCIAL) {
-			getMap().drawImage(getCommercialSprite(), columnPosition, rowPosition);
+		if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
+			if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.RESIDENCE) {
+				getMap().drawImage(getResidenceSprite(), columnPosition, rowPosition);
+			}
+			else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.ADMINISTRATIVE) {
+				getMap().drawImage(getAdministrativeSprite(), columnPosition, rowPosition);
+			}
+			else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.COMMERCIAL) {
+				getMap().drawImage(getCommercialSprite(), columnPosition, rowPosition);
+			}
+			else {
+				getMap().drawImage(getDistrictSprite(), columnPosition, rowPosition);
+			}
 		}
 	}
 	public void displayRailNetworkMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
-		if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.WILDERNESSRR) {
-			getMap().drawImage(getRailNetworkSquareSprite(), columnPosition, rowPosition);
-		}
-		else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.STATION) {
-			getMap().drawImage(getStationSprite(), columnPosition, rowPosition);
+		if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP) {
+			if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.STATION) {
+				getMap().drawImage(getStationSprite(), columnPosition, rowPosition);
+			}
+			else {
+				getMap().drawImage(getRailNetworkSquareSprite(), columnPosition, rowPosition);
+			}
 		}
 	}
 	public void initializeSquareClicks(int firstRow, int firstColumn, double rowModulus, double columnModulus, final PlayableGrid playableGrid) {
