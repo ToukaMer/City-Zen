@@ -13,14 +13,14 @@ public class InteractivityZone extends VBox {
 	private DataDisplayer dataDisplayer;
 	private ToolBox toolBox;
 	
-	public InteractivityZone(double width, double height) {
+	public InteractivityZone(double width, double height, Root root) {
 		super();
 		
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
 		setDataDisplayer(new DataDisplayer(getBlockSize().getWidth()*DATA_DISPLAYER_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT));
-		setToolBox(new ToolBox(getBlockSize().getWidth()*TOOLBOX_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT));
+		setToolBox(new ToolBox(getBlockSize().getWidth()*TOOLBOX_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT,root));
 		
 		getChildren().add(getDataDisplayer());
 		getChildren().add(getToolBox());

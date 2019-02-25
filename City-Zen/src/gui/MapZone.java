@@ -19,7 +19,7 @@ public class MapZone extends HBox {
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
 		setMapCanvas(new MapCanvas(getBlockSize().getWidth()*MAP_CANVAS_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT, root, playableGrid));
-		setInteractivityZone(new InteractivityZone(getBlockSize().getWidth()*INTERACTIVITY_ZONE_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT));
+		setInteractivityZone(new InteractivityZone(getBlockSize().getWidth()*INTERACTIVITY_ZONE_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT,root));
 		
 		getChildren().add(getMapCanvas());
 		getChildren().add(getInteractivityZone());
