@@ -23,7 +23,7 @@ public class ToolbarRight extends HBox {
 		getChildren().add(getSwitchMapButton());
 	}
 	
-	public void initializeSwitchMapButton(final Root root) {
+	public void initializeSwitchMapButton(Root root) {
 		setSwitchMapButton(new Button());
 		getSwitchMapButton().setText("Switch map");
 		getSwitchMapButton().setOnMouseClicked(new EventHandler<MouseEvent>() {

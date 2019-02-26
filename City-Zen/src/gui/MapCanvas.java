@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.ArrayList;
+
 import data.Constants;
 import data.Coordinates;
 import engine.Game;
@@ -28,10 +30,12 @@ public class MapCanvas extends Canvas {
 
 	private Image districtSprite;
 	private Image railNetworkSquareSprite;
-	private Image residenceSprite;
+	private Image residentialSprite;
 	private Image administrativeSprite;
 	private Image commercialSprite;
 	private Image stationSprite;
+	
+	private ArrayList<Coordinates> railroad;
 
 	public MapCanvas(double width, double height,  Root root, PlayableGrid playableGrid) {
 		super();
@@ -52,7 +56,7 @@ public class MapCanvas extends Canvas {
 	public void initializeSprites() {
 		setDistrictSprite(new Image(getClass().getResource(SpritePaths.DISTRICT_SPRITE).toString()));
 		setRailNetworkSquareSprite(new Image(getClass().getResource(SpritePaths.RAIL_NETWORK_SQUARE_SPRITE).toString()));
-		setResidenceSprite(new Image(getClass().getResource(SpritePaths.RESIDENCE_SPRITE).toString()));
+		setResidentialSprite(new Image(getClass().getResource(SpritePaths.RESIDENCE_SPRITE).toString()));
 		setAdministrativeSprite(new Image(getClass().getResource(SpritePaths.ADMINISTRATIVE_SPRITE).toString()));
 		setCommercialSprite(new Image(getClass().getResource(SpritePaths.COMMERCIAL_SPRITE).toString()));
 		setStationSprite(new Image(getClass().getResource(SpritePaths.STATION_SPRITE).toString()));
@@ -125,7 +129,7 @@ public class MapCanvas extends Canvas {
 	public void displayDistrictMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
 		if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
 			if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.RESIDENCE) {
-				getMap().drawImage(getResidenceSprite(), columnPosition, rowPosition);
+				getMap().drawImage(getResidentialSprite(), columnPosition, rowPosition);
 			}
 			else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.ADMINISTRATIVE) {
 				getMap().drawImage(getAdministrativeSprite(), columnPosition, rowPosition);
@@ -275,13 +279,13 @@ public class MapCanvas extends Canvas {
 	public void setRailNetworkSquareSprite(Image railNetworkSquareSprite) {
 		this.railNetworkSquareSprite = railNetworkSquareSprite;
 	}
-	
-	public Image getResidenceSprite() {
-		return residenceSprite;
+
+	public Image getResidentialSprite() {
+		return residentialSprite;
 	}
 
-	public void setResidenceSprite(Image residenceSprite) {
-		this.residenceSprite = residenceSprite;
+	public void setResidentialSprite(Image residentialSprite) {
+		this.residentialSprite = residentialSprite;
 	}
 
 	public Image getAdministrativeSprite() {
@@ -307,7 +311,14 @@ public class MapCanvas extends Canvas {
 	public void setStationSprite(Image stationSprite) {
 		this.stationSprite = stationSprite;
 	}
-	
+
+	public ArrayList<Coordinates> getRailroad() {
+		return railroad;
+	}
+
+	public void setRailroad(ArrayList<Coordinates> railroad) {
+		this.railroad = railroad;
+	}
 	
 	
 }
