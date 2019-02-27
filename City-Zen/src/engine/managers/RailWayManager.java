@@ -50,6 +50,7 @@ public class RailWayManager
 			if(bool == 0) {
 				for(int j=1; j<coord.length-1; j++) {
 					
+					//look around to make the boolean
 					if((coord[j].getRow()-1) > 0) //left
 						if(railRoadMap[coord[j].getRow()-1][coord[j].getColumn()].getType()==Constants.RAILWAY || railRoadMap[coord[j].getRow()-1][coord[j].getColumn()].getType()==Constants.STATION)
 							east = 1;
@@ -63,14 +64,16 @@ public class RailWayManager
 						if(railRoadMap[coord[j].getRow()][coord[j].getColumn()-1].getType()==Constants.RAILWAY || railRoadMap[coord[j].getRow()][coord[j].getColumn()-1].getType()==Constants.STATION)
 							north = 1;
 					
-					if(north == 1 && south==0 && east==0 && west==0 ) 
-						south = 1;
-					if(north == 0 && south==1 && east==0 && west==0 ) 
-						north = 1;
-					if(north == 0 && south==0 && east==0 && west==1 ) 
-						east = 1;
-					if(north == 0 && south==0 && east==1 && west==0 ) 
-						west = 1;
+					//check where the next is and place boolean accordingly
+					if(j<coord.length-2) {
+						if(coord[j+1].getRow() - coord[j].getRow()>0)
+							east = 1;
+						else west = 1;
+						
+						if(coord[j+1].getColumn() - coord[j].getColumn()>0)
+							south = 1;
+						else north = 1;
+					}
 					
 					int [] orientation  = {north,south,east,west};
 					railRoadMap[coord[j].getRow()][coord[j].getColumn()] = new RailWay(coord,orientation);
@@ -98,8 +101,31 @@ public class RailWayManager
 			
 		else
 		{
-			for(int i=1; i<coord.length-1; i++)
-			railRoadMap[coord[i].getRow()][coord[i].getColumn()]= new WildernessRR(); // deleting each object that are in the coordinates of the array
+			for(int i=1; i<coord.length-1; i++) {
+				int [] orientation = ((RailWay) railRoadMap[row][column]).getOrientation();
+				
+				if(orientation[1]+orientation[2]+orientation[3]+orientation[4]==2)
+					railRoadMap[coord[i].getRow()][coord[i].getColumn()]= new WildernessRR(); // deleting each object that are in the coordinates of the array
+				else {
+					if(i<coord.length-1) { // we check whats the orientation of what we are destroying and substract it to keep the right orientation 
+						int east = 0 , west = 0 , south =0, north=0;
+						if(coord[i+1].getRow() - coord[i].getRow()>0)
+							east = 1;
+						else west = 1;
+						
+						if(coord[i+1].getColumn() - coord[i].getColumn()>0)
+							south = 1;
+						else north = 1;
+						
+						orientation[0] = orientation[0]-north;
+						orientation[1] = orientation[1]-south;
+						orientation[2] = orientation[2]-east;
+						orientation[3] = orientation[3]-west;
+					((RailWay) railRoadMap[coord[i].getRow()][coord[i].getColumn()]).setOrientation(orientation);
+					}
+				}
+			}
+			
 			return 1;
 		}
 	}
