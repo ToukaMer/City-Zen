@@ -10,6 +10,8 @@ public class Constants {
 	public static final int STATION = 4;
 	public static final int WILDERNESSRR = 0;
 	
+	public static final int ORIENTATION_MAX =4;
+	
 	public Constants() {
 
 	}

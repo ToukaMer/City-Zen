@@ -5,11 +5,13 @@ import data.Coordinates;
 public class RailWay extends RailRoad
 {	
 	private Coordinates [] coord;
+	private int [] orientation = {0, 0, 0, 0};
 	
-	public RailWay(Coordinates [] coord) 
+	public RailWay(Coordinates [] coord, int [] orientation) 
 	{
 		super();
-		this.coord=coord;
+		this.setOrientation(orientation);
+		this.setCoord(coord);
 		this.setTypeName("Rail");
 		this.setType(1);
 	}
@@ -22,4 +24,11 @@ public class RailWay extends RailRoad
 		this.coord = coord;
 	}
 
+	public int[] getOrientation() {
+		return orientation;
+	}
+
+	public void setOrientation(int[] orientation) {
+		this.orientation = orientation;
+	}
 }

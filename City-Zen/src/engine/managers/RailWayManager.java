@@ -39,7 +39,8 @@ public class RailWayManager
 	{//checking if both sides of the array are stations 
 		if((railRoadMap[coord[0].getRow()][coord[0].getColumn()].getType() == Constants.STATION)&&(railRoadMap[coord[coord.length-1].getRow()][coord[coord.length-1].getColumn()].getType() == Constants.STATION)) {
 			
-			int bool=0;
+			int bool = 0, north = 0, south = 0, east = 0, west=0;
+			
 			
 			for(int i=1; i<coord.length-1; i++) {//checking if there is something in the way
 				if(railRoadMap[coord[i].getRow()][coord[i].getColumn()].getType() != Constants.WILDERNESSRR)
@@ -48,7 +49,21 @@ public class RailWayManager
 			
 			if(bool == 0) {
 				for(int j=1; j<coord.length-1; j++) {
-					railRoadMap[coord[j].getRow()][coord[j].getColumn()] = new RailWay(coord);
+					
+					if((coord[j].getRow()-1) > 0) //left
+						if(railRoadMap[coord[j].getRow()-1][coord[j].getColumn()].getType()==Constants.RAILWAY || railRoadMap[coord[j].getRow()-1][coord[j].getColumn()].getType()==Constants.STATION)
+							east = 1;
+					if((coord[j].getColumn()+1)<Stats.HEIGHT)//bottom
+						if(railRoadMap[coord[j].getRow()][coord[j].getColumn()+1].getType()==Constants.RAILWAY || railRoadMap[coord[j].getRow()][coord[j].getColumn()+1].getType()==Constants.STATION)
+							south = 1;
+					if((coord[j].getRow()+1)>Stats.WIDTH)//right
+						if(railRoadMap[coord[j].getRow()+1][coord[j].getColumn()].getType()==Constants.RAILWAY || railRoadMap[coord[j].getRow()+1][coord[j].getColumn()].getType()==Constants.STATION)
+							west = 1;
+					if((coord[j].getColumn()-1)>0) //top
+						if(railRoadMap[coord[j].getRow()][coord[j].getColumn()-1].getType()==Constants.RAILWAY || railRoadMap[coord[j].getRow()][coord[j].getColumn()-1].getType()==Constants.STATION)
+							north = 1;
+					int [] orientation  = {north,south,east,west};
+					railRoadMap[coord[j].getRow()][coord[j].getColumn()] = new RailWay(coord,orientation);
 				}
 				return 1;
 			}
