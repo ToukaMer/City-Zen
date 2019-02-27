@@ -43,7 +43,7 @@ public class RailWayManager
 			
 			
 			for(int i=1; i<coord.length-1; i++) {//checking if there is something in the way
-				if(railRoadMap[coord[i].getRow()][coord[i].getColumn()].getType() != Constants.WILDERNESSRR)
+				if(railRoadMap[coord[i].getRow()][coord[i].getColumn()].getType() != Constants.WILDERNESSRR && railRoadMap[coord[i].getRow()][coord[i].getColumn()].getType() != Constants.RAILWAY)
 					bool =1;
 			}
 			
@@ -62,6 +62,16 @@ public class RailWayManager
 					if((coord[j].getColumn()-1)>0) //top
 						if(railRoadMap[coord[j].getRow()][coord[j].getColumn()-1].getType()==Constants.RAILWAY || railRoadMap[coord[j].getRow()][coord[j].getColumn()-1].getType()==Constants.STATION)
 							north = 1;
+					
+					if(north == 1 && south==0 && east==0 && west==0 ) 
+						south = 1;
+					if(north == 0 && south==1 && east==0 && west==0 ) 
+						north = 1;
+					if(north == 0 && south==0 && east==0 && west==1 ) 
+						east = 1;
+					if(north == 0 && south==0 && east==1 && west==0 ) 
+						west = 1;
+					
 					int [] orientation  = {north,south,east,west};
 					railRoadMap[coord[j].getRow()][coord[j].getColumn()] = new RailWay(coord,orientation);
 				}
