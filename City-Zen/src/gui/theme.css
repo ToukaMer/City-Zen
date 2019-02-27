@@ -18,6 +18,13 @@ ToolBox{
     -fx-border-width: 1;
     -fx-font-family: "Comic Sans MS";
 }
+.dataLabel{
+	-fx-text-fill : #001166;
+	-fx-font-size: 16px;
+    -fx-padding: 10 15 10 15;
+    -fx-border-width: 1;
+    -fx-font-family: "Comic Sans MS";
+}
 .toolBoxButton{
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
