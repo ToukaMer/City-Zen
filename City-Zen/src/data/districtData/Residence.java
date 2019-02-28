@@ -2,6 +2,7 @@ package data.districtData;
 
 import java.util.Random;
 
+import data.Constants;
 import data.Stats;
 
 //NEED PATH FINDING
@@ -19,7 +20,7 @@ public class Residence extends District{
 	public Residence(int nbHab, int administrationWorkers, int commercialWorkers, int nbResidentMax, int turnCount,
 			int inConstruction, int constructionTime, int constructionTimeLeft) {
 		super();
-		this.setType(2);
+		this.setType(Constants.RESIDENCE);
 		this.setTypeName("Residence");
 		this.nbHab = nbHab;
 		this.administrationWorkers = administrationWorkers;

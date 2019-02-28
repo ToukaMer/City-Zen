@@ -1,5 +1,6 @@
 package data.railRoadData;
 
+import data.Constants;
 import data.Coordinates;
 
 public class RailWay extends RailRoad
@@ -13,7 +14,7 @@ public class RailWay extends RailRoad
 		this.setOrientation(orientation);
 		this.setCoord(coord);
 		this.setTypeName("Rail");
-		this.setType(1);
+		this.setType(Constants.RAILWAY);
 	}
 
 	public Coordinates[] getCoord() {

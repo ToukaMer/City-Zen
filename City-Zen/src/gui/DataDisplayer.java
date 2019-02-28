@@ -14,27 +14,73 @@ public class DataDisplayer extends VBox {
 	private Label nbCommercialLabel;
 	private Label nbAdministrativeLabel;
 	private Label nbStationLabel;
+	private Label monthlyEarnings;
+	private Label monthlyExpences;
+	private Label nbHabitant;
+	private Label nbMaxHabitant;
+	private Label moneyAmountPerHabitant;
+	private Label nbWorkersCommercial;
+	private Label moneyAmountPerCommercialWorker;
+	private Label nbWorkersAdministrative;
+	private Label expencesPerAdministrativeBuilding;
+	private Label expencesPerAdministrativeWorker;
 	
 	public DataDisplayer(double width, double height) {
 		super();
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
-		initializeLabels();
-		
-		getChildren().add(getTitleLabel());
-		getChildren().add(getMoneyLabel());
-		getChildren().add(getNbResidentialLabel());
-		getChildren().add(getNbCommercialLabel());
-		getChildren().add(getNbAdministrativeLabel());
+		initializeDefaultBlock();
 	}
 	
-	public void initializeLabels() {
+	public void initializeDefaultBlock() {
 		initializeTitleLabel();
 		initializeMoneyLabel();
+		initializeMonthlyEarningsLabel();
+		initializeMonthlyExpencesLabel();
 		initializeNbResidentialLabel();
 		initializeNbCommercialLabel();
 		initializeNbAdministrativeLabel();
+		initializeNbStationLabel();
+		getChildren().add(getTitleLabel());
+		getChildren().add(getMoneyLabel());
+		getChildren().add(getMonthlyEarnings());
+		getChildren().add(getMonthlyExpences());
+		getChildren().add(getNbResidentialLabel());
+		getChildren().add(getNbCommercialLabel());
+		getChildren().add(getNbAdministrativeLabel());
+		getChildren().add(getNbStationLabel());
+	}
+	
+	public void initializeResidentialBlock() {
+		initializeTitleLabel();
+		initializeNbHabitantLabel();
+		initializeNbMaxHabitantLabel();
+		initializeMoneyAmountPerHabitantLabel();
+		getChildren().add(getTitleLabel());
+		getChildren().add(getNbHabitant());
+		getChildren().add(getNbMaxHabitant());
+		getChildren().add(getMoneyAmountPerHabitant());
+	}
+	
+	public void initializeCommercialBlock() {
+		initializeTitleLabel();
+		initializeNbWorkersCommercialLabel();
+		initializeMoneyAmountPerCommercialWorkerLabel();
+		getChildren().add(getTitleLabel());
+		getChildren().add(getNbWorkersCommercial());
+		getChildren().add(getMoneyAmountPerCommercialWorker());
+	}
+	
+	public void initializeAdministrativeBlock() {
+		initializeTitleLabel();
+		initializeNbWorkersAdministrativeLabel();
+		initializeExpencesPerAdministrativeBuilding();
+		initializeExpencesPerAdministrativeWorker();
+		getChildren().add(getTitleLabel());
+		getChildren().add(getNbWorkersAdministrative());
+		getChildren().add(getExpencesPerAdministrativeBuilding());
+		getChildren().add(getExpencesPerAdministrativeWorker());
 	}
 	
 	public void initializeTitleLabel() {
@@ -70,6 +116,83 @@ public class DataDisplayer extends VBox {
 		getNbAdministrativeLabel().setText("Nb Administrative :"+Stats.nbAdministrative);
 		getNbAdministrativeLabel().getStyleClass().remove("label");
 		getNbAdministrativeLabel().getStyleClass().add("dataLabel");
+	}
+	
+	public void initializeNbStationLabel() {
+		setNbStationLabel(new Label());
+		getNbStationLabel().setText("Nb Station :"+Stats.nbStations);
+		getNbStationLabel().getStyleClass().remove("label");
+		getNbStationLabel().getStyleClass().add("dataLabel");
+	}
+	
+	public void initializeMonthlyEarningsLabel() {
+		setMonthlyEarnings(new Label());
+		getMonthlyEarnings().setText("Monthly earnings :"+Stats.monthlyRevenues);
+		getMonthlyEarnings().getStyleClass().remove("label");
+		getMonthlyEarnings().getStyleClass().add("dataLabel");
+	}
+	
+	public void initializeMonthlyExpencesLabel() {
+		setMonthlyExpences(new Label());
+		getMonthlyExpences().setText("Monthly expences :"+Stats.monthlyExpences);
+		getMonthlyExpences().getStyleClass().remove("label");
+		getMonthlyExpences().getStyleClass().add("dataLabel");
+	}
+	
+	public void initializeNbHabitantLabel() {
+		setNbHabitant(new Label());
+		getNbHabitant().setText("Nb habitants :"+Stats.nbHab);
+		getNbHabitant().getStyleClass().remove("label");
+		getNbHabitant().getStyleClass().add("dataLabel");
+	}
+	
+	public void initializeNbMaxHabitantLabel() {
+		setNbMaxHabitant(new Label());
+		getNbMaxHabitant().setText("Nb max habitants :"+Stats.nbMaxHab);
+		getNbMaxHabitant().getStyleClass().remove("label");
+		getNbMaxHabitant().getStyleClass().add("dataLabel");
+	}
+	
+	public void initializeMoneyAmountPerHabitantLabel() {
+		setMoneyAmountPerHabitant(new Label());
+		getMoneyAmountPerHabitant().setText("Money amount per habitant :"+Stats.moneyAmountPerHab);
+		getMoneyAmountPerHabitant().getStyleClass().remove("label");
+		getMoneyAmountPerHabitant().getStyleClass().add("dataLabel");
+	}
+	
+	public void initializeNbWorkersCommercialLabel() {
+		setNbWorkersCommercial(new Label());
+		getNbWorkersCommercial().setText("Nb workers :"+Stats.nbWorkersCommercial);
+		getNbWorkersCommercial().getStyleClass().remove("label");
+		getNbWorkersCommercial().getStyleClass().add("dataLabel");
+	}
+	
+	public void initializeNbWorkersAdministrativeLabel() {
+		setNbWorkersAdministrative(new Label());
+		getNbWorkersAdministrative().setText("Nb workers :"+Stats.nbWorkersAdministrative);
+		getNbWorkersAdministrative().getStyleClass().remove("label");
+		getNbWorkersAdministrative().getStyleClass().add("dataLabel");
+	}
+	
+	public void initializeMoneyAmountPerCommercialWorkerLabel() {
+		setMoneyAmountPerCommercialWorker(new Label());
+		getMoneyAmountPerCommercialWorker().setText("Money amount per worker :"+Stats.moneyAmountPerCommercialWorker);
+		getMoneyAmountPerCommercialWorker().getStyleClass().remove("label");
+		getMoneyAmountPerCommercialWorker().getStyleClass().add("dataLabel");
+	}
+	
+	public void initializeExpencesPerAdministrativeBuilding() {
+		setExpencesPerAdministrativeBuilding(new Label());
+		getExpencesPerAdministrativeBuilding().setText("Expences per building :"+Stats.expencesPerAdministrativeBuildings);
+		getExpencesPerAdministrativeBuilding().getStyleClass().remove("label");
+		getExpencesPerAdministrativeBuilding().getStyleClass().add("dataLabel");
+	}
+	
+	public void initializeExpencesPerAdministrativeWorker() {
+		setExpencesPerAdministrativeWorker(new Label());
+		getExpencesPerAdministrativeWorker().setText("Expences per worker :"+Stats.expencesPerAdministrativeWorker);
+		getExpencesPerAdministrativeWorker().getStyleClass().remove("label");
+		getExpencesPerAdministrativeWorker().getStyleClass().add("dataLabel");
 	}
 	
 	public BlockSize getBlockSize() {
@@ -128,5 +251,83 @@ public class DataDisplayer extends VBox {
 		this.nbStationLabel = nbStationLabel;
 	}
 
-	
+	public Label getMonthlyEarnings() {
+		return monthlyEarnings;
+	}
+
+	public void setMonthlyEarnings(Label monthlyEarnings) {
+		this.monthlyEarnings = monthlyEarnings;
+	}
+
+	public Label getMonthlyExpences() {
+		return monthlyExpences;
+	}
+
+	public void setMonthlyExpences(Label monthlyExpences) {
+		this.monthlyExpences = monthlyExpences;
+	}
+
+	public Label getNbHabitant() {
+		return nbHabitant;
+	}
+
+	public void setNbHabitant(Label nbHabitant) {
+		this.nbHabitant = nbHabitant;
+	}
+
+	public Label getNbMaxHabitant() {
+		return nbMaxHabitant;
+	}
+
+	public void setNbMaxHabitant(Label nbMaxHabitant) {
+		this.nbMaxHabitant = nbMaxHabitant;
+	}
+
+	public Label getMoneyAmountPerHabitant() {
+		return moneyAmountPerHabitant;
+	}
+
+	public void setMoneyAmountPerHabitant(Label moneyAmountPerHabitant) {
+		this.moneyAmountPerHabitant = moneyAmountPerHabitant;
+	}
+
+	public Label getNbWorkersCommercial() {
+		return nbWorkersCommercial;
+	}
+
+	public void setNbWorkersCommercial(Label nbWorkersCommercial) {
+		this.nbWorkersCommercial = nbWorkersCommercial;
+	}
+
+	public Label getMoneyAmountPerCommercialWorker() {
+		return moneyAmountPerCommercialWorker;
+	}
+
+	public void setMoneyAmountPerCommercialWorker(Label moneyAmountPerCommercialWorker) {
+		this.moneyAmountPerCommercialWorker = moneyAmountPerCommercialWorker;
+	}
+
+	public Label getNbWorkersAdministrative() {
+		return nbWorkersAdministrative;
+	}
+
+	public void setNbWorkersAdministrative(Label nbWorkersAdministrative) {
+		this.nbWorkersAdministrative = nbWorkersAdministrative;
+	}
+
+	public Label getExpencesPerAdministrativeBuilding() {
+		return expencesPerAdministrativeBuilding;
+	}
+
+	public void setExpencesPerAdministrativeBuilding(Label expencesPerAdministrativeBuilding) {
+		this.expencesPerAdministrativeBuilding = expencesPerAdministrativeBuilding;
+	}
+
+	public Label getExpencesPerAdministrativeWorker() {
+		return expencesPerAdministrativeWorker;
+	}
+
+	public void setExpencesPerAdministrativeWorker(Label expencesPerAdministrativeWorker) {
+		this.expencesPerAdministrativeWorker = expencesPerAdministrativeWorker;
+	}
 }
