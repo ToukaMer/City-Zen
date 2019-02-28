@@ -1,5 +1,6 @@
 package data.districtData;
 
+import data.Constants;
 import data.Stats;
 
 public class Administrative extends District{
@@ -18,7 +19,7 @@ public class Administrative extends District{
 	public Administrative(int currentNbWorkers, int nbUserMax, int currentNbUsers, int nbMaxWorkers, int turnCount,
 			int inConstruction, int constructionTime, int constructionTimeLeft) {
 		super();
-		this.setType(1);
+		this.setType(Constants.ADMINISTRATIVE);
 		this.setTypeName("Administrative");
 		this.currentNbWorkers = currentNbWorkers;
 		this.nbUserMax = nbUserMax;
