@@ -1,5 +1,7 @@
 package data.railRoadData;
 
+import data.Constants;
+
 public class Station extends RailRoad{
 	private int nbUsers;
 	private int nbMaxUsers;
@@ -11,7 +13,7 @@ public class Station extends RailRoad{
 		this.nbMaxUsers = nbMaxUsers;
 		this.revenues = revenues;
 		this.setTypeName("Station");
-		this.setType(4);
+		this.setType(Constants.STATION);
 	}
 
 	public int getNbUsers() {
