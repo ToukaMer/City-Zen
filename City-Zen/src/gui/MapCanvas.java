@@ -173,17 +173,17 @@ public class MapCanvas extends Canvas {
 						
 						if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
 							System.out.println("Quartier :"+getGame().getDistrictMap()[squareX][squareY].getTypeName());
-							if(ToolBox.getBuild()==Constants.RESIDENCE) {
+							if(ToolBox.getBuildDistricts()==Constants.RESIDENCE) {
 								playableGrid.getGame().buildDistrict(Constants.RESIDENCE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
-								ToolBox.setBuild(0);
+								ToolBox.setBuildDistricts(0);
 							}
-							else if(ToolBox.getBuild()==Constants.ADMINISTRATIVE) {
+							else if(ToolBox.getBuildDistricts()==Constants.ADMINISTRATIVE) {
 								playableGrid.getGame().buildDistrict(Constants.ADMINISTRATIVE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
-								ToolBox.setBuild(0);
+								ToolBox.setBuildDistricts(0);
 							}
-							else if(ToolBox.getBuild()==Constants.COMMERCIAL) {
+							else if(ToolBox.getBuildDistricts()==Constants.COMMERCIAL) {
 								playableGrid.getGame().buildDistrict(Constants.COMMERCIAL,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
-								ToolBox.setBuild(0);
+								ToolBox.setBuildDistricts(0);
 							}
 							else if(ToolBox.getDestroy()==1) {
 								playableGrid.getGame().destroyDistrict(playableGrid.getGame().getDistrictManager(), playableGrid.getGame().getDistrictMap(), squareX, squareY);
@@ -192,9 +192,9 @@ public class MapCanvas extends Canvas {
 						}
 						else {
 							System.out.println("Station :"+getGame().getRailRoadMap()[squareX][squareY].getTypeName());
-							if(ToolBox.getBuild()==Constants.STATION) {
-								playableGrid.getGame().buildStation(playableGrid.getGame().getRailWayManager(),playableGrid.getGame().getRailRoadMap(), squareX, squareY);
-								ToolBox.setBuild(0);
+							if(ToolBox.getBuildRailway()==Constants.STATION) {
+								playableGrid.getGame().buildStation(playableGrid.getGame().getRailWayManager(),playableGrid.getGame().getRailRoadMap(), squareX, squareY, playableGrid.getGame().getDistrictMap());
+								ToolBox.setBuildRailway(0);
 							}
 							else if(ToolBox.getDestroy()==1) {
 								playableGrid.getGame().destroyStation(playableGrid.getGame().getRailWayManager(), playableGrid.getGame().getRailRoadMap(), squareX, squareY);

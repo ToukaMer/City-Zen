@@ -1,6 +1,7 @@
 package engine.managers;
 
 import data.*;
+import data.districtData.District;
 import data.railRoadData.RailRoad;
 import data.railRoadData.RailWay;
 import data.railRoadData.Station;
@@ -130,33 +131,35 @@ public class RailWayManager
 		}
 	}
 	
-	public void addStation(RailRoad[][] railRoadMap, int row, int column)
+	public void addStation(RailRoad[][] railRoadMap, int row, int column, District[][] district)
 	{//Fonction d'ajout d'une station.
-		if(railRoadMap[row][column].getType() != 0 )
-		{
-			if (railRoadMap[row][column].getType() == 1)
-			{//Si la case était occupé par une ligne de métro, on remplace celle ci par une nouvelle station.
-				railRoadMap[row][column] = new Station(1, 1, 1);//
+		if(district[row][column].getType() != 0 ) {
+			if(railRoadMap[row][column].getType() != 0 )
+			{
+				if (railRoadMap[row][column].getType() == 1)
+				{//Si la case était occupé par une ligne de métro, on remplace celle ci par une nouvelle station.
+					railRoadMap[row][column] = new Station(1, 1, 1);//
+					Stats.nbStations++;
+					System.out.println("station added");
+
+					//Il faut definir les caractéristique de la station
+				}
+				else {
+					System.out.println("This spot isnt empty!");
+				}
+			}
+			else
+			{
+			//Add railway line
+				railRoadMap[row][column] = new Station(1,1,1);
 				Stats.nbStations++;
-				System.out.println("station added");
+				
+				System.out.println("station added, value : "+railRoadMap[row][column].getType());
 
 				//Il faut definir les caractéristique de la station
-			}
-			else {
-				System.out.println("This spot isnt empty!");
-			}
+
+			}	
 		}
-		else
-		{
-		//Add railway line
-			railRoadMap[row][column] = new Station(1,1,1);
-			Stats.nbStations++;
-			
-			System.out.println("station added, value : "+railRoadMap[row][column].getType());
-
-			//Il faut definir les caractéristique de la station
-
-		}	
 	}
 	
 	public void destroyStation(RailRoad[][] railRoadMap, int width, int height) 
@@ -164,7 +167,7 @@ public class RailWayManager
 		if(railRoadMap[width][height].getType() == 0)
 			System.out.println("There is no Railway or station in this place!");
 		else
-		{//L'objet WildernessRR est créer à la place.
+		{//L'objet WildernessRR est créé à la place.
 			
 				if((width-1) > 0) //left
 					if(railRoadMap[width-1][height].getType()==Constants.RAILWAY)

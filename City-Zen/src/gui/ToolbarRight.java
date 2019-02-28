@@ -30,9 +30,13 @@ public class ToolbarRight extends HBox {
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
+					ToolBox.setBuildDistricts(0);
+					ToolBox.setDestroy(0);
 				}
 				else if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
+					ToolBox.setBuildRailway(0);
+					ToolBox.setDestroy(0);
 				}
 		    }
 		});

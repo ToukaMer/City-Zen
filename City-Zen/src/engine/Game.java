@@ -110,27 +110,27 @@ public class Game {
 	 
 	 public void buildDistrict(int type, DistrictManager districtManager, District[][] district, int xCoord, int yCoord) {
 		 switch(type) { //wilderness = 0, admin = 1, residential = 2, commercial = 3
-			 case 1: districtManager.addAdministrative(district, xCoord, yCoord);
+			 case Constants.ADMINISTRATIVE: districtManager.addAdministrative(district, xCoord, yCoord);
 				break;
-			 case 2: districtManager.addResidence(district, xCoord, yCoord);
+			 case Constants.RESIDENCE: districtManager.addResidence(district, xCoord, yCoord);
 				break;
-			 case 3: districtManager.addCommercial(district, xCoord, yCoord);
+			 case Constants.COMMERCIAL: districtManager.addCommercial(district, xCoord, yCoord);
 			 	break;
 			 default: break;
 		 }
 	 }
 	 
-	 public void buildStation(RailWayManager railWayManager, RailRoad[][] railRoadMap, int xCoord, int yCoord) {
-		 railWayManager.addStation(railRoadMap, xCoord, yCoord);
+	 public void buildStation(RailWayManager railWayManager, RailRoad[][] railRoadMap, int xCoord, int yCoord, District[][] district) {
+		 railWayManager.addStation(railRoadMap, xCoord, yCoord, district);
 	 }
 	 
 	 public void destroyDistrict(DistrictManager districtManager, District[][] district, int xCoord, int yCoord) {
 		 switch(district[xCoord][yCoord].getType()) { //wilderness = 0, admin = 1, residential = 2, commercial = 3
-			 case 1: districtManager.destroyAdministrative(district, xCoord, yCoord);
+			 case Constants.ADMINISTRATIVE: districtManager.destroyAdministrative(district, xCoord, yCoord);
 				break;
-			 case 2: districtManager.destroyResidence(district, xCoord, yCoord);
+			 case Constants.RESIDENCE: districtManager.destroyResidence(district, xCoord, yCoord);
 				break;
-			 case 3: districtManager.destroyCommercial(district, xCoord, yCoord);
+			 case Constants.COMMERCIAL: districtManager.destroyCommercial(district, xCoord, yCoord);
 			 	break;
 			 default: break;
 		 }
@@ -181,7 +181,7 @@ public class Game {
 									railWayManager.addRailWay(railRoad,railWayCoord);
 									break;
 		case "buildStation": 
-									railWayManager.addStation(railRoad, xCoord, yCoord);
+									railWayManager.addStation(railRoad, xCoord, yCoord, district);
 									break;
 		case "destroyRailRoad": 
 									railWayManager.destroyStation(railRoad, xCoord, yCoord);
@@ -298,7 +298,7 @@ public class Game {
 										widthScan = sc.nextInt();
 										System.out.println("height?");
 										heightScan = sc.nextInt();
-										railWayManager.addStation(railRoad, widthScan, heightScan);
+										railWayManager.addStation(railRoad, widthScan, heightScan, district);
 										scan = sc.nextLine();
 										break;
 			case "destroyRailRoad": System.out.println("width?");

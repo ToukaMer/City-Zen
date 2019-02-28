@@ -31,7 +31,8 @@ public class ToolBox extends VBox{
 	private Tooltip destroyTooltip;
 	private Tooltip buildStationTooltip;
 	private Tooltip buildRailWayTooltip;
-	private static int build;
+	private static int buildRailway;
+	private static int buildDistricts;
 	private static int destroy;
 	private TilePane tilePane;
 
@@ -92,7 +93,7 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 				}
-				setBuild(Constants.RESIDENCE);
+				setBuildDistricts(Constants.RESIDENCE);
 		    }
 		});
 	}
@@ -107,7 +108,7 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 				}
-				setBuild(Constants.COMMERCIAL);
+				setBuildDistricts(Constants.COMMERCIAL);
 		    }
 		});
 	}
@@ -122,7 +123,8 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 				}
-				setBuild(Constants.ADMINISTRATIVE);
+				setBuildRailway(0);
+				setBuildDistricts(Constants.ADMINISTRATIVE);
 		    }
 		});
 	}
@@ -137,7 +139,8 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
 				}
-				setBuild(Constants.STATION);
+				setBuildDistricts(0);
+				setBuildRailway(Constants.STATION);
 		    }
 		});
 	}
@@ -276,16 +279,21 @@ public class ToolBox extends VBox{
 		this.blockSize = blockSize;
 	}
 	
-	
-	public static int getBuild() {
-		return build;
+	public static int getBuildRailway() {
+		return buildRailway;
 	}
 
-	public static void setBuild(int build) {
-		ToolBox.build = build;
+	public static void setBuildRailway(int buildRailway) {
+		ToolBox.buildRailway = buildRailway;
 	}
 
+	public static int getBuildDistricts() {
+		return buildDistricts;
+	}
 
+	public static void setBuildDistricts(int buildDistricts) {
+		ToolBox.buildDistricts = buildDistricts;
+	}
 
 	public static int getDestroy() {
 		return destroy;
