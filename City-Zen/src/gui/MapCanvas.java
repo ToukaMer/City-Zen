@@ -8,13 +8,16 @@ import engine.Game;
 import gui_data.BlockSize;
 import gui_data.CameraPosition;
 import gui_data.GuiConstants;
+import gui_data.MousePosition;
 import gui_data.SpritePaths;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 public class MapCanvas extends Canvas {
 
@@ -27,6 +30,8 @@ public class MapCanvas extends Canvas {
 	private CameraPosition tracking;
 	private int numberOfSquares;
 	private int currentMap;
+	private Coordinates mouseOnSquare;
+	private MousePosition movingMouse;
 
 	private Image districtSprite;
 	private Image railNetworkSquareSprite;
@@ -46,11 +51,14 @@ public class MapCanvas extends Canvas {
 		setGame(playableGrid.getGame());
 		setTracking(playableGrid.getTracking());
 		setCameraPosition(playableGrid.getCameraPosition());
+		setMovingMouse(new MousePosition());
+		setMouseOnSquare(new Coordinates());
 		initializeSprites();
 		setCurrentMap(GuiConstants.DISTRICT_MAP);
 		
 		setMap(getGraphicsContext2D());
 		animatedMap(playableGrid);
+		initializeMovingMouseListener();
 	}
 	
 	public void initializeSprites() {
@@ -122,6 +130,7 @@ public class MapCanvas extends Canvas {
 					}
 				}
 				initializeSquareClicks(firstRow, firstColumn, rowModulus, columnModulus, playableGrid);
+				displayOverviewBuilding();
 			}
 		}.start();
 	}
@@ -205,6 +214,56 @@ public class MapCanvas extends Canvas {
 				}
 			}
 		});
+	}
+	
+	public void initializeMovingMouseListener() {
+		setOnMouseMoved(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent mouseEvent) {
+				getMovingMouse().setX(mouseEvent.getX());
+				getMovingMouse().setY(mouseEvent.getY());
+
+				double positionX = getCameraPosition().getX()+getMovingMouse().getX();
+				double positionY = getCameraPosition().getY()+getMovingMouse().getY();
+				
+				//System.out.println("mouseX : "+mouseX+" mouseY : "+mouseY+" positionX : "+positionX+" positionY : "+positionY);
+				//if the mouse is on the board and not out of bonds
+				if(positionX >= 0 && positionX <= GuiConstants.SQUARE_PER_COLUMN*GuiConstants.SQUARE_WIDTH && positionY >= 0 && positionY <= GuiConstants.SQUARE_PER_ROW*GuiConstants.SQUARE_HEIGHT) {
+					int squareX = (int)(positionX/GuiConstants.SQUARE_WIDTH);
+					int squareY = (int)(positionY/GuiConstants.SQUARE_HEIGHT);
+					getMouseOnSquare().setColumn(squareX);
+					getMouseOnSquare().setRow(squareY);
+				}
+				else {
+					getMouseOnSquare().setColumn(-1);
+					getMouseOnSquare().setRow(-1);
+				}
+			}
+		});
+	}
+	
+	public void displayOverviewBuilding() {
+		if(getMouseOnSquare().getColumn()>=0 && getMouseOnSquare().getRow()>=0) {
+			double coordinateX = getMovingMouse().getX()+getTracking().getX();
+			double coordinateY = getMovingMouse().getY()+getTracking().getY();
+			double positionX = coordinateX - coordinateX%GuiConstants.SQUARE_WIDTH - getTracking().getX()%GuiConstants.SQUARE_WIDTH;
+			double positionY = coordinateY - coordinateY%GuiConstants.SQUARE_HEIGHT - getTracking().getY()%GuiConstants.SQUARE_HEIGHT;
+			if(ToolBox.getBuildDistricts()>0) {
+				switch(ToolBox.getBuildDistricts()) {
+					case(Constants.ADMINISTRATIVE): getMap().drawImage(getAdministrativeSprite(), positionX, positionY);
+						break;
+					case(Constants.COMMERCIAL): getMap().drawImage(getCommercialSprite(), positionX, positionY);
+						break;
+					case(Constants.RESIDENCE): getMap().drawImage(getResidentialSprite(), positionX, positionY);
+						break;
+				}
+			}
+			else if(ToolBox.getBuildRailway()>0) {
+				switch(ToolBox.getBuildRailway()) {
+					case(Constants.STATION): getMap().drawImage(getStationSprite(), positionX, positionY);
+						break;
+				}
+			}
+		}
 	}
 	
 	public int getCurrentMap() {
@@ -319,6 +378,23 @@ public class MapCanvas extends Canvas {
 	public void setRailroad(ArrayList<Coordinates> railroad) {
 		this.railroad = railroad;
 	}
+
+	public Coordinates getMouseOnSquare() {
+		return mouseOnSquare;
+	}
+
+	public void setMouseOnSquare(Coordinates mouseOnSquare) {
+		this.mouseOnSquare = mouseOnSquare;
+	}
+
+	public MousePosition getMovingMouse() {
+		return movingMouse;
+	}
+
+	public void setMovingMouse(MousePosition movingMouse) {
+		this.movingMouse = movingMouse;
+	}
+
 	
 	
 }

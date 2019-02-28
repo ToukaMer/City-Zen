@@ -4,6 +4,9 @@ public class Coordinates {
 	private int row; //X
 	private int column; //y
 	
+	public Coordinates() {
+		this(0,0);
+	}
 	public Coordinates(int row, int column) {
 		this.row = row;
 		this.column = column;
