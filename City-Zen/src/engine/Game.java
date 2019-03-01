@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -141,9 +142,9 @@ public class Game {
 		railWayManager.destroyStation(railRoad, xCoord, yCoord);
 	 }
 	 
-	 public void buildRailway(RailRoad[][] railRoadMap, Coordinates [] coord) {
+	 public void buildRailway(RailRoad[][] railRoadMap, ArrayList<Coordinates> coord, Coordinates stationDepart, Coordinates stationArrivee) {
 		
-		 railWayManager.addRailWay(railRoadMap, coord);
+		 railWayManager.addRailWay(railRoadMap, coord,stationDepart,stationArrivee);
 	 }
 	 
 	 public void firstTurnChecks(int type, DistrictManager districtmanager, District[][] district, int xCoord, int yCoord) {
@@ -178,7 +179,7 @@ public class Game {
 									districtmanager.destroyAdministrative(district, xCoord, yCoord);
 									break;
 		case "buildRailWay": 
-									railWayManager.addRailWay(railRoad,railWayCoord);
+									//railWayManager.addRailWay(railRoad,railWayCoord);
 									break;
 		case "buildStation": 
 									railWayManager.addStation(railRoad, xCoord, yCoord, district);
@@ -291,7 +292,7 @@ public class Game {
 										scan = sc.nextLine();
 										break;
 			case "buildRailWay": System.out.println("building test railway");
-										railWayManager.addRailWay(railRoad,railWayCoord);
+										//railWayManager.addRailWay(railRoad,railWayCoord);
 										break;
 										
 			case "buildStation": System.out.println("width?");
