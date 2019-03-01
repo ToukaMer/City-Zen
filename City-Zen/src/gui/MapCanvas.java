@@ -260,10 +260,8 @@ public class MapCanvas extends Canvas {
 			double coordinateX = getMovingMouse().getX()+getTracking().getX();
 			double coordinateY = getMovingMouse().getY()+getTracking().getY();
 
-			//double positionX = coordinateX - coordinateX%GuiConstants.SQUARE_WIDTH;
-			//double positionY = coordinateY - coordinateY%GuiConstants.SQUARE_HEIGHT;
-			double positionX = coordinateX - coordinateX%GuiConstants.SQUARE_WIDTH - getTracking().getX()%GuiConstants.SQUARE_WIDTH;
-			double positionY = coordinateY - coordinateY%GuiConstants.SQUARE_HEIGHT - getTracking().getY()%GuiConstants.SQUARE_HEIGHT;
+			double positionX = coordinateX - coordinateX%GuiConstants.SQUARE_WIDTH - getCameraPosition().getX()%GuiConstants.SQUARE_WIDTH;
+			double positionY = coordinateY - coordinateY%GuiConstants.SQUARE_HEIGHT - getCameraPosition().getY()%GuiConstants.SQUARE_HEIGHT;
 			if(ToolBox.getBuildDistricts()>0) {
 				switch(ToolBox.getBuildDistricts()) {
 					case(Constants.ADMINISTRATIVE): getMap().drawImage(getAdministrativeSprite(), positionX, positionY);
