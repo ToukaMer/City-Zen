@@ -161,11 +161,9 @@ public class MapCanvas extends Canvas {
 	}
 	public void displayRailNetworkMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
 		if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP) {
+			getMap().drawImage(getRailNetworkSquareSprite(), columnPosition, rowPosition);
 			if(getGame().getRailRoadMap()[currentColumn][currentRow].getType()==Constants.STATION) {
 				getMap().drawImage(getStationSprite(), columnPosition, rowPosition);
-			}
-			else {
-				getMap().drawImage(getRailNetworkSquareSprite(), columnPosition, rowPosition);
 			}
 		}
 	}
@@ -246,8 +244,8 @@ public class MapCanvas extends Canvas {
 				//System.out.println("mouseX : "+mouseX+" mouseY : "+mouseY+" positionX : "+positionX+" positionY : "+positionY);
 				//if the mouse is on the board and not out of bonds
 				if(positionX >= 0 && positionX <= GuiConstants.SQUARE_PER_COLUMN*GuiConstants.SQUARE_WIDTH && positionY >= 0 && positionY <= GuiConstants.SQUARE_PER_ROW*GuiConstants.SQUARE_HEIGHT) {
-					int squareX = (int)positionX/GuiConstants.SQUARE_WIDTH;
-					int squareY = (int)positionY/GuiConstants.SQUARE_HEIGHT;
+					int squareX = (int)(positionX/GuiConstants.SQUARE_WIDTH);
+					int squareY = (int)(positionY/GuiConstants.SQUARE_HEIGHT);
 					getMouseOnSquare().setColumn(squareX);
 					getMouseOnSquare().setRow(squareY);
 				}
@@ -260,13 +258,17 @@ public class MapCanvas extends Canvas {
 	}
 	
 	public void displayOverviewBuilding() {
-		if(getMouseOnSquare().getColumn()>=0 && getMouseOnSquare().getRow()>=0) {
-			double coordinateX = getMovingMouse().getX()+getTracking().getX();
-			double coordinateY = getMovingMouse().getY()+getTracking().getY();
+        if(getMouseOnSquare().getColumn()>=0 && getMouseOnSquare().getRow()>=0) {
+            double coordinateX = getMovingMouse().getX()+getTracking().getX();
+            double coordinateY = getMovingMouse().getY()+getTracking().getY();
 
-			double positionX = coordinateX - coordinateX%GuiConstants.SQUARE_WIDTH - getCameraPosition().getX()%GuiConstants.SQUARE_WIDTH;
-			double positionY = coordinateY - coordinateY%GuiConstants.SQUARE_HEIGHT - getCameraPosition().getY()%GuiConstants.SQUARE_HEIGHT;
-			if(ToolBox.getBuildDistricts()>0) {
+            //double positionX = coordinateX - coordinateX%GuiConstants.SQUARE_WIDTH - getCameraPosition().getX()%GuiConstants.SQUARE_WIDTH;
+            //double positionY = coordinateY - coordinateY%GuiConstants.SQUARE_HEIGHT - getCameraPosition().getY()%GuiConstants.SQUARE_HEIGHT;
+			
+            double positionX = getMouseOnSquare().getColumn()*GuiConstants.SQUARE_WIDTH - getCameraPosition().getX();
+            double positionY = getMouseOnSquare().getRow()*GuiConstants.SQUARE_HEIGHT - getCameraPosition().getY();
+            
+            if(ToolBox.getBuildDistricts()>0) {
 				switch(ToolBox.getBuildDistricts()) {
 					case(Constants.ADMINISTRATIVE): getMap().drawImage(getAdministrativeSprite(), positionX, positionY);
 						break;

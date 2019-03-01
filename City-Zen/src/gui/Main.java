@@ -1,6 +1,6 @@
 package gui;
 	
-//import java.awt.Dimension;
+import java.awt.Dimension;
 //import javafx.scene.paint.Color;
 
 import javafx.application.Application;
@@ -26,11 +26,11 @@ public class Main extends Application {
 		try {
 			Pane root = new Pane();
 			
-			//Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-			//setScreenSize(new BlockSize(dimension.getWidth(), dimension.getHeight()));
-			//Scene scene = new Scene(root, getScreenSize().getWidth(), getScreenSize().getHeight(), Color.LIGHTSTEELBLUE);
-			setScreenSize(new BlockSize(WIDTH, HEIGHT));
-			Scene scene = new Scene(root, WIDTH, HEIGHT);
+			Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+			setScreenSize(new BlockSize(dimension.getWidth(), dimension.getHeight()));
+			Scene scene = new Scene(root, getScreenSize().getWidth(), getScreenSize().getHeight());
+			//setScreenSize(new BlockSize(WIDTH, HEIGHT));
+			//Scene scene = new Scene(root, WIDTH, HEIGHT);
 			
 			scene.getStylesheets().add(getClass().getResource("theme.css").toExternalForm());
 			primaryStage.setTitle("CityZen");
@@ -41,7 +41,7 @@ public class Main extends Application {
 			root.getChildren().add(getRoot());
 			
 			primaryStage.show();
-			//primaryStage.setFullScreen(true);
+			primaryStage.setFullScreen(true);
 
 		} catch(Exception e) {
 			e.printStackTrace();
