@@ -1,28 +1,31 @@
 package data.railRoadData;
 
+import java.util.ArrayList;
+
 import data.Constants;
 import data.Coordinates;
 
 public class RailWay extends RailRoad
 {	
-	private Coordinates [] coord;
+	private ArrayList<Coordinates> coord;
 	private int [] orientation = {0, 0, 0, 0};
 	
-	public RailWay(Coordinates [] coord, int [] orientation) 
+	public RailWay(ArrayList<Coordinates> coord2, int [] orientation) 
 	{
 		super();
 		this.setOrientation(orientation);
-		this.setCoord(coord);
+		this.setCoord(coord2);
 		this.setTypeName("Rail");
 		this.setType(Constants.RAILWAY);
 	}
 
-	public Coordinates[] getCoord() {
+
+	public ArrayList<Coordinates> getCoord() {
 		return coord;
 	}
 
-	public void setCoord(Coordinates[] coord) {
-		this.coord = coord;
+	public void setCoord(ArrayList<Coordinates> coord2) {
+		this.coord = coord2;
 	}
 
 	public int[] getOrientation() {
