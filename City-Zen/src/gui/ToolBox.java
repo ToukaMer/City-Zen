@@ -85,7 +85,7 @@ public class ToolBox extends VBox{
 
 	public void initializeBuildResidentialButton(final Root root) {
 		setBuildResidentialButton(new Button());
-		getBuildResidentialButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.BUILD_ICON).toString())));
+		getBuildResidentialButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.RESIDENTIAL_BUILD_ICON).toString())));
 		getBuildResidentialButton().getStyleClass().remove("button");
 		getBuildResidentialButton().getStyleClass().add("toolBoxButton");
 		getBuildResidentialButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -100,7 +100,7 @@ public class ToolBox extends VBox{
 	
 	public void initializeBuildCommercialButton(final Root root) {
 		setBuildCommercialButton(new Button());
-		getBuildCommercialButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.BUILD_ICON).toString())));
+		getBuildCommercialButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.COMMERCIAL_BUILD_ICON).toString())));
 		getBuildCommercialButton().getStyleClass().remove("button");
 		getBuildCommercialButton().getStyleClass().add("toolBoxButton");
 		getBuildCommercialButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -115,7 +115,7 @@ public class ToolBox extends VBox{
 	
 	public void initializeBuildAdministrativeButton(final Root root) {
 		setBuildAdministrativeButton(new Button());
-		getBuildAdministrativeButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.BUILD_ICON).toString())));
+		getBuildAdministrativeButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.ADMINISTRATIVE_BUILD_ICON).toString())));
 		getBuildAdministrativeButton().getStyleClass().remove("button");
 		getBuildAdministrativeButton().getStyleClass().add("toolBoxButton");
 		getBuildAdministrativeButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -131,7 +131,7 @@ public class ToolBox extends VBox{
 	
 	public void initializeBuildStationButton(final Root root) {
 		setBuildStationButton(new Button());
-		getBuildStationButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.BUILD_ICON).toString())));
+		getBuildStationButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.STATION_BUILD_ICON).toString())));
 		getBuildStationButton().getStyleClass().remove("button");
 		getBuildStationButton().getStyleClass().add("toolBoxButton");
 		getBuildStationButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -147,7 +147,7 @@ public class ToolBox extends VBox{
 	
 	public void initializeBuildRailWayButton(final Root root) {
 		setBuildRailWayButton(new Button());
-		getBuildRailWayButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.BUILD_ICON).toString())));
+		getBuildRailWayButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.RAIL_BUILD_ICON).toString())));
 		getBuildRailWayButton().getStyleClass().remove("button");
 		getBuildRailWayButton().getStyleClass().add("toolBoxButton");
 		getBuildRailWayButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -161,7 +161,7 @@ public class ToolBox extends VBox{
 	
 	public void initializeDestroyButton() {
 		setDestroyButton(new Button());
-		getDestroyButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.BUILD_ICON).toString())));
+		getDestroyButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.DESTROY_ICON).toString())));
 		getDestroyButton().getStyleClass().remove("button");
 		getDestroyButton().getStyleClass().add("toolBoxButton");
 		getDestroyButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
