@@ -41,6 +41,8 @@ public class MapCanvas extends Canvas {
 	private Image stationSprite;
 	
 	private ArrayList<Coordinates> railroad;
+	private Coordinates startingStation;
+	private Coordinates endingStation;
 
 	public MapCanvas(double width, double height,  Root root, PlayableGrid playableGrid) {
 		super();
@@ -51,8 +53,11 @@ public class MapCanvas extends Canvas {
 		setGame(playableGrid.getGame());
 		setTracking(playableGrid.getTracking());
 		setCameraPosition(playableGrid.getCameraPosition());
+		
 		setMovingMouse(new MousePosition());
 		setMouseOnSquare(new Coordinates());
+		setStartingStation(new Coordinates());
+		setEndingStation(new Coordinates());
 		initializeSprites();
 		setCurrentMap(GuiConstants.DISTRICT_MAP);
 		
@@ -205,6 +210,15 @@ public class MapCanvas extends Canvas {
 								playableGrid.getGame().buildStation(playableGrid.getGame().getRailWayManager(),playableGrid.getGame().getRailRoadMap(), squareX, squareY, playableGrid.getGame().getDistrictMap());
 								ToolBox.setBuildRailway(0);
 							}
+							else if(ToolBox.getBuildRailway()==Constants.RAILWAY) {
+								if(playableGrid.getGame().getRailRoadMap()[squareX][squareY].getType()==Constants.STATION) {
+									getStartingStation().setColumn(squareX);
+									getStartingStation().setRow(squareY);
+								}
+								else {
+									ToolBox.setBuildRailway(0);
+								}
+							}
 							else if(ToolBox.getDestroy()==1) {
 								playableGrid.getGame().destroyStation(playableGrid.getGame().getRailWayManager(), playableGrid.getGame().getRailRoadMap(), squareX, squareY);
 								ToolBox.setDestroy(0);
@@ -245,6 +259,9 @@ public class MapCanvas extends Canvas {
 		if(getMouseOnSquare().getColumn()>=0 && getMouseOnSquare().getRow()>=0) {
 			double coordinateX = getMovingMouse().getX()+getTracking().getX();
 			double coordinateY = getMovingMouse().getY()+getTracking().getY();
+
+			//double positionX = coordinateX - coordinateX%GuiConstants.SQUARE_WIDTH;
+			//double positionY = coordinateY - coordinateY%GuiConstants.SQUARE_HEIGHT;
 			double positionX = coordinateX - coordinateX%GuiConstants.SQUARE_WIDTH - getTracking().getX()%GuiConstants.SQUARE_WIDTH;
 			double positionY = coordinateY - coordinateY%GuiConstants.SQUARE_HEIGHT - getTracking().getY()%GuiConstants.SQUARE_HEIGHT;
 			if(ToolBox.getBuildDistricts()>0) {
@@ -264,6 +281,52 @@ public class MapCanvas extends Canvas {
 				}
 			}
 		}
+	}
+	
+	public void initializeReleasedMouseListener(PlayableGrid playableGrid) {
+		setOnMouseReleased(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent mouseEvent) {
+				if(ToolBox.getBuildRailway()==Constants.RAILWAY) {
+					double mouseX = mouseEvent.getX();
+					double mouseY = mouseEvent.getY();
+
+					//Calculate the coordinates of the released on the canvas
+					double positionX = getCameraPosition().getX()+mouseX;
+					double positionY = getCameraPosition().getY()+mouseY;
+					
+					if(positionX >= 0 && positionY >= 0) {
+						//Calculate the coordinates of the released square
+						int squareX = (int)(positionX/GuiConstants.SQUARE_WIDTH);
+						int squareY = (int)(positionY/GuiConstants.SQUARE_HEIGHT);
+
+						if(playableGrid.getGame().getRailRoadMap()[squareX][squareY].getType()==Constants.STATION) {
+							getEndingStation().setColumn(squareX);
+							getEndingStation().setRow(squareY);
+							//appeler fonction de création de ligne
+						}
+						
+					}
+				}
+			}
+		});
+	}
+	
+	public void initializeDraggingMouseListener() {
+		setOnMouseDragged(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent mouseEvent) {
+				if(ToolBox.getBuildRailway()==Constants.RAILWAY) {
+					/* Récupérer les coordonnées des cases sur lesquelles la souris passe et les enregistrer dans
+					 * l'ArrayList Railroad
+					 * 
+					 * Faire une fonction d'affichage qui affiche les lignes de métro pendant qu'on les dessine à l'aide des
+					 * coordonnées de la souris, de la même manière que pour le sprite qui suit la souris quand on crée un
+					 * quartier ou une station
+					 * 
+					 * Ajouter l'affichage des lignes de métro existantes en fonction de leur direction
+					 */
+				}
+			}
+		});
 	}
 	
 	public int getCurrentMap() {
@@ -393,6 +456,22 @@ public class MapCanvas extends Canvas {
 
 	public void setMovingMouse(MousePosition movingMouse) {
 		this.movingMouse = movingMouse;
+	}
+
+	public Coordinates getStartingStation() {
+		return startingStation;
+	}
+
+	public void setStartingStation(Coordinates startingStation) {
+		this.startingStation = startingStation;
+	}
+
+	public Coordinates getEndingStation() {
+		return endingStation;
+	}
+
+	public void setEndingStation(Coordinates endingStation) {
+		this.endingStation = endingStation;
 	}
 
 	
