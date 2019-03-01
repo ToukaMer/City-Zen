@@ -43,6 +43,7 @@ public class MapCanvas extends Canvas {
 	private ArrayList<Coordinates> railroad;
 	private Coordinates startingStation;
 	private Coordinates endingStation;
+	private boolean draggingRailroad;
 
 	public MapCanvas(double width, double height,  Root root, PlayableGrid playableGrid) {
 		super();
@@ -58,6 +59,8 @@ public class MapCanvas extends Canvas {
 		setMouseOnSquare(new Coordinates());
 		setStartingStation(new Coordinates());
 		setEndingStation(new Coordinates());
+		setRailroad(new ArrayList<Coordinates>());
+		setDraggingRailroad(false);
 		initializeSprites();
 		setCurrentMap(GuiConstants.DISTRICT_MAP);
 		
@@ -214,6 +217,7 @@ public class MapCanvas extends Canvas {
 								if(playableGrid.getGame().getRailRoadMap()[squareX][squareY].getType()==Constants.STATION) {
 									getStartingStation().setColumn(squareX);
 									getStartingStation().setRow(squareY);
+									setDraggingRailroad(true);
 								}
 								else {
 									ToolBox.setBuildRailway(0);
@@ -242,8 +246,8 @@ public class MapCanvas extends Canvas {
 				//System.out.println("mouseX : "+mouseX+" mouseY : "+mouseY+" positionX : "+positionX+" positionY : "+positionY);
 				//if the mouse is on the board and not out of bonds
 				if(positionX >= 0 && positionX <= GuiConstants.SQUARE_PER_COLUMN*GuiConstants.SQUARE_WIDTH && positionY >= 0 && positionY <= GuiConstants.SQUARE_PER_ROW*GuiConstants.SQUARE_HEIGHT) {
-					int squareX = (int)(positionX/GuiConstants.SQUARE_WIDTH);
-					int squareY = (int)(positionY/GuiConstants.SQUARE_HEIGHT);
+					int squareX = (int)positionX/GuiConstants.SQUARE_WIDTH;
+					int squareY = (int)positionY/GuiConstants.SQUARE_HEIGHT;
 					getMouseOnSquare().setColumn(squareX);
 					getMouseOnSquare().setRow(squareY);
 				}
@@ -304,6 +308,9 @@ public class MapCanvas extends Canvas {
 						}
 						
 					}
+					getRailroad().clear();
+					setDraggingRailroad(false);
+					ToolBox.setBuildRailway(0);
 				}
 			}
 		});
@@ -312,7 +319,32 @@ public class MapCanvas extends Canvas {
 	public void initializeDraggingMouseListener() {
 		setOnMouseDragged(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
-				if(ToolBox.getBuildRailway()==Constants.RAILWAY) {
+				if(isDraggingRailroad()) {
+					double mouseX = mouseEvent.getX();
+					double mouseY = mouseEvent.getY();
+					
+					double coordinateOnMapX = getMovingMouse().getX()+getTracking().getX();
+					double coordinateOnMapY = getMovingMouse().getY()+getTracking().getY();
+
+					double positionX = coordinateOnMapX - coordinateOnMapX%GuiConstants.SQUARE_WIDTH - getCameraPosition().getX()%GuiConstants.SQUARE_WIDTH;
+					double positionY = coordinateOnMapY - coordinateOnMapY%GuiConstants.SQUARE_HEIGHT - getCameraPosition().getY()%GuiConstants.SQUARE_HEIGHT;
+					
+					int column = (int)coordinateOnMapX/GuiConstants.SQUARE_WIDTH;
+					int row = (int)coordinateOnMapY/GuiConstants.SQUARE_HEIGHT;
+					
+					Coordinates square = new Coordinates(row, column);
+					if(!getRailroad().contains(square)) {
+						getRailroad().add(square);
+					}
+					else {
+						int index = getRailroad().indexOf(square);
+						int size = getRailroad().size();
+						if(index != size) {
+							for(int i = size; i>index; i--) {
+								getRailroad().remove(i);
+							}
+						}
+					}
 					/* Récupérer les coordonnées des cases sur lesquelles la souris passe et les enregistrer dans
 					 * l'ArrayList Railroad
 					 * 
@@ -470,6 +502,14 @@ public class MapCanvas extends Canvas {
 
 	public void setEndingStation(Coordinates endingStation) {
 		this.endingStation = endingStation;
+	}
+
+	public boolean isDraggingRailroad() {
+		return draggingRailroad;
+	}
+
+	public void setDraggingRailroad(boolean draggingRailroad) {
+		this.draggingRailroad = draggingRailroad;
 	}
 
 	
