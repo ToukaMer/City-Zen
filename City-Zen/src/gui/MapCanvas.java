@@ -206,21 +206,34 @@ public class MapCanvas extends Canvas {
 	}
 	public void displayRailNetworkMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
 		if(getGame().getRailRoadMap()[currentColumn][currentRow].getType()==Constants.RAILWAY) {
-			int[] orientation = ((data.railRoadData.RailWay)getGame().getRailRoadMap()[currentColumn][currentRow]).getOrientation();
-			if(orientation[Constants.NORTH_DIRECTION]>0) {
+			boolean[] orientation = getGame().getRailRoadMap()[currentColumn][currentRow].getOrientation();
+			if(orientation[Constants.NORTH_DIRECTION]==true) {
 				getMap().drawImage(getRailNorthDirectionSprite(), columnPosition, rowPosition);
 			}
-			if(orientation[Constants.SOUTH_DIRECTION]>0) {
+			if(orientation[Constants.SOUTH_DIRECTION]==true) {
 				getMap().drawImage(getRailSouthDirectionSprite(), columnPosition, rowPosition);
 			}
-			if(orientation[Constants.EAST_DIRECTION]>0) {
+			if(orientation[Constants.EAST_DIRECTION]==true) {
 				getMap().drawImage(getRailEastDirectionSprite(), columnPosition, rowPosition);
 			}
-			if(orientation[Constants.WEST_DIRECTION]>0) {
+			if(orientation[Constants.WEST_DIRECTION]==true) {
 				getMap().drawImage(getRailWestDirectionSprite(), columnPosition, rowPosition);
 			}	
 		}
 		if(getGame().getRailRoadMap()[currentColumn][currentRow].getType()==Constants.STATION) {
+			boolean[] orientation = getGame().getRailRoadMap()[currentColumn][currentRow].getOrientation();
+			if(orientation[Constants.NORTH_DIRECTION]==true) {
+				getMap().drawImage(getRailNorthDirectionSprite(), columnPosition, rowPosition);
+			}
+			if(orientation[Constants.SOUTH_DIRECTION]==true) {
+				getMap().drawImage(getRailSouthDirectionSprite(), columnPosition, rowPosition);
+			}
+			if(orientation[Constants.EAST_DIRECTION]==true) {
+				getMap().drawImage(getRailEastDirectionSprite(), columnPosition, rowPosition);
+			}
+			if(orientation[Constants.WEST_DIRECTION]==true) {
+				getMap().drawImage(getRailWestDirectionSprite(), columnPosition, rowPosition);
+			}	
 			getMap().drawImage(getStationSprite(), columnPosition, rowPosition);
 		}
 	}
