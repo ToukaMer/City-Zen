@@ -18,6 +18,7 @@ public abstract class SpritePaths {
 	public static final String RAIL_WEST_SPRITE = "\\sprites\\rail_west.png";
 	public static final String RAIL_NORTH_SPRITE = "\\sprites\\rail_north.png";
 	public static final String RAIL_SOUTH_SPRITE = "\\sprites\\rail_south.png";
+	public static final String GRID_SPRITE = "\\sprites\\grid.png";
 	public SpritePaths() {
 		
 	}

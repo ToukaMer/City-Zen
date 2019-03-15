@@ -28,15 +28,17 @@ public class MapCanvas extends Canvas {
 	private CameraPosition tracking;
 	private int numberOfSquares;
 	private int currentMap;
+	private boolean displayGrid;
 	private Coordinates mouseOnSquare;
 	private MousePosition movingMouse;
-
+	
 	private Image districtSprite;
 	private Image railNetworkSquareSprite;
 	private Image residentialSprite;
 	private Image administrativeSprite;
 	private Image commercialSprite;
 	private Image stationSprite;
+	private Image gridSprite;
 	
 	private Image railNorthDirectionSprite;
 	private Image railSouthDirectionSprite;
@@ -86,6 +88,7 @@ public class MapCanvas extends Canvas {
 		setRailSouthDirectionSprite(new Image(getClass().getResource(SpritePaths.RAIL_SOUTH_SPRITE).toString()));
 		setRailEastDirectionSprite(new Image(getClass().getResource(SpritePaths.RAIL_EAST_SPRITE).toString()));
 		setRailWestDirectionSprite(new Image(getClass().getResource(SpritePaths.RAIL_WEST_SPRITE).toString()));
+		setGridSprite(new Image(getClass().getResource(SpritePaths.GRID_SPRITE).toString()));
 	}
 	public void animatedMap(final PlayableGrid playableGrid) {
 		new AnimationTimer() {
@@ -164,6 +167,27 @@ public class MapCanvas extends Canvas {
 						while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
 							if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
 								displayRailNetworkMap(columnPosition, rowPosition, currentColumn, currentRow);
+							}
+							currentColumn++;
+							columnPosition += GuiConstants.SQUARE_WIDTH;
+						}
+						currentColumn = firstColumn;
+						columnPosition = -columnModulus;
+						currentRow++;
+						rowPosition += GuiConstants.SQUARE_HEIGHT;
+					}
+					columnPosition = -columnModulus;
+					rowPosition = -rowModulus;
+					currentRow = firstRow;
+					currentColumn = firstColumn;
+				}
+				
+				//Display map's grid
+				if(isDisplayGrid()) {
+					while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
+						while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
+							if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
+								getMap().drawImage(getGridSprite(), columnPosition, rowPosition);
 							}
 							currentColumn++;
 							columnPosition += GuiConstants.SQUARE_WIDTH;
@@ -688,6 +712,22 @@ public class MapCanvas extends Canvas {
 
 	public void setRailWestDirectionSprite(Image railWestDirectionSprite) {
 		this.railWestDirectionSprite = railWestDirectionSprite;
+	}
+
+	public boolean isDisplayGrid() {
+		return displayGrid;
+	}
+
+	public void setDisplayGrid(boolean displayGrid) {
+		this.displayGrid = displayGrid;
+	}
+
+	public Image getGridSprite() {
+		return gridSprite;
+	}
+
+	public void setGridSprite(Image gridSprite) {
+		this.gridSprite = gridSprite;
 	}
 
 	

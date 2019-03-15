@@ -12,6 +12,7 @@ public class ToolbarRight extends HBox {
 	private BlockSize blockSize;
 	
 	private Button switchMapButton;
+	private Button switchDisplayGridButton;
 
 	public ToolbarRight(double width, double height, Root root) {
 		super();
@@ -19,8 +20,10 @@ public class ToolbarRight extends HBox {
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
 		initializeSwitchMapButton(root);
+		initializeSwitchDisplayGridButton(root);
 		
 		getChildren().add(getSwitchMapButton());
+		getChildren().add(getSwitchDisplayGridButton());
 	}
 	
 	public void initializeSwitchMapButton(final Root root) {
@@ -41,6 +44,24 @@ public class ToolbarRight extends HBox {
 		    }
 		});
 	}
+	public void initializeSwitchDisplayGridButton(final Root root) {
+		setSwitchDisplayGridButton(new Button());
+		getSwitchDisplayGridButton().setText("Display grid");
+		getSwitchDisplayGridButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent mouseEvent) {
+				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().isDisplayGrid()) {
+					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setDisplayGrid(false);
+					ToolBox.setBuildDistricts(0);
+					ToolBox.setDestroy(0);
+				}
+				else {
+					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setDisplayGrid(true);
+					ToolBox.setBuildDistricts(0);
+					ToolBox.setDestroy(0);
+				}
+		    }
+		});
+	}
 
 	public BlockSize getBlockSize() {
 		return blockSize;
@@ -56,5 +77,13 @@ public class ToolbarRight extends HBox {
 
 	public void setSwitchMapButton(Button switchMapButton) {
 		this.switchMapButton = switchMapButton;
+	}
+
+	public Button getSwitchDisplayGridButton() {
+		return switchDisplayGridButton;
+	}
+
+	public void setSwitchDisplayGridButton(Button switchDisplayGridButton) {
+		this.switchDisplayGridButton = switchDisplayGridButton;
 	}
 }
