@@ -315,7 +315,7 @@ public class MapCanvas extends Canvas {
 		});
 	}
 	
-	public void initializeReleasedMouseListener(PlayableGrid playableGrid) {
+	public void initializeReleasedMouseListener(final PlayableGrid playableGrid) {
 		setOnMouseReleased(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(ToolBox.getBuildRailway()==Constants.RAILWAY && isDraggingRailroad()) {
@@ -349,7 +349,7 @@ public class MapCanvas extends Canvas {
 		});
 	}
 	
-	public void initializeMousePressedListener(PlayableGrid playableGrid) {
+	public void initializeMousePressedListener(final PlayableGrid playableGrid) {
 		setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(ToolBox.getBuildRailway()==Constants.RAILWAY) {
