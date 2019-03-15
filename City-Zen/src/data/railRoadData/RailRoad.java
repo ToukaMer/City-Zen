@@ -6,7 +6,7 @@ public abstract class RailRoad {
 	private int timeFoot;
 	private int timeTrain;
 	private int price;
-	private boolean [] orientation;
+	private boolean [] orientation = {false,false,false,false};
 	
 	
 	
