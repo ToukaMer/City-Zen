@@ -54,15 +54,17 @@ public class RailWayManager
 					//look around to make the boolean
 				
 					//check where the next is and place boolean accordingly
-					if(j<coord.size()-2) {
+					if(j<coord.size()-1) {
 						
 						if(coord.get(j+1).getRow() - coord.get(j).getRow()>0)
 							orientation[Constants.SOUTH_DIRECTION]=true;
-						else orientation[Constants.NORTH_DIRECTION]=true;
+						else if(coord.get(j+1).getRow() - coord.get(j).getRow()<0)
+							orientation[Constants.NORTH_DIRECTION]=true;
 						
 						if(coord.get(j+1).getColumn() - coord.get(j).getColumn()>0)
 							orientation[Constants.EAST_DIRECTION]=true;
-						else orientation[Constants.WEST_DIRECTION]=true;
+						else if(coord.get(j+1).getColumn() - coord.get(j).getColumn()<0)
+							orientation[Constants.WEST_DIRECTION]=true;
 							
 					}
 					
