@@ -1,12 +1,28 @@
 package data.railRoadData;
 
+import java.util.ArrayList;
+
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
+import data.Constants;
+import data.Coordinates;
+
 public abstract class RailRoad {
 	private int type;
 	private String typeName;
 	private int timeFoot;
 	private int timeTrain;
 	private int price;
+	private boolean [] orientation;
 	
+	
+	
+	public boolean[] getOrientation() {
+		return orientation;
+	}
+	public void setOrientation(boolean[] orientation) {
+		this.orientation = orientation;
+	}
 	public int getType() {
 		return type;
 	}

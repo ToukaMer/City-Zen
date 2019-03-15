@@ -1,6 +1,6 @@
 package gui;
 	
-//import java.awt.Dimension;
+import java.awt.Dimension;
 //import javafx.scene.paint.Color;
 
 import javafx.application.Application;
@@ -28,7 +28,7 @@ public class Main extends Application {
 			
 			//Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 			//setScreenSize(new BlockSize(dimension.getWidth(), dimension.getHeight()));
-			//Scene scene = new Scene(root, getScreenSize().getWidth(), getScreenSize().getHeight(), Color.LIGHTSTEELBLUE);
+			//Scene scene = new Scene(root, getScreenSize().getWidth(), getScreenSize().getHeight());
 			setScreenSize(new BlockSize(WIDTH, HEIGHT));
 			Scene scene = new Scene(root, WIDTH, HEIGHT);
 			

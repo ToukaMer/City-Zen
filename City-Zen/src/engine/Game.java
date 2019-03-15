@@ -45,69 +45,6 @@ public class Game {
 		setRailWayManager(railWayManager);
 	}
 
-	public void initDistrictMap(int width, int height) {
-		setDistrictMap(getDistrictManager().initDistrictMap(width, height));//cree une map de la surface 
-	}
-	
-	public void initRailRoadMap(int width, int height) {
-		setRailRoadMap(getRailWayManager().initRailWay(width, height));//-- du metro
-	}
-	
-	public void initDistrictManager() {
-		districtManager = new DistrictManager();
-	}
-	
-	public void initRailWayManager() {
-		railWayManager = new RailWayManager();
-	}
-	
-	public DistrictManager getDistrictManager() {
-		return districtManager;
-	}
-
-	public void setDistrictManager(DistrictManager districtManager) {
-		this.districtManager = districtManager;
-	}
-
-	public RailWayManager getRailWayManager() {
-		return railWayManager;
-	}
-
-	public void setRailWayManager(RailWayManager railWayManager) {
-		this.railWayManager = railWayManager;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public District[][] getDistrictMap() {
-		return districtMap;
-	}
-
-	public void setDistrictMap(District[][] districtMap) {
-		this.districtMap = districtMap;
-	}
-
-	public RailRoad[][] getRailRoadMap() {
-		return railRoadMap;
-	}
-
-	public void setRailRoadMap(RailRoad[][] railRoadMap) {
-		this.railRoadMap = railRoadMap;
-	}
 	 
 	 public void buildDistrict(int type, DistrictManager districtManager, District[][] district, int xCoord, int yCoord) {
 		 switch(type) { //wilderness = 0, admin = 1, residential = 2, commercial = 3
@@ -443,5 +380,68 @@ public class Game {
 	}
 
 	
+
+	public void initDistrictMap(int width, int height) {
+		setDistrictMap(getDistrictManager().initDistrictMap(width, height));//cree une map de la surface 
+	}
 	
+	public void initRailRoadMap(int width, int height) {
+		setRailRoadMap(getRailWayManager().initRailWay(width, height));//-- du metro
+	}
+	
+	public void initDistrictManager() {
+		districtManager = new DistrictManager();
+	}
+	
+	public void initRailWayManager() {
+		railWayManager = new RailWayManager();
+	}
+	
+	public DistrictManager getDistrictManager() {
+		return districtManager;
+	}
+
+	public void setDistrictManager(DistrictManager districtManager) {
+		this.districtManager = districtManager;
+	}
+
+	public RailWayManager getRailWayManager() {
+		return railWayManager;
+	}
+
+	public void setRailWayManager(RailWayManager railWayManager) {
+		this.railWayManager = railWayManager;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public District[][] getDistrictMap() {
+		return districtMap;
+	}
+
+	public void setDistrictMap(District[][] districtMap) {
+		this.districtMap = districtMap;
+	}
+
+	public RailRoad[][] getRailRoadMap() {
+		return railRoadMap;
+	}
+
+	public void setRailRoadMap(RailRoad[][] railRoadMap) {
+		this.railRoadMap = railRoadMap;
+	}
 }

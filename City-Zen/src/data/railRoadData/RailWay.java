@@ -8,13 +8,11 @@ import data.Coordinates;
 public class RailWay extends RailRoad
 {	
 	private ArrayList<Coordinates> coord;
-	private int [] orientation = {0, 0, 0, 0};
 	
-	public RailWay(ArrayList<Coordinates> coord2, int [] orientation) 
+	public RailWay(ArrayList<Coordinates> coord) 
 	{
 		super();
-		this.setOrientation(orientation);
-		this.setCoord(coord2);
+		this.setCoord(coord);
 		this.setTypeName("Rail");
 		this.setType(Constants.RAILWAY);
 	}
@@ -24,15 +22,8 @@ public class RailWay extends RailRoad
 		return coord;
 	}
 
-	public void setCoord(ArrayList<Coordinates> coord2) {
-		this.coord = coord2;
+	public void setCoord(ArrayList<Coordinates> coord) {
+		this.coord = coord;
 	}
-
-	public int[] getOrientation() {
-		return orientation;
-	}
-
-	public void setOrientation(int[] orientation) {
-		this.orientation = orientation;
-	}
+	
 }
