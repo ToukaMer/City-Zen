@@ -42,8 +42,8 @@ public class RailWayManager
 	{//checking if both sides of the array are stations 
 		if((railRoadMap[stationDepart.getColumn()][stationDepart.getRow()].getType() == Constants.STATION)&&(railRoadMap[stationArrivee.getColumn()][stationArrivee.getRow()].getType() == Constants.STATION)) {
 				boolean bool=true;
-				boolean [] orientation = {false,false,false,false};
-			for(int i=1; i<coord.size(); i++) {//checking if there is something in the way
+				
+			for(int i=0; i<coord.size(); i++) {//checking if there is something in the way
 				if(railRoadMap[coord.get(i).getColumn()][coord.get(i).getRow()].getType() != Constants.WILDERNESSRR && railRoadMap[coord.get(i).getColumn()][coord.get(i).getRow()].getType() != Constants.RAILWAY)
 					bool =false;
 			}
@@ -52,18 +52,32 @@ public class RailWayManager
 				for(int j=0; j<coord.size(); j++) {
 					//i need to replace so it does tab[column][row]
 					//look around to make the boolean
-				
+					boolean [] orientation = railRoadMap[coord.get(j).getColumn()][coord.get(j).getRow()].getOrientation();
 					//check where the next is and place boolean accordingly
 					if(j<coord.size()-1) {
 						
 						if(coord.get(j+1).getRow() - coord.get(j).getRow()>0)
 							orientation[Constants.SOUTH_DIRECTION]=true;
-						else if(coord.get(j+1).getRow() - coord.get(j).getRow()<0)
+						if(coord.get(j+1).getRow() - coord.get(j).getRow()<0)
 							orientation[Constants.NORTH_DIRECTION]=true;
 						
 						if(coord.get(j+1).getColumn() - coord.get(j).getColumn()>0)
 							orientation[Constants.EAST_DIRECTION]=true;
-						else if(coord.get(j+1).getColumn() - coord.get(j).getColumn()<0)
+						if(coord.get(j+1).getColumn() - coord.get(j).getColumn()<0)
+							orientation[Constants.WEST_DIRECTION]=true;
+							
+					}
+					//check where the previous is and place boolean accordingly
+					if(j>0) {
+						
+						if(coord.get(j-1).getRow() - coord.get(j).getRow()>0)
+							orientation[Constants.SOUTH_DIRECTION]=true;
+						if(coord.get(j-1).getRow() - coord.get(j).getRow()<0)
+							orientation[Constants.NORTH_DIRECTION]=true;
+						
+						if(coord.get(j-1).getColumn() - coord.get(j).getColumn()>0)
+							orientation[Constants.EAST_DIRECTION]=true;
+						if(coord.get(j-1).getColumn() - coord.get(j).getColumn()<0)
 							orientation[Constants.WEST_DIRECTION]=true;
 							
 					}
@@ -72,22 +86,22 @@ public class RailWayManager
 					if(j==0) {
 						if(stationDepart.getColumn()>coord.get(j).getColumn())
 							orientation[Constants.EAST_DIRECTION]=true;
-						else if(stationDepart.getColumn()<coord.get(j).getColumn())
+						if(stationDepart.getColumn()<coord.get(j).getColumn())
 							orientation[Constants.WEST_DIRECTION]=true;
 						if(stationDepart.getRow()>coord.get(j).getRow())
 							orientation[Constants.SOUTH_DIRECTION]=true;
-						else if(stationDepart.getRow()<coord.get(j).getRow())
+						if(stationDepart.getRow()<coord.get(j).getRow())
 							orientation[Constants.NORTH_DIRECTION]=true;
 					}
 					
-					if(j==coord.size()-2) {
+					if(j==coord.size()-1) {
 						if(stationArrivee.getColumn()>coord.get(j).getColumn())
 							orientation[Constants.EAST_DIRECTION]=true;
-						else if(stationArrivee.getColumn()<coord.get(j).getColumn())
+						if(stationArrivee.getColumn()<coord.get(j).getColumn())
 							orientation[Constants.WEST_DIRECTION]=true;
 						if(stationArrivee.getRow()>coord.get(j).getRow())
 							orientation[Constants.SOUTH_DIRECTION]=true;
-						else if(stationArrivee.getRow()<coord.get(j).getRow())
+						if(stationArrivee.getRow()<coord.get(j).getRow())
 							orientation[Constants.NORTH_DIRECTION]=true;
 					}
 					
@@ -97,9 +111,10 @@ public class RailWayManager
 					railRoadMap[coord.get(j).getColumn()][coord.get(j).getRow()].setOrientation(orientation);
 					System.out.println("x="+coord.get(j).getColumn()+" y="+coord.get(j).getRow()+" \n {n,s,e,w} = {"+orientation[0]+","+orientation[1]+","+orientation[2]+","+orientation[3]+"} \n");
 				
-					updateStationOrientation(railRoadMap, stationDepart.getColumn(), stationDepart.getRow());
-					updateStationOrientation(railRoadMap, stationArrivee.getColumn(), stationArrivee.getRow());
+					
 				}
+				updateStationOrientation(railRoadMap, stationDepart.getColumn(), stationDepart.getRow());
+				updateStationOrientation(railRoadMap, stationArrivee.getColumn(), stationArrivee.getRow());
 				return 1;
 			}
 			else {
@@ -178,7 +193,7 @@ public class RailWayManager
 							if(railRoadMap[column-1][row].getType()==Constants.RAILWAY || railRoadMap[column-1][row].getType()==Constants.STATION)
 								orientation[Constants.WEST_DIRECTION] = true;
 						
-						if((row+1)>Stats.WIDTH)//right//south
+						if((row+1)<Stats.WIDTH)//right//south
 							if(railRoadMap[column][row+1].getType()==Constants.RAILWAY || railRoadMap[column][row+1].getType()==Constants.STATION)
 									orientation[Constants.SOUTH_DIRECTION] = true;
 						if((column+1)<Stats.HEIGHT)//bottom//right
@@ -195,8 +210,6 @@ public class RailWayManager
 					
 				
 				System.out.println("station added, value : "+railRoadMap[column][row].getType());
-
-				//Il faut definir les caractéristique de la station
 
 			}	
 		}
