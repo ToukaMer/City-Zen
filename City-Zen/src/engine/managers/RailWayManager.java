@@ -1,276 +1,323 @@
 package engine.managers;
 
 import java.util.ArrayList;
+import java.util.Map.Entry;
+
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import data.*;
-import data.districtData.District;
-import data.railRoadData.RailRoad;
+import data.railRoadData.NotRailed;
+import data.railRoadData.Rail;
+import data.railRoadData.RailSquare;
 import data.railRoadData.RailWay;
 import data.railRoadData.Station;
-import data.railRoadData.WildernessRR;
+import engine.Game;
+import gui_data.GuiConstants;
 
-public class RailWayManager 
+public final class RailWayManager 
 {
-	public void printRailWay(RailRoad[][] railRoadMap, int width, int height)
-	{//Trace la carte des métro sous terrain.
-		for(int i =0; i<width; i++) 
-		{
-			for(int j=0; j<height; j++) 
-			{
-				System.out.print("|"+railRoadMap[i][j].getType()+"|");
-			}
-			System.out.println("\n------------------------------");
-		}
-	}
-	
-	public RailRoad[][] initRailWay(int width, int height)
-	{//Fonction d'initialisation de la carte du métro.
-		//La carte est initialement vide, donc on la parcours en 2D et on la rempli de WildernessRR
-		RailRoad[][] railRoadMap = new RailRoad[width][height]; 
-		for(int column =0; column<height; column++) 
-		{
-			for(int row=0; row<width; row++) 
-			{
-				railRoadMap[column][row] = new WildernessRR();
-			}
-		}
+//	
+//	public static void printRailWay()
+//	{//Trace la carte des métro sous terrain.
+//		for(int i =0; i<GuiConstants.SQUARE_PER_COLUMN; i++) 
+//		{
+//			for(int j=0; j<GuiConstants.SQUARE_PER_ROW; j++) 
+//			{
+//				System.out.print("|"+Game.getINSTANCE().getRailRoadMap().getType()+"|");
+//			}
+//			System.out.println("\n------------------------------");
+//		}
+//	}
+//	
+//	
+	public static RailSquare[][] initRailSquareMap(){
 		
-		return railRoadMap;
+		RailSquare railSquare[][] = new RailSquare[GuiConstants.SQUARE_PER_COLUMN][GuiConstants.SQUARE_PER_ROW];
+		for(int column = 0; column<GuiConstants.SQUARE_PER_ROW; column++) 
+		{
+			for(int row= 0; row<GuiConstants.SQUARE_PER_COLUMN; row++) 
+			{
+				railSquare[column][row] = new NotRailed(new Coordinates(row, column));
+			}
+		}
+		return railSquare;
+	}
+
+	public static void incrementNbStation() {
+		Game.getINSTANCE().getStats().setNbStations(Game.getINSTANCE().getStats().getNbStations()+1);
+	}
+	public static void decrementNbStation() {
+		Game.getINSTANCE().getStats().setNbStations(Game.getINSTANCE().getStats().getNbStations()-1);
 	}
 	
-	public int addRailWay (RailRoad[][] railRoadMap, ArrayList<Coordinates> coord, Coordinates stationDepart, Coordinates stationArrivee)
-	{//checking if both sides of the array are stations 
-		if((railRoadMap[stationDepart.getColumn()][stationDepart.getRow()].getType() == Constants.STATION)&&(railRoadMap[stationArrivee.getColumn()][stationArrivee.getRow()].getType() == Constants.STATION)) {
-				boolean bool=true;
-				
-			for(int i=0; i<coord.size(); i++) {//checking if there is something in the way
-				if(railRoadMap[coord.get(i).getColumn()][coord.get(i).getRow()].getType() != Constants.WILDERNESSRR && railRoadMap[coord.get(i).getColumn()][coord.get(i).getRow()].getType() != Constants.RAILWAY)
-					bool =false;
-			}
-			
-			if(bool) {
-				for(int j=0; j<coord.size(); j++) {
-					//i need to replace so it does tab[column][row]
-					//look around to make the boolean
-					boolean [] orientation = railRoadMap[coord.get(j).getColumn()][coord.get(j).getRow()].getOrientation();
-					//check where the next is and place boolean accordingly
-					if(j<coord.size()-1) {
-						
-						if(coord.get(j+1).getRow() - coord.get(j).getRow()>0)
-							orientation[Constants.SOUTH_DIRECTION]=true;
-						if(coord.get(j+1).getRow() - coord.get(j).getRow()<0)
-							orientation[Constants.NORTH_DIRECTION]=true;
-						
-						if(coord.get(j+1).getColumn() - coord.get(j).getColumn()>0)
-							orientation[Constants.EAST_DIRECTION]=true;
-						if(coord.get(j+1).getColumn() - coord.get(j).getColumn()<0)
-							orientation[Constants.WEST_DIRECTION]=true;
-							
+	public static void addRailWay (ArrayList<Coordinates> coord, Coordinates stationDepart, Coordinates stationArrivee){
+		//checking if both sides of the array are stations 
+		if((Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()].getType() == Constants.STATION)
+				&& ((Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()].getType() 
+						== Constants.STATION))) {
+			boolean stationInTheMiddle = false;
+			for(Coordinates current : coord) {//checking if there is something in the way
+				if(Game.getINSTANCE().getRailSquareMap()[current.getColumn()][current.getRow()].getType() == Constants.STATION) {
+					stationInTheMiddle = true;
+					ArrayList<Coordinates> firstPart = new ArrayList<Coordinates>();
+					ArrayList<Coordinates> secondPart = new ArrayList<Coordinates>();
+					for(int i = 0; i< coord.size(); i++) {
+						if(i < coord.indexOf(current)) {
+							firstPart.add(coord.get(i));
+						}
+						else if(i > coord.indexOf(current)) {
+							secondPart.add(coord.get(i));
+						}
 					}
-					//check where the previous is and place boolean accordingly
-					if(j>0) {
-						
-						if(coord.get(j-1).getRow() - coord.get(j).getRow()>0)
-							orientation[Constants.SOUTH_DIRECTION]=true;
-						if(coord.get(j-1).getRow() - coord.get(j).getRow()<0)
-							orientation[Constants.NORTH_DIRECTION]=true;
-						
-						if(coord.get(j-1).getColumn() - coord.get(j).getColumn()>0)
-							orientation[Constants.EAST_DIRECTION]=true;
-						if(coord.get(j-1).getColumn() - coord.get(j).getColumn()<0)
-							orientation[Constants.WEST_DIRECTION]=true;
-							
-					}
-					
-					//check where is the begin/end station to put orientation too;
-					if(j==0) {
-						if(stationDepart.getColumn()>coord.get(j).getColumn())
-							orientation[Constants.EAST_DIRECTION]=true;
-						if(stationDepart.getColumn()<coord.get(j).getColumn())
-							orientation[Constants.WEST_DIRECTION]=true;
-						if(stationDepart.getRow()>coord.get(j).getRow())
-							orientation[Constants.SOUTH_DIRECTION]=true;
-						if(stationDepart.getRow()<coord.get(j).getRow())
-							orientation[Constants.NORTH_DIRECTION]=true;
-					}
-					
-					if(j==coord.size()-1) {
-						if(stationArrivee.getColumn()>coord.get(j).getColumn())
-							orientation[Constants.EAST_DIRECTION]=true;
-						if(stationArrivee.getColumn()<coord.get(j).getColumn())
-							orientation[Constants.WEST_DIRECTION]=true;
-						if(stationArrivee.getRow()>coord.get(j).getRow())
-							orientation[Constants.SOUTH_DIRECTION]=true;
-						if(stationArrivee.getRow()<coord.get(j).getRow())
-							orientation[Constants.NORTH_DIRECTION]=true;
-					}
-					
-					
-			
-					railRoadMap[coord.get(j).getColumn()][coord.get(j).getRow()] = new RailWay(coord);
-					railRoadMap[coord.get(j).getColumn()][coord.get(j).getRow()].setOrientation(orientation);
-					System.out.println("x="+coord.get(j).getColumn()+" y="+coord.get(j).getRow()+" \n {n,s,e,w} = {"+orientation[0]+","+orientation[1]+","+orientation[2]+","+orientation[3]+"} \n");
-				
-					
+					//If there is a station in the way, split it in two parts and create a line going to the station and coming from it
+					addRailWay(firstPart, stationDepart, current);
+					addRailWay(secondPart, current, stationArrivee);
 				}
-				updateStationOrientation(railRoadMap, stationDepart.getColumn(), stationDepart.getRow());
-				updateStationOrientation(railRoadMap, stationArrivee.getColumn(), stationArrivee.getRow());
-				return 1;
-			}
-			else {
-				System.out.println("There is an obstacle on the path\n");
-				return 2;
 			}
 			
+			if(!stationInTheMiddle) {
+				if(((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getRailWays().containsKey(stationArrivee)) {
+					System.out.println("There is already a railway between those stations");
+				}
+				else {
+					ArrayList<Coordinates> coordinates = new ArrayList<>();
+					//Create rails if necessary
+					for(Coordinates current : coord) {
+						if(Game.getINSTANCE().getRailSquareMap()[current.getColumn()][current.getRow()].getType() == Constants.NOT_RAILED) {
+							int[] direction = new int[4];
+							direction[0] = 0; 
+							direction[1] = 0; 
+							direction[2] = 0; 
+							direction[3] = 0; 
+							Game.getINSTANCE().getRailSquareMap()[current.getColumn()][current.getRow()] = new Rail(current, direction);
+						}
+						//Set all the rails in an arrayList that will be used to create the RailWay object
+						coordinates.add(current);
+					}
+
+					//Verify next square in the list to decide of the direction
+					for(Coordinates current : coord) {
+						//Set directions for ArrayList<Coordinates>
+						int[] direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[current.getColumn()][current.getRow()]).getDirection();
+	 					if(coord.indexOf(current) > 0) {
+	 						if(current.getColumn() < coord.get(coord.indexOf(current)-1).getColumn()) {
+	 							direction[Constants.EAST_DIRECTION]++;
+	 						}
+	 						else if(current.getColumn() > coord.get(coord.indexOf(current)-1).getColumn()) {
+	 							direction[Constants.WEST_DIRECTION]++;
+	 	 					}
+	 						else if(current.getRow() > coord.get(coord.indexOf(current)-1).getRow()) {
+	 							direction[Constants.NORTH_DIRECTION]++;
+		 					}
+	 						else {
+	 							direction[Constants.SOUTH_DIRECTION]++;
+	 						}
+						}
+	 					if(coord.indexOf(current) < coord.size()-1) {
+	 						if(current.getColumn() < coord.get(coord.indexOf(current)+1).getColumn()) {
+	 							direction[Constants.EAST_DIRECTION]++;
+	 						}
+	 						else if(current.getColumn() > coord.get(coord.indexOf(current)+1).getColumn()) {
+	 							direction[Constants.WEST_DIRECTION]++;
+	 	 					}
+	 						else if(current.getRow() > coord.get(coord.indexOf(current)+1).getRow()) {
+	 							direction[Constants.NORTH_DIRECTION]++;
+		 					}
+	 						else {
+	 							direction[Constants.SOUTH_DIRECTION]++;
+	 						}
+						}
+	 					((Rail)Game.getINSTANCE().getRailSquareMap()[current.getColumn()][current.getRow()]).setDirection(direction);
+					}
+					//Set directions for starting station
+					if(stationDepart.getColumn() < coord.get(0).getColumn()) {
+						int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getDirection()[Constants.EAST_DIRECTION];
+						((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getDirection()[Constants.EAST_DIRECTION] = direction+1;
+						direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.WEST_DIRECTION];
+						((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.WEST_DIRECTION] = direction+1;
+					}
+					else if(stationDepart.getColumn() > coord.get(0).getColumn()) {
+						int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getDirection()[Constants.WEST_DIRECTION];
+						((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getDirection()[Constants.WEST_DIRECTION] = direction+1;
+						direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.EAST_DIRECTION];
+						((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.EAST_DIRECTION] = direction+1;
+					}
+					else if(stationDepart.getRow() < coord.get(0).getRow()) {
+						int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getDirection()[Constants.SOUTH_DIRECTION];
+						((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getDirection()[Constants.SOUTH_DIRECTION] = direction+1;
+						direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.NORTH_DIRECTION];
+						((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.NORTH_DIRECTION] = direction+1;
+					}
+					else {
+						int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getDirection()[Constants.NORTH_DIRECTION];
+						((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getDirection()[Constants.NORTH_DIRECTION] = direction+1;
+						direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.SOUTH_DIRECTION];
+						((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.SOUTH_DIRECTION] = direction+1;
+					}
+
+					//Set directions for arrival station
+					if(stationArrivee.getColumn() < coord.get(coord.size()-1).getColumn()) {
+						int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[stationArrivee.getColumn()][stationArrivee.getRow()]).getDirection()[Constants.EAST_DIRECTION];
+						((Station)Game.getINSTANCE().getRailSquareMap()[stationArrivee.getColumn()][stationArrivee.getRow()]).getDirection()[Constants.EAST_DIRECTION] = direction+1;
+						direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(coord.size()-1).getColumn()][coord.get(coord.size()-1).getRow()]).getDirection()[Constants.WEST_DIRECTION];
+						((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(coord.size()-1).getColumn()][coord.get(coord.size()-1).getRow()]).getDirection()[Constants.WEST_DIRECTION] = direction+1;
+					}
+					else if(stationArrivee.getColumn() > coord.get(coord.size()-1).getColumn()) {
+						int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[stationArrivee.getColumn()][stationArrivee.getRow()]).getDirection()[Constants.WEST_DIRECTION];
+						((Station)Game.getINSTANCE().getRailSquareMap()[stationArrivee.getColumn()][stationArrivee.getRow()]).getDirection()[Constants.WEST_DIRECTION] = direction+1;
+						direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(coord.size()-1).getColumn()][coord.get(coord.size()-1).getRow()]).getDirection()[Constants.EAST_DIRECTION];
+						((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(coord.size()-1).getColumn()][coord.get(coord.size()-1).getRow()]).getDirection()[Constants.EAST_DIRECTION] = direction+1;
+					}
+					else if(stationArrivee.getRow() < coord.get(coord.size()-1).getRow()) {
+						int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[stationArrivee.getColumn()][stationArrivee.getRow()]).getDirection()[Constants.SOUTH_DIRECTION];
+						((Station)Game.getINSTANCE().getRailSquareMap()[stationArrivee.getColumn()][stationArrivee.getRow()]).getDirection()[Constants.SOUTH_DIRECTION] = direction+1;
+						direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(coord.size()-1).getColumn()][coord.get(coord.size()-1).getRow()]).getDirection()[Constants.NORTH_DIRECTION];
+						((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(coord.size()-1).getColumn()][coord.get(coord.size()-1).getRow()]).getDirection()[Constants.NORTH_DIRECTION] = direction+1;
+					}
+					else {
+						int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[stationArrivee.getColumn()][stationArrivee.getRow()]).getDirection()[Constants.NORTH_DIRECTION];
+						((Station)Game.getINSTANCE().getRailSquareMap()[stationArrivee.getColumn()][stationArrivee.getRow()]).getDirection()[Constants.NORTH_DIRECTION] = direction+1;
+						direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(coord.size()-1).getColumn()][coord.get(coord.size()-1).getRow()]).getDirection()[Constants.SOUTH_DIRECTION];
+						((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(coord.size()-1).getColumn()][coord.get(coord.size()-1).getRow()]).getDirection()[Constants.SOUTH_DIRECTION] = direction+1;
+					}	
+
+					RailWay railWay = new RailWay(coordinates, Constants.RAIL_TIME*coordinates.size());
+					((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getRailWays().put(stationArrivee, railWay);
+				}
+			}
+		}
+	}
+
+	public static void destroyRailWay(Coordinates startingStation, Coordinates arrivalStation) {
+		if(Game.getINSTANCE().getRailSquareMap()[startingStation.getRow()][startingStation.getColumn()].getType() != Constants.STATION) {
+			System.out.println("Starting coordinates are not station coordinates");
+		}
+		else if(Game.getINSTANCE().getRailSquareMap()[arrivalStation.getRow()][arrivalStation.getColumn()].getType() != Constants.STATION) {
+			System.out.println("Arrival coordinates are not station coordinates");
 		}
 		else {
-			System.out.println("That railway isnt connected to 2 stations\n");
-			System.out.println("Depart type: "+railRoadMap[stationDepart.getColumn()][stationDepart.getRow()].getType()+"\n Arrivee type :"+railRoadMap[stationArrivee.getRow()][stationArrivee.getColumn()].getType()+"\n");
-			return 3;
-		}
-	}
-	
-	public int destroyRailWay(RailRoad[][] railRoadMap, int column, int row) {
-		ArrayList<Coordinates> coord  = ((RailWay) railRoadMap[column][row]).getCoord(); // we save the array of rails
-		if(railRoadMap[column][row].getType() != 1) { // verifying if the cliqued object is a rail
-			System.out.println("This spot isnt a RailWay!");
-			return 2;
-		}
-			
-		else
-		{
-			for(int i=1; i<coord.size(); i++) {
-				boolean[] orientation = railRoadMap[column][row].getOrientation();
-				
-				if((orientation[1] ? 1 :0) + (orientation[2] ? 1 :0) + (orientation[3] ? 1 : 0) + (orientation[4] ? 1 :0)==2)
-					railRoadMap[coord.get(i).getColumn()][coord.get(i).getRow()]= new WildernessRR(); // deleting each object that are in the coordinates of the array
-				else {
-					if(i<coord.size()) { // we check whats the orientation of what we are destroying and substract it to keep the right orientation 
-						if(coord.get(i+1).getRow() - coord.get(i).getRow()>0)
-							orientation[Constants.SOUTH_DIRECTION]=true;
-						else orientation[Constants.NORTH_DIRECTION]=true;
-						
-						if(coord.get(i+1).getColumn() - coord.get(i).getColumn()>0)
-							orientation[Constants.EAST_DIRECTION]=true;
-						else orientation[Constants.WEST_DIRECTION]=true;
-						
-					(railRoadMap[coord.get(i).getColumn()][coord.get(i).getRow()]).setOrientation(orientation);
+			if(((Station)Game.getINSTANCE().getRailSquareMap()[startingStation.getRow()][startingStation.getColumn()]).getRailWays().containsKey(arrivalStation)){
+				ArrayList<Coordinates> coord = ((Station)Game.getINSTANCE().getRailSquareMap()[startingStation.getRow()][startingStation.getColumn()]).getRailWays().get(arrivalStation).getRails();
+				for(Coordinates current : coord) {
+					int[] direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[current.getColumn()][current.getRow()]).getDirection();
+					int index = coord.indexOf(current);
+					if(index > 0) {
+						if(current.getColumn() < coord.get(coord.indexOf(current)-1).getColumn()) {
+							direction[Constants.WEST_DIRECTION]--;
+						}
+						else if(current.getColumn() > coord.get(coord.indexOf(current)-1).getColumn()) {
+							direction[Constants.EAST_DIRECTION]--;
+	 					}
+						else if(current.getRow() > coord.get(coord.indexOf(current)-1).getRow()) {
+							direction[Constants.SOUTH_DIRECTION]--;
+						}
+						else {
+							direction[Constants.NORTH_DIRECTION]--;
+						}
 					}
+					if(index < coord.size()-1) {
+						if(current.getColumn() < coord.get(coord.indexOf(current)+1).getColumn()) {
+							direction[Constants.WEST_DIRECTION]--;
+						}
+						else if(current.getColumn() > coord.get(coord.indexOf(current)+1).getColumn()) {
+							direction[Constants.EAST_DIRECTION]--;
+	 					}
+						else if(current.getRow() > coord.get(coord.indexOf(current)+1).getRow()) {
+							direction[Constants.SOUTH_DIRECTION]--;
+						}
+						else {
+							direction[Constants.NORTH_DIRECTION]--;
+						}
+					}
+					((Rail)Game.getINSTANCE().getRailSquareMap()[current.getColumn()][current.getRow()]).setDirection(direction);
 				}
-			}
-			
-			return 1;
-		}
-	}
-	
-	public void addStation(RailRoad[][] railRoadMap, int column, int row, District[][] district)
-	{//Fonction d'ajout d'une station.
-		if(district[column][row].getType() != 0 ) {
-			if(railRoadMap[column][row].getType() != 0 && railRoadMap[column][row].getType() != 1 )
-			{
-				if (railRoadMap[column][row].getType() == 1)
-				{//Si la case était occupé par une ligne de métro, on remplace celle ci par une nouvelle station.
-					railRoadMap[column][row] = new Station(1, 1, 1);//
-					Stats.nbStations++;
-					System.out.println("station added");
-
-					//Il faut definir les caractéristique de la station
+				//Set directions for starting station
+				if(startingStation.getColumn() < coord.get(0).getColumn()) {
+					int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[startingStation.getColumn()][startingStation.getRow()]).getDirection()[Constants.EAST_DIRECTION];
+					((Station)Game.getINSTANCE().getRailSquareMap()[startingStation.getColumn()][startingStation.getRow()]).getDirection()[Constants.EAST_DIRECTION] = direction-1;
+					direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.WEST_DIRECTION];
+					((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.WEST_DIRECTION] = direction-1;
+				}
+				else if(startingStation.getColumn() > coord.get(0).getColumn()) {
+					int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[startingStation.getColumn()][startingStation.getRow()]).getDirection()[Constants.WEST_DIRECTION];
+					((Station)Game.getINSTANCE().getRailSquareMap()[startingStation.getColumn()][startingStation.getRow()]).getDirection()[Constants.WEST_DIRECTION] = direction-1;
+					direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.EAST_DIRECTION];
+					((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.EAST_DIRECTION] = direction-1;
+				}
+				else if(startingStation.getRow() < coord.get(0).getRow()) {
+					int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[startingStation.getColumn()][startingStation.getRow()]).getDirection()[Constants.SOUTH_DIRECTION];
+					((Station)Game.getINSTANCE().getRailSquareMap()[startingStation.getColumn()][startingStation.getRow()]).getDirection()[Constants.SOUTH_DIRECTION] = direction-1;
+					direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.NORTH_DIRECTION];
+					((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.NORTH_DIRECTION] = direction-1;
 				}
 				else {
-					System.out.println("This spot isnt empty!");
+					int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[startingStation.getColumn()][startingStation.getRow()]).getDirection()[Constants.NORTH_DIRECTION];
+					((Station)Game.getINSTANCE().getRailSquareMap()[startingStation.getColumn()][startingStation.getRow()]).getDirection()[Constants.NORTH_DIRECTION] = direction-1;
+					direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.SOUTH_DIRECTION];
+					((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.SOUTH_DIRECTION] = direction-1;
 				}
+	
+				//Set directions for arrival station
+				if(arrivalStation.getColumn() < coord.get(coord.size()-1).getColumn()) {
+					int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[arrivalStation.getColumn()][arrivalStation.getRow()]).getDirection()[Constants.EAST_DIRECTION];
+					((Station)Game.getINSTANCE().getRailSquareMap()[arrivalStation.getColumn()][arrivalStation.getRow()]).getDirection()[Constants.EAST_DIRECTION] = direction-1;
+					direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.WEST_DIRECTION];
+					((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.WEST_DIRECTION] = direction-1;
+				}
+				else if(arrivalStation.getColumn() > coord.get(coord.size()-1).getColumn()) {
+					int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[arrivalStation.getColumn()][arrivalStation.getRow()]).getDirection()[Constants.WEST_DIRECTION];
+					((Station)Game.getINSTANCE().getRailSquareMap()[arrivalStation.getColumn()][arrivalStation.getRow()]).getDirection()[Constants.WEST_DIRECTION] = direction-1;
+					direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.EAST_DIRECTION];
+					((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.EAST_DIRECTION] = direction-1;
+				}
+				else if(arrivalStation.getRow() < coord.get(coord.size()-1).getRow()) {
+					int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[arrivalStation.getColumn()][arrivalStation.getRow()]).getDirection()[Constants.SOUTH_DIRECTION];
+					((Station)Game.getINSTANCE().getRailSquareMap()[arrivalStation.getColumn()][arrivalStation.getRow()]).getDirection()[Constants.SOUTH_DIRECTION] = direction-1;
+					direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.NORTH_DIRECTION];
+					((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.NORTH_DIRECTION] = direction-1;
+				}
+				else {
+					int direction = ((Station)Game.getINSTANCE().getRailSquareMap()[arrivalStation.getColumn()][arrivalStation.getRow()]).getDirection()[Constants.NORTH_DIRECTION];
+					((Station)Game.getINSTANCE().getRailSquareMap()[arrivalStation.getColumn()][arrivalStation.getRow()]).getDirection()[Constants.NORTH_DIRECTION] = direction-1;
+					direction = ((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.SOUTH_DIRECTION];
+					((Rail)Game.getINSTANCE().getRailSquareMap()[coord.get(0).getColumn()][coord.get(0).getRow()]).getDirection()[Constants.SOUTH_DIRECTION] = direction-1;
+				}	
+				((Station)Game.getINSTANCE().getRailSquareMap()[startingStation.getRow()][startingStation.getColumn()]).getRailWays().remove(arrivalStation);
 			}
-			else
-			{
-			//Add railway line
-				railRoadMap[column][row] = new Station(1,1,1);
-				boolean [] orientation = {false,false,false,false};
-				Stats.nbStations++;
-				
-						//look around to make the boolean
-						
-						if((column-1)>0) //top//left
-							if(railRoadMap[column-1][row].getType()==Constants.RAILWAY || railRoadMap[column-1][row].getType()==Constants.STATION)
-								orientation[Constants.WEST_DIRECTION] = true;
-						
-						if((row+1)<Stats.WIDTH)//right//south
-							if(railRoadMap[column][row+1].getType()==Constants.RAILWAY || railRoadMap[column][row+1].getType()==Constants.STATION)
-									orientation[Constants.SOUTH_DIRECTION] = true;
-						if((column+1)<Stats.HEIGHT)//bottom//right
-							if(railRoadMap[column+1][row].getType()==Constants.RAILWAY || railRoadMap[column+1][row].getType()==Constants.STATION)
-									orientation[Constants.EAST_DIRECTION] = true;
-						if((row-1) > 0) //left//north
-							if(railRoadMap[column][row-1].getType()==Constants.RAILWAY || railRoadMap[column][row-1].getType()==Constants.STATION)
-									orientation[Constants.NORTH_DIRECTION] = true;
-						
-						
-
-			railRoadMap[column][row].setOrientation(orientation);
-			System.out.println("x="+column+" y="+row+" \n {n,s,e,w} = {"+orientation[Constants.NORTH_DIRECTION]+","+orientation[Constants.SOUTH_DIRECTION]+","+orientation[Constants.EAST_DIRECTION]+","+orientation[Constants.WEST_DIRECTION]+"} \n");
-					
-				
-				System.out.println("station added, value : "+railRoadMap[column][row].getType());
-
-			}	
+			else {
+				System.out.println("No railway between those stations");
+			}
 		}
 	}
 	
-	public void updateStationOrientation(RailRoad[][] railRoadMap, int column, int row) {
-		boolean [] orientation = {false,false,false,false};
-		Stats.nbStations++;
-		
-				//look around to make the boolean
-				
-				if((column-1)>0) //top//left
-					if(railRoadMap[column-1][row].getType()==Constants.RAILWAY || railRoadMap[column-1][row].getType()==Constants.STATION)
-						orientation[Constants.WEST_DIRECTION] = true;
-				
-				if((row+1)>Stats.WIDTH)//right//south
-					if(railRoadMap[column][row+1].getType()==Constants.RAILWAY || railRoadMap[column][row+1].getType()==Constants.STATION)
-							orientation[Constants.SOUTH_DIRECTION] = true;
-				if((column+1)<Stats.HEIGHT)//bottom//right
-					if(railRoadMap[column+1][row].getType()==Constants.RAILWAY || railRoadMap[column+1][row].getType()==Constants.STATION)
-							orientation[Constants.EAST_DIRECTION] = true;
-				if((row-1) > 0) //left//north
-					if(railRoadMap[column][row-1].getType()==Constants.RAILWAY || railRoadMap[column][row-1].getType()==Constants.STATION)
-							orientation[Constants.NORTH_DIRECTION] = true;
-				
-				railRoadMap[column][row].setOrientation(orientation);
-		
-	}
-	
-	public void destroyStation(RailRoad[][] railRoadMap, int width, int height) 
-	{//Detruit un élément de la carte
-		if(railRoadMap[width][height].getType() == 0)
-			System.out.println("There is no Railway or station in this place!");
-		else
-		{//L'objet WildernessRR est créé à la place.
-			
-				if((width-1) > 0) //left
-					if(railRoadMap[width-1][height].getType()==Constants.RAILWAY)
-						destroyRailWay(railRoadMap, width-1, height);
-				if((height+1)<Stats.HEIGHT)//bottom
-					if(railRoadMap[width][height+1].getType()==Constants.RAILWAY)
-						destroyRailWay(railRoadMap, width, height+1);
-				if((width+1)>Stats.WIDTH)//right
-					if(railRoadMap[width+1][height].getType()==Constants.RAILWAY)
-						destroyRailWay(railRoadMap, width+1, height);
-				if((height-1)>0) //top
-					if(railRoadMap[width][height-1].getType()==Constants.RAILWAY)
-						destroyRailWay(railRoadMap, width, height-1);
-				
-				railRoadMap[width][height] = new WildernessRR();
+	public static void addStation(int column, int row){
+		if(Game.getINSTANCE().getRailSquareMap()[row][column].getType() == Constants.NOT_RAILED) {
+			if(Game.getINSTANCE().getDistrictMap()[row][column].getType() != Constants.WILDERNESS) {
+				int direction[] = new int[4];
+				direction[0] = direction[1] = direction[2] = direction[3] = 0;
+				Station station = new Station(new Coordinates(row, column), direction);
+				Game.getINSTANCE().getRailSquareMap()[row][column] = station;
+				/***** FAIRE DIJKSTRA *****/
+			}
+			else {
+				System.out.println("This square has no district on it");
+			}
+		}
+		else {
+			System.out.println("This square is already used");
 		}
 	}
 	
-	public void updateRailRoadMap(RailRoad[][] railRoadMap, int width, int height)
-	{//Fonction d'actualisation de la RailRoadMap.
-		for(int column =0; column<height; column++) 
-		{
-			for(int row=0; row<width; row++) 
-			{
-				//railRoadMap[column][row] = new WildernessRR();
+	public static void destroyStation(int column, int row) {
+		if(Game.getINSTANCE().getRailSquareMap()[row][column].getType() == Constants.STATION) {
+			for(Entry<Coordinates, RailWay> entry : ((Station)Game.getINSTANCE().getRailSquareMap()[column][row]).getRailWays().entrySet()) {
+				destroyRailWay(new Coordinates(row, column), entry.getKey());
 			}
+			Game.getINSTANCE().getRailSquareMap()[row][column] = new NotRailed(new Coordinates(row, column));
+			/***** FAIRE DIJKSTRA *****/
+		}
+		else {
+			System.out.println("There is no station on this square");
 		}
 	}
 	

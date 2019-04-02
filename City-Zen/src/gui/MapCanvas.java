@@ -4,7 +4,14 @@ import java.util.ArrayList;
 
 import data.Constants;
 import data.Coordinates;
+import data.districtData.Administrative;
+import data.districtData.Commercial;
+import data.districtData.Residencial;
+import data.railRoadData.Station;
+import data.railRoadData.Rail;
 import engine.Game;
+import engine.managers.DistrictManager;
+import engine.managers.RailWayManager;
 import gui_data.BlockSize;
 import gui_data.CameraPosition;
 import gui_data.GuiConstants;
@@ -21,8 +28,6 @@ public class MapCanvas extends Canvas {
 
 	private BlockSize blockSize;
 	private GraphicsContext map;
-	
-	private Game game;
 	
 	private CameraPosition cameraPosition;
 	private CameraPosition tracking;
@@ -56,7 +61,6 @@ public class MapCanvas extends Canvas {
 		setWidth(getBlockSize().getWidth());
 		setHeight(getBlockSize().getHeight());
 
-		setGame(playableGrid.getGame());
 		setTracking(playableGrid.getTracking());
 		setCameraPosition(playableGrid.getCameraPosition());
 		
@@ -66,6 +70,7 @@ public class MapCanvas extends Canvas {
 		setEndingStation(new Coordinates());
 		setRailroad(new ArrayList<Coordinates>());
 		setDraggingRailroad(false);
+		setDisplayGrid(true);
 		initializeSprites();
 		setCurrentMap(GuiConstants.DISTRICT_MAP);
 		
@@ -75,6 +80,7 @@ public class MapCanvas extends Canvas {
 		initializeReleasedMouseListener(playableGrid);
 		initializeDraggingMouseListener();
 		initializeMousePressedListener(playableGrid);
+		
 	}
 	
 	public void initializeSprites() {
@@ -218,44 +224,46 @@ public class MapCanvas extends Canvas {
 	}
 	
 	public void displayDistrictMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
-		if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.RESIDENCE) {
+		
+		if(Game.getINSTANCE().getDistrictMap()[currentColumn][currentRow].getType()==Constants.RESIDENCIAL) {
 			getMap().drawImage(getResidentialSprite(), columnPosition, rowPosition);
 		}
-		else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.ADMINISTRATIVE) {
+		else if(Game.getINSTANCE().getDistrictMap()[currentColumn][currentRow].getType()==Constants.ADMINISTRATIVE) {
 			getMap().drawImage(getAdministrativeSprite(), columnPosition, rowPosition);
 		}
-		else if(getGame().getDistrictMap()[currentColumn][currentRow].getType()==Constants.COMMERCIAL) {
+		else if(Game.getINSTANCE().getDistrictMap()[currentColumn][currentRow].getType()==Constants.COMMERCIAL) {
 			getMap().drawImage(getCommercialSprite(), columnPosition, rowPosition);
 		}
 	}
 	public void displayRailNetworkMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
-		if(getGame().getRailRoadMap()[currentColumn][currentRow].getType()==Constants.RAILWAY) {
-			boolean[] orientation = getGame().getRailRoadMap()[currentColumn][currentRow].getOrientation();
-			if(orientation[Constants.NORTH_DIRECTION]==true) {
+		if(Game.getINSTANCE().getRailSquareMap()[currentColumn][currentRow].getType()==Constants.RAIL) {
+			//int[] orientation = Game.getINSTANCE().getRailSquareMap()[currentRow][currentColumn];
+			int orientation[] = ((Rail)Game.getINSTANCE().getRailSquareMap()[currentColumn][currentRow]).getDirection();
+			if(orientation[Constants.NORTH_DIRECTION] > 0) {
 				getMap().drawImage(getRailNorthDirectionSprite(), columnPosition, rowPosition);
 			}
-			if(orientation[Constants.SOUTH_DIRECTION]==true) {
+			if(orientation[Constants.SOUTH_DIRECTION] > 0) {
 				getMap().drawImage(getRailSouthDirectionSprite(), columnPosition, rowPosition);
 			}
-			if(orientation[Constants.EAST_DIRECTION]==true) {
+			if(orientation[Constants.EAST_DIRECTION] > 0) {
 				getMap().drawImage(getRailEastDirectionSprite(), columnPosition, rowPosition);
 			}
-			if(orientation[Constants.WEST_DIRECTION]==true) {
+			if(orientation[Constants.WEST_DIRECTION] > 0) {
 				getMap().drawImage(getRailWestDirectionSprite(), columnPosition, rowPosition);
 			}	
 		}
-		if(getGame().getRailRoadMap()[currentColumn][currentRow].getType()==Constants.STATION) {
-			boolean[] orientation = getGame().getRailRoadMap()[currentColumn][currentRow].getOrientation();
-			if(orientation[Constants.NORTH_DIRECTION]==true) {
+		if(Game.getINSTANCE().getRailSquareMap()[currentColumn][currentRow].getType()==Constants.STATION) {
+			int[] orientation = ((Station)Game.getINSTANCE().getRailSquareMap()[currentColumn][currentRow]).getDirection();
+			if(orientation[Constants.NORTH_DIRECTION] > 0) {
 				getMap().drawImage(getRailNorthDirectionSprite(), columnPosition, rowPosition);
 			}
-			if(orientation[Constants.SOUTH_DIRECTION]==true) {
+			if(orientation[Constants.SOUTH_DIRECTION] > 0) {
 				getMap().drawImage(getRailSouthDirectionSprite(), columnPosition, rowPosition);
 			}
-			if(orientation[Constants.EAST_DIRECTION]==true) {
+			if(orientation[Constants.EAST_DIRECTION] > 0) {
 				getMap().drawImage(getRailEastDirectionSprite(), columnPosition, rowPosition);
 			}
-			if(orientation[Constants.WEST_DIRECTION]==true) {
+			if(orientation[Constants.WEST_DIRECTION] > 0) {
 				getMap().drawImage(getRailWestDirectionSprite(), columnPosition, rowPosition);
 			}	
 			getMap().drawImage(getStationSprite(), columnPosition, rowPosition);
@@ -281,34 +289,34 @@ public class MapCanvas extends Canvas {
 						System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
 						
 						if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
-							System.out.println("Quartier :"+getGame().getDistrictMap()[squareX][squareY].getTypeName());
-							if(ToolBox.getBuildDistricts()==Constants.RESIDENCE) {
-								playableGrid.getGame().buildDistrict(Constants.RESIDENCE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
+							System.out.println("Quartier :"+Game.getINSTANCE().getDistrictMap()[squareX][squareY].getTypeName());
+							if(ToolBox.getBuildDistricts()==Constants.RESIDENCIAL) {
+								DistrictManager.buildDistrict(new Residencial(new Coordinates(squareY, squareX)));
 								ToolBox.setBuildDistricts(0);
 							}
 							else if(ToolBox.getBuildDistricts()==Constants.ADMINISTRATIVE) {
-								playableGrid.getGame().buildDistrict(Constants.ADMINISTRATIVE,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
+								DistrictManager.buildDistrict(new Administrative(new Coordinates(squareY, squareX)));
 								ToolBox.setBuildDistricts(0);
 							}
 							else if(ToolBox.getBuildDistricts()==Constants.COMMERCIAL) {
-								playableGrid.getGame().buildDistrict(Constants.COMMERCIAL,playableGrid.getGame().getDistrictManager(),playableGrid.getGame().getDistrictMap(), squareX, squareY);
+								DistrictManager.buildDistrict(new Commercial(new Coordinates(squareY, squareX)));
 								ToolBox.setBuildDistricts(0);
 							}
 							else if(ToolBox.getDestroy()==1) {
-								playableGrid.getGame().destroyDistrict(playableGrid.getGame().getDistrictManager(), playableGrid.getGame().getDistrictMap(), squareX, squareY);
+								DistrictManager.destroyDistrict(new Coordinates(squareY, squareX));
 								ToolBox.setDestroy(0);
 							}
 						}
 						else {
-							System.out.println("Station :"+getGame().getRailRoadMap()[squareX][squareY].getTypeName());
+							System.out.println("Station :"+Game.getINSTANCE().getRailSquareMap()[squareX][squareY].getTypeName());
 							if(ToolBox.getBuildRailway()==Constants.STATION) {
-								playableGrid.getGame().buildStation(playableGrid.getGame().getRailWayManager(),playableGrid.getGame().getRailRoadMap(), squareX, squareY, playableGrid.getGame().getDistrictMap());
+								RailWayManager.addStation(squareY, squareX);
 								ToolBox.setBuildRailway(0);
 							}
-							else if(ToolBox.getDestroy()==1) {
-								playableGrid.getGame().destroyStation(playableGrid.getGame().getRailWayManager(), playableGrid.getGame().getRailRoadMap(), squareX, squareY);
-								ToolBox.setDestroy(0);
-							}
+//							else if(ToolBox.getDestroy()==1) {
+//								RailWayManager.destroyRailWay(startingStation, arrivalStation);
+//								ToolBox.setDestroy(0);
+//							}
 						}
 					}
 				}
@@ -342,7 +350,7 @@ public class MapCanvas extends Canvas {
 	public void initializeReleasedMouseListener(final PlayableGrid playableGrid) {
 		setOnMouseReleased(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
-				if(ToolBox.getBuildRailway()==Constants.RAILWAY && isDraggingRailroad()) {
+				if(ToolBox.getBuildRailway()==Constants.RAIL && isDraggingRailroad()) {
 					double mouseX = mouseEvent.getX();
 					double mouseY = mouseEvent.getY();
 
@@ -355,13 +363,13 @@ public class MapCanvas extends Canvas {
 						int squareX = (int)(positionX/GuiConstants.SQUARE_WIDTH);
 						int squareY = (int)(positionY/GuiConstants.SQUARE_HEIGHT);
 
-						if(playableGrid.getGame().getRailRoadMap()[squareX][squareY].getType()==Constants.STATION) {
+						if(Game.getINSTANCE().getRailSquareMap()[squareX][squareY].getType()==Constants.STATION) {
 							getEndingStation().setColumn(squareX);
 							getEndingStation().setRow(squareY);
 							if(getRailroad().contains(getEndingStation())) {
 								getRailroad().remove(getEndingStation());
 							}
-							getGame().buildRailway(getGame().getRailRoadMap(), getRailroad(), getStartingStation(), getEndingStation());
+							RailWayManager.addRailWay(getRailroad(), getStartingStation(), getEndingStation());
 						}
 						
 					}
@@ -376,7 +384,7 @@ public class MapCanvas extends Canvas {
 	public void initializeMousePressedListener(final PlayableGrid playableGrid) {
 		setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
-				if(ToolBox.getBuildRailway()==Constants.RAILWAY) {
+				if(ToolBox.getBuildRailway()==Constants.RAIL) {
 					double mouseX = mouseEvent.getX();
 					double mouseY = mouseEvent.getY();
 
@@ -388,7 +396,7 @@ public class MapCanvas extends Canvas {
 						//Calculate the coordinates of the released square
 						int squareX = (int)(positionX/GuiConstants.SQUARE_WIDTH);
 						int squareY = (int)(positionY/GuiConstants.SQUARE_HEIGHT);
-						if(playableGrid.getGame().getRailRoadMap()[squareX][squareY].getType()==Constants.STATION) {
+						if(Game.getINSTANCE().getRailSquareMap()[squareX][squareY].getType()==Constants.STATION) {
 							getStartingStation().setColumn(squareX);
 							getStartingStation().setRow(squareY);
 							setDraggingRailroad(true);
@@ -447,7 +455,7 @@ public class MapCanvas extends Canvas {
 						break;
 					case(Constants.COMMERCIAL): getMap().drawImage(getCommercialSprite(), positionX, positionY);
 						break;
-					case(Constants.RESIDENCE): getMap().drawImage(getResidentialSprite(), positionX, positionY);
+					case(Constants.RESIDENCIAL): getMap().drawImage(getResidentialSprite(), positionX, positionY);
 						break;
 				}
 			}
@@ -584,14 +592,6 @@ public class MapCanvas extends Canvas {
 
 	public void setDistrictSprite(Image districtSprite) {
 		this.districtSprite = districtSprite;
-	}
-
-	public Game getGame() {
-		return game;
-	}
-
-	public void setGame(Game game) {
-		this.game = game;
 	}
 
 	public Image getRailNetworkSquareSprite() {

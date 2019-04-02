@@ -1,19 +1,27 @@
 package data.railRoadData;
 
-import data.Constants;
+import java.util.HashMap;
 
-public class Station extends RailRoad{
+import data.Constants;
+import data.Coordinates;
+
+public class Station extends RailSquare{
 	private int nbUsers;
 	private int nbMaxUsers;
 	private int revenues;
+	private int[] direction;
+	private HashMap<Coordinates, RailWay> railWays;
 	
-	public Station(int nbUsers, int nbMaxUsers, int revenues) {
-		super();
+	public Station(Coordinates coordinates, int nbUsers, int nbMaxUsers, int revenues, int[] direction, HashMap<Coordinates, RailWay> railWays) {
+		super(Constants.STATION, Constants.STATION_NAME, coordinates);
 		this.nbUsers = nbUsers;
 		this.nbMaxUsers = nbMaxUsers;
 		this.revenues = revenues;
-		this.setTypeName("Station");
-		this.setType(Constants.STATION);
+		this.direction = direction;
+		this.railWays = railWays;
+	}
+	public Station(Coordinates coordinates, int[] direction) {
+		this(coordinates, 0, Constants.NB_USER_MAX_STATION, 0, direction, new HashMap<Coordinates, RailWay>());
 	}
 
 	public int getNbUsers() {
@@ -39,7 +47,16 @@ public class Station extends RailRoad{
 	public void setRevenues(int revenues) {
 		this.revenues = revenues;
 	}
-	
-	
-	
+	public HashMap<Coordinates, RailWay> getRailWays() {
+		return railWays;
+	}
+	public void setRailWays(HashMap<Coordinates, RailWay> railWays) {
+		this.railWays = railWays;
+	}
+	public int[] getDirection() {
+		return direction;
+	}
+	public void setDirection(int[] direction) {
+		this.direction = direction;
+	}
 }

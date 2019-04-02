@@ -4,13 +4,15 @@ import data.*;
 import data.districtData.Administrative;
 import data.districtData.Commercial;
 import data.districtData.District;
-import data.districtData.Residence;
+import data.districtData.Residencial;
 import data.districtData.Wilderness;
+import engine.Game;
+import gui_data.GuiConstants;
+import jdk.internal.dynalink.linker.GuardingDynamicLinker;
 
-public class DistrictManager {
-	private int nbResidentsInit =0;
+public final class DistrictManager {
 	
-	public void printDistrictMap(District[][] district, int width, int height) 
+	public static void printDistrictMap(District[][] district, int width, int height) 
 	{
 		
 		for(int i =0; i<width; i++) {
@@ -18,135 +20,126 @@ public class DistrictManager {
 				System.out.print("|"+district[i][j].getType()+"|");
 			}
 			System.out.println("\n------------------------------");
-		}
-		
-		Stats.printStats();
+		}		
+		System.out.println(Game.getINSTANCE().getStats().toString());
 		
 		
 	}
 	
-	public District[][] initDistrictMap(int width, int height)
-	{
-		District[][] district = new District[width][height]; 
 	
-		for(int column =0; column<height; column++) {
-			for(int row=0; row<width; row++) {
-				if(((column*height)+row+1) == ((height*height/2)+(width/2))) { // get the center of the map , +1 because it begins at 0
-					
+	
+	public static District[][] initDistrictMap()
+	{
+		District[][] district = new District[GuiConstants.SQUARE_PER_COLUMN][GuiConstants.SQUARE_PER_ROW]; 
+	
+		for(int column =0; column<GuiConstants.SQUARE_PER_ROW; column++) {
+			for(int row=0; row<GuiConstants.SQUARE_PER_COLUMN; row++) {
 					// put the town center at the center
-					district[column][row] = new Administrative(0, 30, 0, 30, 0, 1, 30, 30);
-					Stats.nbWorkersAdministrative+=((Administrative)district[column][row]).getCurrentNbWorkers();
-					Stats.nbAdministrative++;
 					
-				}else
-				district[column][row] = new Wilderness();
+					district[column][row] = new Wilderness(new Coordinates(row, column));
 			}
 		}
+		int y = GuiConstants.SQUARE_PER_ROW/2;
+		int x = GuiConstants.SQUARE_PER_COLUMN/2;
+		district[x][y] = new Administrative(new Coordinates(y, x));
 		
 		return district;
 	}
 	
-	public void addResidence(District[][] district, int width, int height) 
-	{
-		if(district[width][height].getType() != 0)
-			System.out.println("This spot isnt empty!");
-		else
-		{
-			district[width][height] = new Residence(nbResidentsInit, 0, 0, 30, 0, 1, 30, 30);
-			Stats.nbHab+=((Residence)district[width][height]).getNbHab();
-			Stats.nbResidence++;
+	public static void incrementNbAdministrative() {
+		Game.getINSTANCE().getStats().setNbAdministrative(Game.getINSTANCE().getStats().getNbAdministrative()+1);
+	}
+	public static void incrementNbCommercial() {
+		Game.getINSTANCE().getStats().setNbCommercial(Game.getINSTANCE().getStats().getNbCommercial()+1);
+	}
+	public static void incrementNbResidencial() {
+		Game.getINSTANCE().getStats().setNbResidencial(Game.getINSTANCE().getStats().getNbResidencial()+1);
+	}
+	public static void decrementNbAdministrative() {
+		Game.getINSTANCE().getStats().setNbAdministrative(Game.getINSTANCE().getStats().getNbAdministrative()-1);
+	}
+	public static void decrementNbCommercial() {
+		Game.getINSTANCE().getStats().setNbCommercial(Game.getINSTANCE().getStats().getNbCommercial()-1);
+	}
+	public static void decrementNbResidencial() {
+		Game.getINSTANCE().getStats().setNbResidencial(Game.getINSTANCE().getStats().getNbResidencial()-1);
+	}
+	
+	
+	public static void buildDistrict(District district) {
+		if(Game.getINSTANCE().getDistrictMap()[district.getCoordinates().getColumn()][district.getCoordinates().getRow()].getType() != 0) {	
+			if (Constants.DEBUG_DISTRICT) {
+				System.out.println("This spot isnt empty!");
+			}
+		}
+		else {
+			Game.getINSTANCE().getDistrictMap()[district.getCoordinates().getColumn()][district.getCoordinates().getRow()] = district;
+			switch (district.getType()) {
+			case Constants.RESIDENCIAL:
+				incrementNbResidencial();
+				if (Constants.DEBUG_DISTRICT) System.out.println("Add residencial done");
+				
+				break;
+				
+			case Constants.ADMINISTRATIVE:
+				incrementNbAdministrative();
+				if (Constants.DEBUG_DISTRICT) System.out.println("Add administrative done");
+				break;
+
+			case Constants.COMMERCIAL: 
+				incrementNbCommercial();
+				if (Constants.DEBUG_DISTRICT) System.out.println("Add commercial done");
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
+	public static void destroyDistrict(Coordinates coordinates) {
+		switch (Game.getINSTANCE().getDistrictMap()[coordinates.getColumn()][coordinates.getRow()].getType()) {
+		case Constants.RESIDENCIAL:
+			decrementNbResidencial();
+			if (Constants.DEBUG_DISTRICT) System.out.println("Destroy residencial done");
 			
-			System.out.println("nbHab: "+Stats.nbHab);
-		}	
-	}
-	
-	public void destroyResidence(District[][] district, int width, int height) 
-	{
-		if(district[width][height].getType() != 2)
-			System.out.println("This spot isnt a Residence!");
-		else
-		{
-			Stats.nbResidence--;
-			Stats.nbHab -= ((Residence) district[width][height]).getNbHab(); //voir pour virer le cast
-			district[width][height] = new Wilderness();
-			System.out.println("nbHab: "+Stats.nbHab);
+			break;
 			
+		case Constants.ADMINISTRATIVE:
+			decrementNbAdministrative();
+			if (Constants.DEBUG_DISTRICT) System.out.println("Destroy administrative done");
+			break;
+
+		case Constants.COMMERCIAL: 
+			decrementNbCommercial();
+			if (Constants.DEBUG_DISTRICT) System.out.println("Destroy commercial done");
+			break;
+		default:
+			break;
 		}
-	}
-	
-	public void addAdministrative(District[][] district, int width, int height) {
-		if(district[width][height].getType() != 0)
-			System.out.println("This spot isnt empty!");
-		else
-		{
-			district[width][height] = new Administrative(0, 30, 0, 30, 0, 1, 30, 30);
-			Stats.nbWorkersAdministrative+=((Administrative)district[width][height]).getCurrentNbWorkers();
-			Stats.nbAdministrative++;
-		}	
-	}
-	
-	public void destroyAdministrative(District[][] district, int width, int height) {
-		if(district[width][height].getType() != 1)
-			System.out.println("This spot isnt an Adminitrative District!");
-		else
-		{
-			Stats.nbAdministrative--;
-			Stats.nbWorkersAdministrative-=((Administrative)district[width][height]).getCurrentNbWorkers();
-			district[width][height] = new Wilderness();
-		}
-	}
-	
-	public void addCommercial(District[][] district, int width, int height) {
-		if(district[width][height].getType() != 0)
-			System.out.println("This spot isnt empty!");
-		else
-		{
-			district[width][height] = new Commercial(0, 30, 0, 1, 30, 30);
-			Stats.nbWorkersCommercial+=((Commercial)district[width][height]).getCurrentNbWorkers();
-			Stats.nbCommercial++;
-		}	
-	}
-	
-	public void destroyCommercial(District[][] district, int width, int height) {
-		if(district[width][height].getType() != 3)
-			System.out.println("This spot isnt a Commercial District!");
-		else
-		{
-			Stats.nbCommercial--;
-			Stats.nbWorkersCommercial-=((Commercial)district[width][height]).getCurrentNbWorkers();
-			district[width][height] = new Wilderness();
-		}
-	}
-	
-	public void updateDistrict(District[][] district, int width, int height) {
-		int maxAdministrativeWorkerCount=0;
-		int maxCommercialWorkerCount=0;
-		int maxResidentCount=0;
+		Game.getINSTANCE().getDistrictMap()[coordinates.getColumn()][coordinates.getRow()] = new Wilderness(coordinates);
 		
-		for(int column =0; column<height; column++) {
-			for(int row=0; row<width; row++) {
+	}
+	
+
+	
+	public static void updateDistrict(District[][] district) {
+		for(int column =0; column<GuiConstants.SQUARE_PER_ROW; column++) {
+			for(int row=0; row<GuiConstants.SQUARE_PER_COLUMN; row++) {
 				switch(district[column][row].getTypeName()) {
 					case "Residence" : 
-						((Residence)district[column][row]).incrementTurnCount();
-						maxResidentCount+=((Residence)district[column][row]).getNbResidentMax();
+						((Residencial)district[column][row]).setTurnCount(((Residencial)district[column][row]).getTurnCount());
 						break;
 					case "Administrative" :
-						((Administrative)district[column][row]).incrementTurnCount();
-						maxAdministrativeWorkerCount+=((Administrative)district[column][row]).getNbMaxWorkers();
+						((Administrative)district[column][row]).setTurnCount(((Administrative)district[column][row]).getTurnCount());
 						break;
 					case "Commercial" :
-						((Commercial)district[column][row]).incrementTurnCount();
-						maxCommercialWorkerCount+=((Commercial)district[column][row]).getNbMaxWorkers();
+						((Commercial)district[column][row]).setTurnCount(((Commercial)district[column][row]).getTurnCount());
 						break;
 					case "Wilderness" :
 						break;
 				}
 			}
 		}
-		
-		Stats.nbMaxWorkersAdministrative = maxAdministrativeWorkerCount;
-		Stats.nbMaxWorkersCommercial = maxCommercialWorkerCount;
-		Stats.nbMaxHab = maxResidentCount;
 	}
 	
 

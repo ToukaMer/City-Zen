@@ -1,7 +1,6 @@
 package gui;
 	
 import java.awt.Dimension;
-//import javafx.scene.paint.Color;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

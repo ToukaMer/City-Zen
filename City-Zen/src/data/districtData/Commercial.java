@@ -1,113 +1,61 @@
 package data.districtData;
 
+import java.util.HashMap;
+
 import data.Constants;
-import data.Stats;
+import data.Coordinates;
+import data.railRoadData.RailWay;
 
 public class Commercial extends District{
 	private int nbMaxWorkers=0;
 	private int currentNbWorkers=0;
-	private int turnCount=0;
-	 private int inConstruction;
-	 private int constructionTime;
-	 private int constructionTimeLeft;
-	 
-
+	private HashMap<District, RailWay> railways;
+	private boolean station;
 	
-	 public Commercial(int nbMaxWorkers, int currentNbWorkers, int turnCount, int inConstruction, int constructionTime,
-			int constructionTimeLeft) {
-		super();
-		this.setType(Constants.COMMERCIAL);
-		this.setTypeName("Commercial");
+	public Commercial(int price, int revenues, int usingTime, int satisfaction,
+			Coordinates coordinates, boolean inConstruction, int constructionTime, int constructionTimeLeft,
+			int turnCount, int nbMaxWorkers, int currentNbWorkers,
+			HashMap<District, RailWay> railways, boolean station) {
+		super(Constants.COMMERCIAL, Constants.COMMERCIAL_NAME, price, revenues, usingTime, satisfaction, coordinates, inConstruction, constructionTime,
+				constructionTimeLeft, turnCount);
 		this.nbMaxWorkers = nbMaxWorkers;
 		this.currentNbWorkers = currentNbWorkers;
-		this.turnCount = turnCount;
-		this.inConstruction = inConstruction;
-		this.constructionTime = constructionTime;
-		this.constructionTimeLeft = constructionTimeLeft;
+		this.railways = railways;
+		this.station = station;
 	}
-
-	public void decrementconstructionTimeLeft() {
-			constructionTimeLeft --;
-		}
-	 
-	public int getInConstruction() {
-		return inConstruction;
-	}
-
-
-	public void setInConstruction(int inConstruction) {
-		this.inConstruction = inConstruction;
-	}
-
-
-	public int getConstructionTime() {
-		return constructionTime;
-	}
-
-
-	public void setConstructionTime(int constructionTime) {
-		this.constructionTime = constructionTime;
-	}
-
-
-	public int getconstructionTimeLeft() {
-		return constructionTimeLeft;
-	}
-
-
-	public void setconstructionTimeLeft(int constructionTimeLeft) {
-		this.constructionTimeLeft = constructionTimeLeft;
+	public Commercial(Coordinates coordinates) {
+		this(Constants.COMMERCIAL_PRICE, Constants.COMMERCIAL_REVENUES, Constants.COMMERCIAL_USING_TIME, 
+				Constants.COMMERCIAL_SATISFACTION, coordinates, true, Constants.COMMERCIAL_CONSTRUCTION_TIME,
+				Constants.COMMERCIAL_CONSTRUCTION_TIME_LEFT,  Constants.COMMERCIAL_TURN_COUNT, 
+				Constants.MAX_NUMBER_OF_COMMERCIAL_WORKERS, 0,
+				new HashMap<District, RailWay>(), false);
 	}
 	
-	public int getTurnCount() {
-		return turnCount;
-	}
-
-	public void setTurnCount(int turnCount) {
-		this.turnCount = turnCount;
-	}
-	
-	public void incrementTurnCount() {
-		turnCount += 1;
-		/*if((turnCount%5)==0) //for testing only
-			incrementNbWorkers();*/
-	}
-	
-	public void incrementNbWorkers() {
-		if(currentNbWorkers<nbMaxWorkers)
-		{
-			currentNbWorkers += 1;
-			Stats.nbWorkersCommercial++;
-		}
-		
-	}
-	
-	public void decrementNbWorkers() {
-		if(currentNbWorkers>0)
-		{
-			currentNbWorkers -= 1;
-			Stats.nbWorkersCommercial--;
-		}
-		
-	}
-
 	public int getNbMaxWorkers() {
 		return nbMaxWorkers;
 	}
-
 	public void setNbMaxWorkers(int nbMaxWorkers) {
 		this.nbMaxWorkers = nbMaxWorkers;
 	}
-
 	public int getCurrentNbWorkers() {
 		return currentNbWorkers;
 	}
-
-	public void setCurrentNbWorkers(int currentHab) {
-		this.currentNbWorkers = currentHab;
+	public void setCurrentNbWorkers(int currentNbWorkers) {
+		this.currentNbWorkers = currentNbWorkers;
 	}
-	
-	
+	public HashMap<District, RailWay> getRailways() {
+		return railways;
+	}
+	public void setRailways(HashMap<District, RailWay> railways) {
+		this.railways = railways;
+	}
+	public boolean isStation() {
+		return station;
+	}
+	public void setStation(boolean station) {
+		this.station = station;
+	}
+	 
 	
 	
 }

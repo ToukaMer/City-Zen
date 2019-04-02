@@ -93,7 +93,7 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 				}
-				setBuildDistricts(Constants.RESIDENCE);
+				setBuildDistricts(Constants.RESIDENCIAL);
 		    }
 		});
 	}
@@ -156,7 +156,7 @@ public class ToolBox extends VBox{
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
 				}
 				setBuildDistricts(0);
-				setBuildRailway(Constants.RAILWAY);
+				setBuildRailway(Constants.RAIL);
 		    }
 		});
 	}
