@@ -23,6 +23,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 public class MapCanvas extends Canvas {
 
@@ -34,8 +35,11 @@ public class MapCanvas extends Canvas {
 	private int numberOfSquares;
 	private int currentMap;
 	private boolean displayGrid;
-	private Coordinates mouseOnSquare;
+	private Coordinates mouseSquare;
+	private MousePosition mouseSquarePointer;
 	private MousePosition movingMouse;
+	private boolean oneSquareSelected;
+	private Coordinates selectedSquare;
 	
 	private Image districtSprite;
 	private Image railNetworkSquareSprite;
@@ -44,11 +48,13 @@ public class MapCanvas extends Canvas {
 	private Image commercialSprite;
 	private Image stationSprite;
 	private Image gridSprite;
+	private Image selectedSquareSprite;
 	
 	private Image railNorthDirectionSprite;
 	private Image railSouthDirectionSprite;
 	private Image railEastDirectionSprite;
 	private Image railWestDirectionSprite;
+	private Image railCenterDirectionSprite;
 	
 	private ArrayList<Coordinates> railroad;
 	private Coordinates startingStation;
@@ -65,7 +71,10 @@ public class MapCanvas extends Canvas {
 		setCameraPosition(playableGrid.getCameraPosition());
 		
 		setMovingMouse(new MousePosition());
-		setMouseOnSquare(new Coordinates());
+		setMouseSquarePointer(new MousePosition());
+		setMouseSquare(new Coordinates());
+		setSelectedSquare(new Coordinates());
+		setOneSquareSelected(false);
 		setStartingStation(new Coordinates());
 		setEndingStation(new Coordinates());
 		setRailroad(new ArrayList<Coordinates>());
@@ -94,7 +103,9 @@ public class MapCanvas extends Canvas {
 		setRailSouthDirectionSprite(new Image(getClass().getResource(SpritePaths.RAIL_SOUTH_SPRITE).toString()));
 		setRailEastDirectionSprite(new Image(getClass().getResource(SpritePaths.RAIL_EAST_SPRITE).toString()));
 		setRailWestDirectionSprite(new Image(getClass().getResource(SpritePaths.RAIL_WEST_SPRITE).toString()));
+		setRailCenterDirectionSprite(new Image(getClass().getResource(SpritePaths.RAIL_CENTER_SPRITE).toString()));
 		setGridSprite(new Image(getClass().getResource(SpritePaths.GRID_SPRITE).toString()));
+		setSelectedSquareSprite(new Image(getClass().getResource(SpritePaths.SELECTED_SQUARE_SPRITE).toString()));
 	}
 	public void animatedMap(final PlayableGrid playableGrid) {
 		new AnimationTimer() {
@@ -208,12 +219,20 @@ public class MapCanvas extends Canvas {
 					currentRow = firstRow;
 					currentColumn = firstColumn;
 				}
+				if(isOneSquareSelected()) {
+					if(getSelectedSquare().getColumn() >= firstColumn && getSelectedSquare().getColumn() < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
+						if(getSelectedSquare().getRow() >= firstRow && getSelectedSquare().getColumn() < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
+							double positionX = getSelectedSquare().getColumn()*GuiConstants.SQUARE_WIDTH - getCameraPosition().getX();
+				            double positionY = getSelectedSquare().getRow()*GuiConstants.SQUARE_HEIGHT - getCameraPosition().getY();
+							getMap().drawImage(getSelectedSquareSprite(), positionX, positionY);
+						}
+					}
+				}
 				initializeSquareClicks(firstRow, firstColumn, rowModulus, columnModulus, playableGrid);
 				displayOverviewBuilding();
 			}
 		}.start();
 	}
-	
 	public void displayBackgroundMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
 		if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
 			getMap().drawImage(getDistrictSprite(), columnPosition, rowPosition);
@@ -222,7 +241,6 @@ public class MapCanvas extends Canvas {
 			getMap().drawImage(getRailNetworkSquareSprite(), columnPosition, rowPosition);
 		}
 	}
-	
 	public void displayDistrictMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
 		
 		if(Game.getINSTANCE().getDistrictMap()[currentColumn][currentRow].getType()==Constants.RESIDENCIAL) {
@@ -287,7 +305,8 @@ public class MapCanvas extends Canvas {
 
 					if(squareX < GuiConstants.SQUARE_PER_ROW && squareY < GuiConstants.SQUARE_PER_COLUMN) {
 						System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
-						
+						setOneSquareSelected(true);
+						setSelectedSquare(new Coordinates(squareY, squareX));
 						if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
 							System.out.println("Quartier :"+Game.getINSTANCE().getDistrictMap()[squareX][squareY].getTypeName());
 							if(ToolBox.getBuildDistricts()==Constants.RESIDENCIAL) {
@@ -323,7 +342,6 @@ public class MapCanvas extends Canvas {
 			}
 		});
 	}
-	
 	public void initializeMovingMouseListener() {
 		setOnMouseMoved(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
@@ -336,17 +354,18 @@ public class MapCanvas extends Canvas {
 				if(positionX >= 0 && positionX <= GuiConstants.SQUARE_PER_COLUMN*GuiConstants.SQUARE_WIDTH && positionY >= 0 && positionY <= GuiConstants.SQUARE_PER_ROW*GuiConstants.SQUARE_HEIGHT) {
 					int squareX = (int)(positionX/GuiConstants.SQUARE_WIDTH);
 					int squareY = (int)(positionY/GuiConstants.SQUARE_HEIGHT);
-					getMouseOnSquare().setColumn(squareX);
-					getMouseOnSquare().setRow(squareY);
+					getMouseSquare().setColumn(squareX);
+					getMouseSquare().setRow(squareY);
 				}
 				else {
-					getMouseOnSquare().setColumn(-1);
-					getMouseOnSquare().setRow(-1);
+					getMouseSquare().setColumn(-1);
+					getMouseSquare().setRow(-1);
 				}
+				getMouseSquarePointer().setX(getMouseSquare().getColumn()*GuiConstants.SQUARE_WIDTH - getCameraPosition().getX());
+	            getMouseSquarePointer().setY(getMouseSquare().getRow()*GuiConstants.SQUARE_HEIGHT - getCameraPosition().getY());
 			}
 		});
 	}
-	
 	public void initializeReleasedMouseListener(final PlayableGrid playableGrid) {
 		setOnMouseReleased(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
@@ -380,7 +399,6 @@ public class MapCanvas extends Canvas {
 			}
 		});
 	}
-	
 	public void initializeMousePressedListener(final PlayableGrid playableGrid) {
 		setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
@@ -409,7 +427,6 @@ public class MapCanvas extends Canvas {
 			}
 		});
 	}
-	
 	public void initializeDraggingMouseListener() {
 		setOnMouseDragged(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
@@ -443,33 +460,42 @@ public class MapCanvas extends Canvas {
 			}
 		});
 	}
-	
 	public void displayOverviewBuilding() {
-        if(getMouseOnSquare().getColumn()>=0 && getMouseOnSquare().getRow()>=0) {
-            double positionX = getMouseOnSquare().getColumn()*GuiConstants.SQUARE_WIDTH - getCameraPosition().getX();
-            double positionY = getMouseOnSquare().getRow()*GuiConstants.SQUARE_HEIGHT - getCameraPosition().getY();
-            
+        if(getMouseSquare().getColumn()>=0 && getMouseSquare().getRow()>=0) {
+
+        	getGraphicsContext2D().setGlobalAlpha(0.5);
             if(ToolBox.getBuildDistricts()>0) {
 				switch(ToolBox.getBuildDistricts()) {
-					case(Constants.ADMINISTRATIVE): getMap().drawImage(getAdministrativeSprite(), positionX, positionY);
+					case(Constants.ADMINISTRATIVE): getMap().drawImage(getAdministrativeSprite(), getMouseSquarePointer().getX(), getMouseSquarePointer().getY());
 						break;
-					case(Constants.COMMERCIAL): getMap().drawImage(getCommercialSprite(), positionX, positionY);
+					case(Constants.COMMERCIAL): getMap().drawImage(getCommercialSprite(), getMouseSquarePointer().getX(), getMouseSquarePointer().getY());
 						break;
-					case(Constants.RESIDENCIAL): getMap().drawImage(getResidentialSprite(), positionX, positionY);
+					case(Constants.RESIDENCIAL): getMap().drawImage(getResidentialSprite(), getMouseSquarePointer().getX(), getMouseSquarePointer().getY());
 						break;
 				}
 			}
 			else if(ToolBox.getBuildRailway()>0) {
 				switch(ToolBox.getBuildRailway()) {
-					case(Constants.STATION): getMap().drawImage(getStationSprite(), positionX, positionY);
+					case(Constants.STATION): getMap().drawImage(getStationSprite(), getMouseSquarePointer().getX(), getMouseSquarePointer().getY());
 						break;
 				}
 			}
+			else {
+	        	getGraphicsContext2D().setGlobalAlpha(0.3);
+				getGraphicsContext2D().setFill(Color.WHITE);
+				getGraphicsContext2D().fillRect(getMouseSquarePointer().getX(), getMouseSquarePointer().getY(), (double)GuiConstants.SQUARE_WIDTH, (double)GuiConstants.SQUARE_HEIGHT);
+			}
+        	getGraphicsContext2D().setGlobalAlpha(1);
 		}
 	}
-	
 	public void displayOverviewRailroad() {
+		if(ToolBox.getBuildRailway() == Constants.RAIL && !isDraggingRailroad()) {
+        	getGraphicsContext2D().setGlobalAlpha(0.3);
+			getMap().drawImage(getRailCenterDirectionSprite(), getMouseSquarePointer().getX(), getMouseSquarePointer().getY());
+			getGraphicsContext2D().setGlobalAlpha(1);
+		}
 		if(isDraggingRailroad()) {
+        	getGraphicsContext2D().setGlobalAlpha(0.5);
         	if(!getRailroad().isEmpty()) {
         		Image imageFrom;
         		Image imageTo;
@@ -535,6 +561,7 @@ public class MapCanvas extends Canvas {
             		index++;
         		}
         	}
+        	getGraphicsContext2D().setGlobalAlpha(1);
         }
 	}
 	public int getCurrentMap() {
@@ -642,14 +669,6 @@ public class MapCanvas extends Canvas {
 		this.railroad = railroad;
 	}
 
-	public Coordinates getMouseOnSquare() {
-		return mouseOnSquare;
-	}
-
-	public void setMouseOnSquare(Coordinates mouseOnSquare) {
-		this.mouseOnSquare = mouseOnSquare;
-	}
-
 	public MousePosition getMovingMouse() {
 		return movingMouse;
 	}
@@ -729,6 +748,56 @@ public class MapCanvas extends Canvas {
 	public void setGridSprite(Image gridSprite) {
 		this.gridSprite = gridSprite;
 	}
+
+
+	public Image getRailCenterDirectionSprite() {
+		return railCenterDirectionSprite;
+	}
+
+	public void setRailCenterDirectionSprite(Image railCenterDirectionSprite) {
+		this.railCenterDirectionSprite = railCenterDirectionSprite;
+	}
+
+	public boolean isOneSquareSelected() {
+		return oneSquareSelected;
+	}
+
+	public void setOneSquareSelected(boolean oneSquareSelected) {
+		this.oneSquareSelected = oneSquareSelected;
+	}
+
+	public Coordinates getSelectedSquare() {
+		return selectedSquare;
+	}
+
+	public void setSelectedSquare(Coordinates selectedSquare) {
+		this.selectedSquare = selectedSquare;
+	}
+
+	public Image getSelectedSquareSprite() {
+		return selectedSquareSprite;
+	}
+
+	public void setSelectedSquareSprite(Image selectedSquareSprite) {
+		this.selectedSquareSprite = selectedSquareSprite;
+	}
+
+	public Coordinates getMouseSquare() {
+		return mouseSquare;
+	}
+
+	public void setMouseSquare(Coordinates mouseSquare) {
+		this.mouseSquare = mouseSquare;
+	}
+
+	public MousePosition getMouseSquarePointer() {
+		return mouseSquarePointer;
+	}
+
+	public void setMouseSquarePointer(MousePosition mouseSquarePointer) {
+		this.mouseSquarePointer = mouseSquarePointer;
+	}
+
 
 	
 	

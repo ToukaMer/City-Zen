@@ -74,7 +74,7 @@ public class ToolBox extends VBox{
 	}
 
 	public void initializeButtons(final Root root) {
-		initializeBuildResidentialButton(root);
+		initializeBuildResidencialButton(root);
 		initializeBuildCommercialButton(root);
 		initializeBuildAdministrativeButton(root);
 		initializeBuildStationButton(root);
@@ -83,7 +83,7 @@ public class ToolBox extends VBox{
 	}
 
 
-	public void initializeBuildResidentialButton(final Root root) {
+	public void initializeBuildResidencialButton(final Root root) {
 		setBuildResidentialButton(new Button());
 		getBuildResidentialButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.RESIDENTIAL_BUILD_ICON).toString())));
 		getBuildResidentialButton().getStyleClass().remove("button");
