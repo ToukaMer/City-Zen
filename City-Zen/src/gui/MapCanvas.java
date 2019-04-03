@@ -389,6 +389,7 @@ public class MapCanvas extends Canvas {
 								getRailroad().remove(getEndingStation());
 							}
 							RailWayManager.addRailWay(getRailroad(), getStartingStation(), getEndingStation());
+							RailWayManager.addRailWay(getRailroad(), getEndingStation(), getStartingStation());
 						}
 						
 					}

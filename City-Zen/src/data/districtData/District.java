@@ -1,6 +1,9 @@
 package data.districtData;
 
+import java.util.HashMap;
+
 import data.Coordinates;
+import data.districtData.TripPath;
 
 public class District {
 	 private int type;
@@ -14,10 +17,11 @@ public class District {
 	 private int constructionTime;
 	 private int constructionTimeLeft;
 	 private int turnCount;
+	 private HashMap<Coordinates, TripPath> tripPaths;
 	 
 	 public District(int type, String typeName, int price, int revenues, int usingTime, int satisfaction,
 			 Coordinates coordinates, boolean inConstruction, int constructionTime,
-			 int constructionTimeLeft, int turnCount){
+			 int constructionTimeLeft, int turnCount, HashMap<Coordinates, TripPath> tripPaths){
 		this.type = type;
 		this.typeName = typeName;
 		this.revenues = revenues;
@@ -28,6 +32,14 @@ public class District {
 		this.constructionTime = constructionTime;
 		this.constructionTimeLeft = constructionTimeLeft;
 		this.turnCount = turnCount;
+		this.tripPaths = tripPaths;
+	 }
+	 
+	 public District(int type, String typeName, int price, int revenues, int usingTime, int satisfaction,
+			 Coordinates coordinates, boolean inConstruction, int constructionTime,
+			 int constructionTimeLeft, int turnCount){
+		 this(type, typeName, price, revenues, usingTime, satisfaction, coordinates, inConstruction, constructionTime,
+				 constructionTimeLeft, turnCount, new HashMap<Coordinates, TripPath>());
 	 }
 	 
 	public Coordinates getCoordinates() {
@@ -111,6 +123,14 @@ public class District {
 
 	public void setTurnCount(int turnCount) {
 		this.turnCount = turnCount;
+	}
+
+	public HashMap<Coordinates, TripPath> getTripPaths() {
+		return tripPaths;
+	}
+
+	public void setTripPaths(HashMap<Coordinates, TripPath> tripPaths) {
+		this.tripPaths = tripPaths;
 	}
 	 
 }

@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import data.*;
+import data.districtData.TripPath;
 import data.railRoadData.NotRailed;
 import data.railRoadData.Rail;
 import data.railRoadData.RailSquare;
@@ -190,6 +191,12 @@ public final class RailWayManager
 
 					RailWay railWay = new RailWay(coordinates, Constants.RAIL_TIME*coordinates.size());
 					((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getRailWays().put(stationArrivee, railWay);
+					if(Game.getINSTANCE().getDistrictMap()[stationDepart.getColumn()][stationDepart.getRow()].getTripPaths().containsKey(stationDepart)) {
+						if(railWay.getTripTime() < Game.getINSTANCE().getDistrictMap()[stationDepart.getColumn()][stationDepart.getRow()].getTripPaths().get(stationArrivee).getTripTime()) {
+							TripPath tripPath = new TripPath(coordinates, railWay.getTripTime());
+							Game.getINSTANCE().getDistrictMap()[stationDepart.getColumn()][stationDepart.getRow()].getTripPaths().put(stationArrivee, tripPath);
+						}
+					}
 				}
 			}
 			else if(!validRailWay){
