@@ -140,13 +140,13 @@ public class Stats {
 	}
 	@Override
 	public String toString() {
-		return "Stats [money=" + money + ", monthlyRevenues=" + monthlyRevenues + ", monthlyExpences=" + monthlyExpences
-				+ ", nbHab=" + nbHab + ", nbMaxHab=" + nbMaxHab + ", nbWorkersAdministrative=" + nbWorkersAdministrative
-				+ ", nbWorkersCommercial=" + nbWorkersCommercial + ", nbResidencial=" + nbResidencial
-				+ ", nbCommercial=" + nbCommercial + ", nbAdministrative=" + nbAdministrative + ", nbStations="
-				+ nbStations + ", maxMoney=" + maxMoney + ", gainsPerCommercialWorker=" + gainsPerCommercialWorker
-				+ ", costsPerAdministrative=" + costsPerAdministrative + ", costsPerAdministrativeWorker="
-				+ costsPerAdministrativeWorker + "]";
+		return money + "" + monthlyRevenues + "_" + monthlyExpences
+				+ "_" + nbHab + "_" + nbMaxHab + "_" + nbWorkersAdministrative
+				+ "_" + nbWorkersCommercial + "_" + nbResidencial
+				+ ", nbCommercial=" + nbCommercial + "_" + nbAdministrative + "_"
+				+ nbStations + "_" + maxMoney + "_" + gainsPerCommercialWorker
+				+ "_" + costsPerAdministrative + "_"
+				+ costsPerAdministrativeWorker ;
 	}
 	
 	
