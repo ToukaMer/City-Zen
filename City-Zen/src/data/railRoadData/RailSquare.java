@@ -2,7 +2,7 @@ package data.railRoadData;
 
 import data.Coordinates;
 
-public class RailSquare {
+public abstract class RailSquare {
 	private int type;
 	private String typeName;
 	private Coordinates coordinates;

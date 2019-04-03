@@ -22,6 +22,17 @@ public class RailWay{
 	public RailWay(ArrayList<Coordinates> rails, int tripTime) {
 		this(new ArrayList<Coordinates>(), tripTime, 0);
 	}
+	
+	public String toString_rails_list() {
+		String data = new String();
+		for (Coordinates temp : rails) {
+			data.concat(temp.toString());
+		}
+		data.concat("\n");
+		data.concat(String.valueOf(tripTime));
+		data.concat("\n");
+		return data;
+	}
 
 	public ArrayList<Coordinates> getRails() {
 		return rails;
