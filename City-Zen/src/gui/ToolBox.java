@@ -25,15 +25,18 @@ public class ToolBox extends VBox{
 	private Button buildStationButton;
 	private Button buildRailWayButton;
 	private Button destroyButton;
+	private Button destroyRailwayButton;
 	private Tooltip buildResidentialTooltip;
 	private Tooltip buildCommercialTooltip;
 	private Tooltip buildAdministrativeTooltip;
 	private Tooltip destroyTooltip;
 	private Tooltip buildStationTooltip;
 	private Tooltip buildRailWayTooltip;
+	private Tooltip destroyRailwayTooltip;
 	private static int buildRailway;
 	private static int buildDistricts;
 	private static int destroy;
+	private static int destroyRailway;
 	private TilePane tilePane;
 
 	public ToolBox(double width, double height, Root root) {
@@ -80,6 +83,7 @@ public class ToolBox extends VBox{
 		initializeBuildStationButton(root);
 		initializeBuildRailWayButton(root);
 		initializeDestroyButton();
+		initializeDestroyRailwayButton();
 	}
 
 
@@ -173,6 +177,19 @@ public class ToolBox extends VBox{
 		});
 	}
 	
+	public void initializeDestroyRailwayButton() {
+		setDestroyRailwayButton(new Button());
+		getDestroyRailwayButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.DESTROY_RAILWAY_ICON).toString())));
+		getDestroyRailwayButton().getStyleClass().remove("button");
+		getDestroyRailwayButton().getStyleClass().add("toolBoxButton");
+		getDestroyRailwayButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent mouseEvent) {
+				setDestroy(0);
+				setDestroyRailway(1);
+		    }
+		});
+	}
+	
 	public void initializeBuildResidentialTooltip() {
 		setBuildResidentialTooltip(new Tooltip());
 		getBuildResidentialTooltip().setText("Build a residential");
@@ -209,6 +226,12 @@ public class ToolBox extends VBox{
 		getDestroyButton().setTooltip(destroyTooltip);
 	}
 	
+	public void initializeDestroyRailwayTooltip() {
+		setDestroyRailwayTooltip(new Tooltip());
+		getDestroyRailwayTooltip().setText("Destroy a railway");
+		getDestroyRailwayButton().setTooltip(getDestroyRailwayTooltip());
+	}
+	
 	public void initializeTooltips() {
 		initializeBuildResidentialTooltip();
 		initializeBuildCommercialTooltip();
@@ -216,6 +239,7 @@ public class ToolBox extends VBox{
 		initializeBuildStationTooltip();
 		initializeBuildRailWayTooltip();
 		initializeDestroyTooltip();
+		initializeDestroyRailwayTooltip();
 	}
 		
 	public void initializeTitleLabel() {
@@ -387,4 +411,27 @@ public class ToolBox extends VBox{
 		this.buildRailWayTooltip = buildRailWayTooltip;
 	}
 	
+	public static int getDestroyRailway() {
+		return destroyRailway;
+	}
+
+	public static void setDestroyRailway(int destroyRailway) {
+		ToolBox.destroyRailway = destroyRailway;
+	}
+
+	public Button getDestroyRailwayButton() {
+		return destroyRailwayButton;
+	}
+
+	public void setDestroyRailwayButton(Button destroyRailwayButton) {
+		this.destroyRailwayButton = destroyRailwayButton;
+	}
+
+	public Tooltip getDestroyRailwayTooltip() {
+		return destroyRailwayTooltip;
+	}
+
+	public void setDestroyRailwayTooltip(Tooltip destroyRailwayTooltip) {
+		this.destroyRailwayTooltip = destroyRailwayTooltip;
+	}
 }
