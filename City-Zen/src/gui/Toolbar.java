@@ -18,7 +18,7 @@ public class Toolbar extends HBox {
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 		
-		setToolbarLeft(new ToolbarLeft(getBlockSize().getWidth()*TOOLBAR_LEFT_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT));
+		setToolbarLeft(new ToolbarLeft(getBlockSize().getWidth()*TOOLBAR_LEFT_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT, root));
 		setToolbarRight(new ToolbarRight(getBlockSize().getWidth()*TOOLBAR_RIGHT_WIDTH, getBlockSize().getHeight()*MAX_HEIGHT, root));
 		
 		getChildren().add(getToolbarLeft());
