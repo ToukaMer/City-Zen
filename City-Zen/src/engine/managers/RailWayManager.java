@@ -56,8 +56,16 @@ public final class RailWayManager
 				&& ((Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()].getType() 
 						== Constants.STATION))) {
 			boolean stationInTheMiddle = false;
+			boolean validRailWay = true;
 			for(Coordinates current : coord) {//checking if there is something in the way
-				if(Game.getINSTANCE().getRailSquareMap()[current.getColumn()][current.getRow()].getType() == Constants.STATION) {
+				if(current.getColumn() < 0 || current.getColumn() >= GuiConstants.SQUARE_PER_COLUMN) {
+					validRailWay = false;
+				}
+				else if(current.getRow() < 0 || current.getRow() >= GuiConstants.SQUARE_PER_ROW) {
+					validRailWay = false;
+				}
+				else if(Game.getINSTANCE().getRailSquareMap()[current.getColumn()][current.getRow()].getType() == Constants.STATION) {
+					//If there is a station in the way, split it in two parts and create a line going to the station and coming from it
 					stationInTheMiddle = true;
 					ArrayList<Coordinates> firstPart = new ArrayList<Coordinates>();
 					ArrayList<Coordinates> secondPart = new ArrayList<Coordinates>();
@@ -69,13 +77,12 @@ public final class RailWayManager
 							secondPart.add(coord.get(i));
 						}
 					}
-					//If there is a station in the way, split it in two parts and create a line going to the station and coming from it
 					addRailWay(firstPart, stationDepart, current);
 					addRailWay(secondPart, current, stationArrivee);
 				}
 			}
 			
-			if(!stationInTheMiddle) {
+			if(!stationInTheMiddle && validRailWay) {
 				if(((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getRailWays().containsKey(stationArrivee)) {
 					System.out.println("There is already a railway between those stations");
 				}
@@ -184,6 +191,9 @@ public final class RailWayManager
 					RailWay railWay = new RailWay(coordinates, Constants.RAIL_TIME*coordinates.size());
 					((Station)Game.getINSTANCE().getRailSquareMap()[stationDepart.getColumn()][stationDepart.getRow()]).getRailWays().put(stationArrivee, railWay);
 				}
+			}
+			else if(!validRailWay){
+				System.out.println("Invalid railway");
 			}
 		}
 	}

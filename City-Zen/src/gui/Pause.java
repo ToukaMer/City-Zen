@@ -1,67 +1,88 @@
 package gui;
 
-import javafx.event.ActionEvent;
+import gui_data.BlockSize;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class Pause extends VBox{
-	private boolean flip;
-	Button save;
-	Button load;
-	Button quit;
-	Button tuto;
-	VBox pauseMenu;
-	
-	public Pause() {
-		super();
-		this.flip = false;
-		save = new Button("save");
-		load = new Button("load");
-		quit = new Button("quit");
-		tuto = new Button("tuto");
 
-		pauseMenu = new VBox();
-		pauseMenu.getChildren().addAll(save, load, quit, tuto);
+	private BlockSize blockSize;
+
+	private Button backToGame;
+	private Button save;
+	private Button load;
+	private Button quit;
+	
+	public Pause(double width, double height) {
+		super();
+		setBlockSize(new BlockSize(width, height));
+		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
+
+		initializeButtons();
+		initializeBackToGame();
+		
+		getChildren().add(getBackToGame());
+		getChildren().add(getSave());
+		getChildren().add(getLoad());
+		getChildren().add(getQuit());
 		setVisible(false);
 	}
 	
-	public void toggle(){
-		if(!this.flip){
-			//show the game menu and change the state of the game to pause
+	public void initializeButtons() {
+		setBackToGame(new Button("Back to game"));
+		setSave(new Button("Save"));
+		setLoad(new Button("Load"));
+		setQuit(new Button("Quit game"));
+	}
+	
+	public void initializeBackToGame() {
+		getBackToGame().setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent mouseEvent) {
+				Root.getINSTANCE().switchToGame();
+		    }
+		});
+	}
+	
+	public Button getSave() {
+		return save;
+	}
 
-			System.out.println("show");
-			setVisible(true);
-			this.flip=true;
-			/*
-			save.setOnAction(new EventHandler<ActionEvent>() {
+	public void setSave(Button save) {
+		this.save = save;
+	}
 
-	            public void handle(ActionEvent event) {
-	                
-	            }
-	        });
-			
-			load.setOnAction(new EventHandler<ActionEvent>() {
+	public Button getLoad() {
+		return load;
+	}
 
-	            public void handle(ActionEvent event) {
-	                
-	            }
-	        });
-			
-			quit.setOnAction(new EventHandler<ActionEvent>() {
+	public void setLoad(Button load) {
+		this.load = load;
+	}
 
-	            public void handle(ActionEvent event) {
-	                
-	            }
-	        });
-			*/
-		}
-		else{
-			//hide the menu and resume the game
-			System.out.println("hide");
-			setVisible(false);
-			this.flip=false;
-			
-		}
+	public Button getQuit() {
+		return quit;
+	}
+
+	public void setQuit(Button quit) {
+		this.quit = quit;
+	}
+	
+
+	public BlockSize getBlockSize() {
+		return blockSize;
+	}
+
+	public void setBlockSize(BlockSize blockSize) {
+		this.blockSize = blockSize;
+	}
+
+	public Button getBackToGame() {
+		return backToGame;
+	}
+
+	public void setBackToGame(Button backToGame) {
+		this.backToGame = backToGame;
 	}
 }

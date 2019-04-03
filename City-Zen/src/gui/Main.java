@@ -36,7 +36,7 @@ public class Main extends Application {
 
 			primaryStage.setScene(scene);
 			
-			setRoot(new Root(getScreenSize().getWidth(), getScreenSize().getHeight()));
+			setRoot(Root.getINSTANCE(getScreenSize().getWidth(), getScreenSize().getHeight()));
 			root.getChildren().add(getRoot());
 			
 			primaryStage.show();

@@ -1,7 +1,6 @@
 package gui;
 
 import gui_data.BlockSize;
-import gui_data.GuiConstants;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -28,7 +27,7 @@ public class ToolbarLeft extends HBox {
 		getMenuButton().setText("Menu");
 		getMenuButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
-				root.getPause().toggle();
+				Root.getINSTANCE().switchToPause();
 		    }
 		});
 	}

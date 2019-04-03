@@ -48,7 +48,7 @@ public class ToolBox extends VBox{
 		
 		getTilePane().getChildren().add(getBuildAdministrativeButton());
 		getTilePane().getChildren().add(getBuildCommercialButton());
-		getTilePane().getChildren().add(getBuildResidentialButton());
+		getTilePane().getChildren().add(getBuildResidencialButton());
 		getTilePane().getChildren().add(getBuildStationButton());
 		getTilePane().getChildren().add(getBuildRailWayButton());
 		getTilePane().getChildren().add(getDestroyButton());
@@ -85,10 +85,10 @@ public class ToolBox extends VBox{
 
 	public void initializeBuildResidencialButton(final Root root) {
 		setBuildResidentialButton(new Button());
-		getBuildResidentialButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.RESIDENTIAL_BUILD_ICON).toString())));
-		getBuildResidentialButton().getStyleClass().remove("button");
-		getBuildResidentialButton().getStyleClass().add("toolBoxButton");
-		getBuildResidentialButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+		getBuildResidencialButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.RESIDENTIAL_BUILD_ICON).toString())));
+		getBuildResidencialButton().getStyleClass().remove("button");
+		getBuildResidencialButton().getStyleClass().add("toolBoxButton");
+		getBuildResidencialButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
@@ -176,7 +176,7 @@ public class ToolBox extends VBox{
 	public void initializeBuildResidentialTooltip() {
 		setBuildResidentialTooltip(new Tooltip());
 		getBuildResidentialTooltip().setText("Build a residential");
-		getBuildResidentialButton().setTooltip(buildResidentialTooltip);
+		getBuildResidencialButton().setTooltip(buildResidentialTooltip);
 	}
 	
 	public void initializeBuildCommercialTooltip() {
@@ -225,7 +225,7 @@ public class ToolBox extends VBox{
 		getTitleLabel().getStyleClass().add("toolBoxLabel");
 	}
 	
-	public Button getBuildResidentialButton() {
+	public Button getBuildResidencialButton() {
 		return buildResidentialButton;
 	}
 
