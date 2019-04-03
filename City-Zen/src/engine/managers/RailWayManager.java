@@ -3,7 +3,6 @@ package engine.managers;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import data.*;
 import data.districtData.TripPath;
@@ -325,12 +324,12 @@ public final class RailWayManager
 		}
 	}
 	
-	public static void destroyStation(int column, int row) {
-		if(Game.getINSTANCE().getRailSquareMap()[row][column].getType() == Constants.STATION) {
+	public static void destroyStation(int row, int column) {
+		if(Game.getINSTANCE().getRailSquareMap()[column][row].getType() == Constants.STATION) {
 			for(Entry<Coordinates, RailWay> entry : ((Station)Game.getINSTANCE().getRailSquareMap()[column][row]).getRailWays().entrySet()) {
 				destroyRailWay(new Coordinates(row, column), entry.getKey());
 			}
-			Game.getINSTANCE().getRailSquareMap()[row][column] = new NotRailed(new Coordinates(row, column));
+			Game.getINSTANCE().getRailSquareMap()[column][row] = new NotRailed(new Coordinates(row, column));
 			/***** FAIRE DIJKSTRA *****/
 		}
 		else {

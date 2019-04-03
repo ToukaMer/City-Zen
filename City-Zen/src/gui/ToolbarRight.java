@@ -1,5 +1,6 @@
 package gui;
 
+import data.Constants;
 import gui_data.BlockSize;
 import gui_data.GuiConstants;
 import javafx.event.EventHandler;
@@ -33,13 +34,19 @@ public class ToolbarRight extends HBox {
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
+					ToolBox.setDestroyDistrict(0);
+					ToolBox.setDestroyRailway(0);
+					ToolBox.setDestroyStation(0);
+					ToolBox.setBuildRailway(0);
 					ToolBox.setBuildDistricts(0);
-					ToolBox.setDestroy(0);
 				}
 				else if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
+					ToolBox.setDestroyDistrict(0);
+					ToolBox.setDestroyRailway(0);
+					ToolBox.setDestroyStation(0);
 					ToolBox.setBuildRailway(0);
-					ToolBox.setDestroy(0);
+					ToolBox.setBuildDistricts(0);
 				}
 		    }
 		});
@@ -52,12 +59,12 @@ public class ToolbarRight extends HBox {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().isDisplayGrid()) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setDisplayGrid(false);
 					ToolBox.setBuildDistricts(0);
-					ToolBox.setDestroy(0);
+					ToolBox.setDestroyDistrict(0);
 				}
 				else {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setDisplayGrid(true);
 					ToolBox.setBuildDistricts(0);
-					ToolBox.setDestroy(0);
+					ToolBox.setDestroyDistrict(0);
 				}
 		    }
 		});

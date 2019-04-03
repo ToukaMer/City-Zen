@@ -22,6 +22,7 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -297,47 +298,76 @@ public class MapCanvas extends Canvas {
 				double positionX = getCameraPosition().getX()+mouseX;
 				double positionY = getCameraPosition().getY()+mouseY;
 				
-				if(positionX >= 0 && positionX <= GuiConstants.SQUARE_PER_COLUMN*GuiConstants.SQUARE_WIDTH && positionY >= 0 && positionY <= GuiConstants.SQUARE_PER_ROW*GuiConstants.SQUARE_HEIGHT) {
-
-					//Calculate the coordinates of the clicked square
-					int squareX = (int)(positionX/GuiConstants.SQUARE_WIDTH);
-					int squareY = (int)(positionY/GuiConstants.SQUARE_HEIGHT);
-
-					if(squareX < GuiConstants.SQUARE_PER_ROW && squareY < GuiConstants.SQUARE_PER_COLUMN) {
-						System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
-						setOneSquareSelected(true);
-						setSelectedSquare(new Coordinates(squareY, squareX));
-						if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
-							System.out.println("Quartier :"+Game.getINSTANCE().getDistrictMap()[squareX][squareY].getTypeName());
-							if(ToolBox.getBuildDistricts()==Constants.RESIDENCIAL) {
-								DistrictManager.buildDistrict(new Residencial(new Coordinates(squareY, squareX)));
-								ToolBox.setBuildDistricts(0);
+				//If the click is a left click
+				if(mouseEvent.getButton() == MouseButton.PRIMARY) {
+					if(positionX >= 0 && positionX <= GuiConstants.SQUARE_PER_COLUMN*GuiConstants.SQUARE_WIDTH && positionY >= 0 && positionY <= GuiConstants.SQUARE_PER_ROW*GuiConstants.SQUARE_HEIGHT) {
+	
+						//Calculate the coordinates of the clicked square
+						int squareX = (int)(positionX/GuiConstants.SQUARE_WIDTH);
+						int squareY = (int)(positionY/GuiConstants.SQUARE_HEIGHT);
+	
+						if(squareX < GuiConstants.SQUARE_PER_ROW && squareY < GuiConstants.SQUARE_PER_COLUMN) {
+							System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
+							setOneSquareSelected(true);
+							setSelectedSquare(new Coordinates(squareY, squareX));
+							if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
+								System.out.println("Quartier :"+Game.getINSTANCE().getDistrictMap()[squareX][squareY].getTypeName());
+								if(ToolBox.getBuildDistricts()==Constants.RESIDENCIAL) {
+									DistrictManager.buildDistrict(new Residencial(new Coordinates(squareY, squareX)));
+									ToolBox.setBuildDistricts(0);
+								}
+								else if(ToolBox.getBuildDistricts()==Constants.ADMINISTRATIVE) {
+									DistrictManager.buildDistrict(new Administrative(new Coordinates(squareY, squareX)));
+									ToolBox.setBuildDistricts(0);
+								}
+								else if(ToolBox.getBuildDistricts()==Constants.COMMERCIAL) {
+									DistrictManager.buildDistrict(new Commercial(new Coordinates(squareY, squareX)));
+									ToolBox.setBuildDistricts(0);
+								}
+								else if(ToolBox.getDestroyDistrict() > 0) {
+									DistrictManager.destroyDistrict(new Coordinates(squareY, squareX));
+									ToolBox.setDestroyDistrict(0);
+								}
 							}
-							else if(ToolBox.getBuildDistricts()==Constants.ADMINISTRATIVE) {
-								DistrictManager.buildDistrict(new Administrative(new Coordinates(squareY, squareX)));
-								ToolBox.setBuildDistricts(0);
-							}
-							else if(ToolBox.getBuildDistricts()==Constants.COMMERCIAL) {
-								DistrictManager.buildDistrict(new Commercial(new Coordinates(squareY, squareX)));
-								ToolBox.setBuildDistricts(0);
-							}
-							else if(ToolBox.getDestroy()==1) {
-								DistrictManager.destroyDistrict(new Coordinates(squareY, squareX));
-								ToolBox.setDestroy(0);
+							else if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP){
+								System.out.println("Station :"+Game.getINSTANCE().getRailSquareMap()[squareX][squareY].getTypeName());
+								if(ToolBox.getBuildRailway()==Constants.STATION) {
+									RailWayManager.addStation(squareY, squareX);
+									ToolBox.setBuildRailway(0);
+								}
+								else if(ToolBox.getDestroyStation() > 0) {
+									RailWayManager.destroyStation(squareY, squareX);
+									ToolBox.setDestroyStation(0);
+								}
+	//							else if(ToolBox.getDestroy()==1) {
+	//								RailWayManager.destroyRailWay(startingStation, arrivalStation);
+	//								ToolBox.setDestroy(0);
+	//							}
 							}
 						}
 						else {
-							System.out.println("Station :"+Game.getINSTANCE().getRailSquareMap()[squareX][squareY].getTypeName());
-							if(ToolBox.getBuildRailway()==Constants.STATION) {
-								RailWayManager.addStation(squareY, squareX);
-								ToolBox.setBuildRailway(0);
-							}
-//							else if(ToolBox.getDestroy()==1) {
-//								RailWayManager.destroyRailWay(startingStation, arrivalStation);
-//								ToolBox.setDestroy(0);
-//							}
+							ToolBox.setDestroyDistrict(0);
+							ToolBox.setDestroyRailway(0);
+							ToolBox.setDestroyStation(0);
+							ToolBox.setBuildRailway(0);
+							ToolBox.setBuildDistricts(0);
 						}
 					}
+					else {
+						ToolBox.setDestroyDistrict(0);
+						ToolBox.setDestroyRailway(0);
+						ToolBox.setDestroyStation(0);
+						ToolBox.setBuildRailway(0);
+						ToolBox.setBuildDistricts(0);
+					}
+				}
+				//Else the click is a right click or a wheel click
+				else {
+					ToolBox.setDestroyDistrict(0);
+					ToolBox.setDestroyRailway(0);
+					ToolBox.setDestroyStation(0);
+					ToolBox.setBuildRailway(0);
+					ToolBox.setBuildDistricts(0);
 				}
 			}
 		});
@@ -389,7 +419,11 @@ public class MapCanvas extends Canvas {
 								getRailroad().remove(getEndingStation());
 							}
 							RailWayManager.addRailWay(getRailroad(), getStartingStation(), getEndingStation());
-							RailWayManager.addRailWay(getRailroad(), getEndingStation(), getStartingStation());
+							ArrayList<Coordinates> reversedRailroad = new ArrayList<Coordinates>();
+							for(int i = getRailroad().size()-1; i >= 0; i--) {
+								reversedRailroad.add(getRailroad().get(i));
+							}
+							RailWayManager.addRailWay(reversedRailroad, getEndingStation(), getStartingStation());
 						}
 						
 					}
@@ -480,6 +514,11 @@ public class MapCanvas extends Canvas {
 					case(Constants.STATION): getMap().drawImage(getStationSprite(), getMouseSquarePointer().getX(), getMouseSquarePointer().getY());
 						break;
 				}
+			}
+			else if(ToolBox.getDestroyDistrict() > 0 || ToolBox.getDestroyRailway() > 0 || ToolBox.getDestroyStation() > 0) {
+	        	getGraphicsContext2D().setGlobalAlpha(0.3);
+				getGraphicsContext2D().setFill(Color.RED);
+				getGraphicsContext2D().fillRect(getMouseSquarePointer().getX(), getMouseSquarePointer().getY(), (double)GuiConstants.SQUARE_WIDTH, (double)GuiConstants.SQUARE_HEIGHT);
 			}
 			else {
 	        	getGraphicsContext2D().setGlobalAlpha(0.3);

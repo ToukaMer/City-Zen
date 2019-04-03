@@ -117,7 +117,9 @@ public final class DistrictManager {
 			break;
 		}
 		Game.getINSTANCE().getDistrictMap()[coordinates.getColumn()][coordinates.getRow()] = new Wilderness(coordinates);
-		
+		if(Game.getINSTANCE().getRailSquareMap()[coordinates.getColumn()][coordinates.getRow()].getType() == Constants.STATION) {
+			RailWayManager.destroyStation(coordinates.getRow(), coordinates.getColumn());
+		}
 	}
 	
 

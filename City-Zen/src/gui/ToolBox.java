@@ -24,18 +24,21 @@ public class ToolBox extends VBox{
 	private Button buildAdministrativeButton;
 	private Button buildStationButton;
 	private Button buildRailWayButton;
-	private Button destroyButton;
+	private Button destroyDistrictButton;
+	private Button destroyStationButton;
 	private Button destroyRailwayButton;
-	private Tooltip buildResidentialTooltip;
+	private Tooltip buildResidencialTooltip;
 	private Tooltip buildCommercialTooltip;
 	private Tooltip buildAdministrativeTooltip;
-	private Tooltip destroyTooltip;
 	private Tooltip buildStationTooltip;
 	private Tooltip buildRailWayTooltip;
 	private Tooltip destroyRailwayTooltip;
+	private Tooltip destroyDistrictTooltip;
+	private Tooltip destroyStationTooltip;
 	private static int buildRailway;
 	private static int buildDistricts;
-	private static int destroy;
+	private static int destroyDistrict;
+	private static int destroyStation;
 	private static int destroyRailway;
 	private TilePane tilePane;
 
@@ -54,7 +57,9 @@ public class ToolBox extends VBox{
 		getTilePane().getChildren().add(getBuildResidencialButton());
 		getTilePane().getChildren().add(getBuildStationButton());
 		getTilePane().getChildren().add(getBuildRailWayButton());
-		getTilePane().getChildren().add(getDestroyButton());
+		getTilePane().getChildren().add(getDestroyDistrictButton());
+		getTilePane().getChildren().add(getDestroyStationButton());
+		getTilePane().getChildren().add(getDestroyRailwayButton());
 		
 		getChildren().add(getTitleLabel());
 		getChildren().add(getTilePane());
@@ -82,8 +87,9 @@ public class ToolBox extends VBox{
 		initializeBuildAdministrativeButton(root);
 		initializeBuildStationButton(root);
 		initializeBuildRailWayButton(root);
-		initializeDestroyButton();
+		initializeDestroyDistrictButton();
 		initializeDestroyRailwayButton();
+		initializeDestroyStationButton();
 	}
 
 
@@ -97,6 +103,10 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 				}
+				setDestroyDistrict(0);
+				setDestroyRailway(0);
+				setDestroyStation(0);
+				setBuildRailway(0);
 				setBuildDistricts(Constants.RESIDENCIAL);
 		    }
 		});
@@ -112,6 +122,10 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 				}
+				setDestroyDistrict(0);
+				setDestroyRailway(0);
+				setDestroyStation(0);
+				setBuildRailway(0);
 				setBuildDistricts(Constants.COMMERCIAL);
 		    }
 		});
@@ -127,6 +141,9 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 				}
+				setDestroyDistrict(0);
+				setDestroyRailway(0);
+				setDestroyStation(0);
 				setBuildRailway(0);
 				setBuildDistricts(Constants.ADMINISTRATIVE);
 		    }
@@ -143,6 +160,9 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
 				}
+				setDestroyDistrict(0);
+				setDestroyRailway(0);
+				setDestroyStation(0);
 				setBuildDistricts(0);
 				setBuildRailway(Constants.STATION);
 		    }
@@ -159,20 +179,49 @@ public class ToolBox extends VBox{
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
 				}
+				setDestroyDistrict(0);
+				setDestroyRailway(0);
+				setDestroyStation(0);
 				setBuildDistricts(0);
 				setBuildRailway(Constants.RAIL);
 		    }
 		});
 	}
 	
-	public void initializeDestroyButton() {
-		setDestroyButton(new Button());
-		getDestroyButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.DESTROY_ICON).toString())));
-		getDestroyButton().getStyleClass().remove("button");
-		getDestroyButton().getStyleClass().add("toolBoxButton");
-		getDestroyButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+	public void initializeDestroyDistrictButton() {
+		setDestroyDistrictButton(new Button());
+		getDestroyDistrictButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.DESTROY_ICON).toString())));
+		getDestroyDistrictButton().getStyleClass().remove("button");
+		getDestroyDistrictButton().getStyleClass().add("toolBoxButton");
+		getDestroyDistrictButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
-				setDestroy(1);
+				if(Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
+					Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
+				}
+				setDestroyDistrict(1);
+				setDestroyRailway(0);
+				setDestroyStation(0);
+				setBuildRailway(0);
+				setBuildDistricts(0);
+		    }
+		});
+	}
+	
+	public void initializeDestroyStationButton() {
+		setDestroyStationButton(new Button());
+		getDestroyStationButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.DESTROY_ICON).toString())));
+		getDestroyStationButton().getStyleClass().remove("button");
+		getDestroyStationButton().getStyleClass().add("toolBoxButton");
+		getDestroyStationButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent mouseEvent) {
+				if(Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
+					Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
+				}
+				setDestroyDistrict(0);
+				setDestroyRailway(0);
+				setDestroyStation(1);
+				setBuildRailway(0);
+				setBuildDistricts(0);
 		    }
 		});
 	}
@@ -184,16 +233,23 @@ public class ToolBox extends VBox{
 		getDestroyRailwayButton().getStyleClass().add("toolBoxButton");
 		getDestroyRailwayButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
-				setDestroy(0);
+				if(Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
+					Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
+				}
+				setDestroyDistrict(0);
 				setDestroyRailway(1);
+				setDestroyStation(0);
+				setBuildRailway(0);
+				setBuildDistricts(0);
+
 		    }
 		});
 	}
 	
-	public void initializeBuildResidentialTooltip() {
-		setBuildResidentialTooltip(new Tooltip());
-		getBuildResidentialTooltip().setText("Build a residential");
-		getBuildResidencialButton().setTooltip(buildResidentialTooltip);
+	public void initializeBuildResidencialTooltip() {
+		setBuildResidencialTooltip(new Tooltip());
+		getBuildResidencialTooltip().setText("Build a residential");
+		getBuildResidencialButton().setTooltip(buildResidencialTooltip);
 	}
 	
 	public void initializeBuildCommercialTooltip() {
@@ -211,19 +267,25 @@ public class ToolBox extends VBox{
 	public void initializeBuildStationTooltip() {
 		setBuildStationTooltip(new Tooltip());
 		getBuildStationTooltip().setText("Build a station");
-		getBuildStationButton().setTooltip(buildStationTooltip);
+		getBuildStationButton().setTooltip(getBuildStationTooltip());
+	}
+	
+	public void initializeDestroyStationTooltip() {
+		setDestroyStationTooltip(new Tooltip());
+		getDestroyStationTooltip().setText("Destroy a station");
+		getDestroyStationButton().setTooltip(getDestroyStationTooltip());
 	}
 	
 	public void initializeBuildRailWayTooltip() {
 		setBuildRailWayTooltip(new Tooltip());
-		getBuildRailWayTooltip().setText("Build an railway");
+		getBuildRailWayTooltip().setText("Build a railway");
 		getBuildRailWayButton().setTooltip(buildRailWayTooltip);
 	}
 	
-	public void initializeDestroyTooltip() {
-		setDestroyTooltip(new Tooltip());
-		getDestroyTooltip().setText("Destroy");
-		getDestroyButton().setTooltip(destroyTooltip);
+	public void initializeDestroyDistrictTooltip() {
+		setDestroyDistrictTooltip(new Tooltip());
+		getDestroyDistrictTooltip().setText("Destroy a district");
+		getDestroyDistrictButton().setTooltip(destroyDistrictTooltip);
 	}
 	
 	public void initializeDestroyRailwayTooltip() {
@@ -233,13 +295,14 @@ public class ToolBox extends VBox{
 	}
 	
 	public void initializeTooltips() {
-		initializeBuildResidentialTooltip();
+		initializeBuildResidencialTooltip();
 		initializeBuildCommercialTooltip();
 		initializeBuildAdministrativeTooltip();
 		initializeBuildStationTooltip();
 		initializeBuildRailWayTooltip();
-		initializeDestroyTooltip();
+		initializeDestroyDistrictTooltip();
 		initializeDestroyRailwayTooltip();
+		initializeDestroyStationTooltip();
 	}
 		
 	public void initializeTitleLabel() {
@@ -288,15 +351,6 @@ public class ToolBox extends VBox{
 	public void setBuildRailWayButton(Button buildRailWayButton) {
 		this.buildRailWayButton = buildRailWayButton;
 	}
-
-	public Button getDestroyButton() {
-		return destroyButton;
-	}
-
-	public void setDestroyButton(Button destroyButton) {
-		this.destroyButton = destroyButton;
-	}
-
 	public BlockSize getBlockSize() {
 		return blockSize;
 	}
@@ -321,16 +375,6 @@ public class ToolBox extends VBox{
 		ToolBox.buildDistricts = buildDistricts;
 	}
 
-	public static int getDestroy() {
-		return destroy;
-	}
-
-	public static void setDestroy(int destroy) {
-		ToolBox.destroy = destroy;
-	}
-
-
-
 	public Label getTitleLabel() {
 		return titleLabel;
 	}
@@ -339,18 +383,6 @@ public class ToolBox extends VBox{
 
 	public void setTitleLabel(Label titleLabel) {
 		this.titleLabel = titleLabel;
-	}
-
-
-
-	public Tooltip getBuildResidentialTooltip() {
-		return buildResidentialTooltip;
-	}
-
-
-
-	public void setBuildResidentialTooltip(Tooltip buildResidentialTooltip) {
-		this.buildResidentialTooltip = buildResidentialTooltip;
 	}
 
 
@@ -375,18 +407,6 @@ public class ToolBox extends VBox{
 
 	public void setBuildAdministrativeTooltip(Tooltip buildAdministrativeTooltip) {
 		this.buildAdministrativeTooltip = buildAdministrativeTooltip;
-	}
-
-
-
-	public Tooltip getDestroyTooltip() {
-		return destroyTooltip;
-	}
-
-
-
-	public void setDestroyTooltip(Tooltip destroyTooltip) {
-		this.destroyTooltip = destroyTooltip;
 	}
 
 
@@ -433,5 +453,65 @@ public class ToolBox extends VBox{
 
 	public void setDestroyRailwayTooltip(Tooltip destroyRailwayTooltip) {
 		this.destroyRailwayTooltip = destroyRailwayTooltip;
+	}
+
+	public Button getDestroyDistrictButton() {
+		return destroyDistrictButton;
+	}
+
+	public void setDestroyDistrictButton(Button destroyDistrictButton) {
+		this.destroyDistrictButton = destroyDistrictButton;
+	}
+
+	public Tooltip getBuildResidencialTooltip() {
+		return buildResidencialTooltip;
+	}
+
+	public void setBuildResidencialTooltip(Tooltip buildResidencialTooltip) {
+		this.buildResidencialTooltip = buildResidencialTooltip;
+	}
+
+	public Tooltip getDestroyDistrictTooltip() {
+		return destroyDistrictTooltip;
+	}
+
+	public void setDestroyDistrictTooltip(Tooltip destroyDistrictTooltip) {
+		this.destroyDistrictTooltip = destroyDistrictTooltip;
+	}
+
+	public Button getBuildResidentialButton() {
+		return buildResidentialButton;
+	}
+
+	public Button getDestroyStationButton() {
+		return destroyStationButton;
+	}
+
+	public void setDestroyStationButton(Button destroyStationButton) {
+		this.destroyStationButton = destroyStationButton;
+	}
+
+	public Tooltip getDestroyStationTooltip() {
+		return destroyStationTooltip;
+	}
+
+	public void setDestroyStationTooltip(Tooltip destroyStationTooltip) {
+		this.destroyStationTooltip = destroyStationTooltip;
+	}
+
+	public static int getDestroyDistrict() {
+		return destroyDistrict;
+	}
+
+	public static void setDestroyDistrict(int destroyDistrict) {
+		ToolBox.destroyDistrict = destroyDistrict;
+	}
+
+	public static int getDestroyStation() {
+		return destroyStation;
+	}
+
+	public static void setDestroyStation(int destroyStation) {
+		ToolBox.destroyStation = destroyStation;
 	}
 }
