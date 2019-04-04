@@ -8,7 +8,6 @@ import data.districtData.Residencial;
 import data.districtData.Wilderness;
 import engine.Game;
 import gui_data.GuiConstants;
-import jdk.internal.dynalink.linker.GuardingDynamicLinker;
 
 public final class DistrictManager {
 	
