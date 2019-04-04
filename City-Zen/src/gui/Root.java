@@ -1,5 +1,6 @@
 package gui;
 
+import engine.Game;
 import gui_data.BlockSize;
 import javafx.scene.layout.StackPane;
 
@@ -82,6 +83,7 @@ public class Root extends StackPane {
 		getPlayableGrid().toBack();
 		getPause().setVisible(false);
 		getPause().toBack();
+		Game.getINSTANCE().reinitializeGame();
 	}
 	
 	public BlockSize getBlockSize() {

@@ -13,7 +13,7 @@ public class Game {
 	private RailSquare[][] railSquareMap;
 	private Stats stats;
 	
-	public Game() {
+	private Game() {
 		super();
 		setStats(new Stats());
 		setDistrictMap(DistrictManager.initDistrictMap());
@@ -22,7 +22,11 @@ public class Game {
 		getStats().setNbWorkersAdministrative(Constants.STARTING_NUMBER_OF_ADMINISTRATIVE_WORKERS);
 	}
 	 
-	 public Stats getStats() {
+	public void reinitializeGame() {
+		INSTANCE = new Game();
+	}
+	
+	public Stats getStats() {
 		return stats;
 	}
 
