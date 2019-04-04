@@ -50,18 +50,23 @@ public class StartMenu extends VBox{
 	
 	public void initializeLabel() {
 		setLbl_cityzen(new Label("City-Zen"));
+		getLbl_cityzen().getStyleClass().remove("label");
+		getLbl_cityzen().getStyleClass().add("menuLabel");
 		getLbl_cityzen().setPrefWidth(getBlockSize().getWidth());
 		getLbl_cityzen().setAlignment(Pos.CENTER);
 	}
 	
 	public void initializeButtons() {
 		setStartButton(new Button("Start a new game"));
+		getStartButton().getStyleClass().add("menuButton");
 		getStartButton().setPrefWidth(getBlockSize().getWidth());
 		getStartButton().setPrefHeight(getBlockSize().getWidth()*BUTTONS_GAP);
 		setLoadButton(new Button("Load a game"));
+		getLoadButton().getStyleClass().add("menuButton");
 		getLoadButton().setPrefWidth(getBlockSize().getWidth());
 		getLoadButton().setPrefHeight(getBlockSize().getWidth()*BUTTONS_GAP);
 		setQuitButton(new Button("Quit"));
+		getQuitButton().getStyleClass().add("menuButton");
 		getQuitButton().setPrefWidth(getBlockSize().getWidth());
 		getQuitButton().setPrefHeight(getBlockSize().getWidth()*BUTTONS_GAP);
 	}

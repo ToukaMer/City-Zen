@@ -69,7 +69,7 @@ StartMenu {
 /* GENERAL */
 
 
-.button {
+.menuButton {
 	-fx-background-color : #2a78b2;
 	-fx-font-family: "Courier New";
     -fx-font-weight: bold;
@@ -77,10 +77,10 @@ StartMenu {
     -fx-text-fill: white;
 	-fx-font-size : 16px;
 }
-.button:hover {
+.menuButton:hover {
     -fx-background-color: linear-gradient(#184981, #1b67a1);
 }
-.label{
+.menuLabel{
 	-fx-font-size: 46px;
    -fx-font-family: "Courier New";
    -fx-fill: white;

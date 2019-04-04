@@ -37,8 +37,8 @@ public class Root extends StackPane {
 		getChildren().add(getPlayableGrid());
 		getChildren().add(getPause());
 
-		getStartMenu().setVisible(false);
-		getPlayableGrid().setVisible(true);
+		getStartMenu().setVisible(true);
+		getPlayableGrid().setVisible(false);
 		getPause().setVisible(false);
 	}
 
