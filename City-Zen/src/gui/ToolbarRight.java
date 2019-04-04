@@ -1,10 +1,12 @@
 package gui;
 
-import data.Constants;
+import data.Calendar;
+import engine.Game;
 import gui_data.BlockSize;
 import gui_data.GuiConstants;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
@@ -12,6 +14,7 @@ public class ToolbarRight extends HBox {
 
 	private BlockSize blockSize;
 	
+	private Label calendarLabel;
 	private Button switchMapButton;
 	private Button switchDisplayGridButton;
 
@@ -19,10 +22,12 @@ public class ToolbarRight extends HBox {
 		super();
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
-		
+
+		initializeCalendarLabel();
 		initializeSwitchMapButton(root);
 		initializeSwitchDisplayGridButton(root);
 		
+		getChildren().add(getCalendarLabel());
 		getChildren().add(getSwitchMapButton());
 		getChildren().add(getSwitchDisplayGridButton());
 	}
@@ -77,6 +82,13 @@ public class ToolbarRight extends HBox {
 		    }
 		});
 	}
+	
+	public void initializeCalendarLabel() {
+		setCalendarLabel(new Label());
+		getCalendarLabel().setId("calendarLabel");
+		Calendar calendar = Game.getINSTANCE().getStats().getCalendar();
+		getCalendarLabel().setText(calendar.getDayName()+", "+calendar.getMonthName()+" "+calendar.getDayNumber()+", "+calendar.getYearNumber());
+	}
 
 	public BlockSize getBlockSize() {
 		return blockSize;
@@ -100,5 +112,13 @@ public class ToolbarRight extends HBox {
 
 	public void setSwitchDisplayGridButton(Button switchDisplayGridButton) {
 		this.switchDisplayGridButton = switchDisplayGridButton;
+	}
+
+	public Label getCalendarLabel() {
+		return calendarLabel;
+	}
+
+	public void setCalendarLabel(Label calendarLabel) {
+		this.calendarLabel = calendarLabel;
 	}
 }

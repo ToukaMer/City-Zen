@@ -11,6 +11,10 @@ Maps{
 ToolBox{
 	-fx-background-color: #998877;
 }
+#calendarLabel{
+	-fx-text-fill : rgb(255,255,255);
+	-fx-font-size: 14px;
+}
 .toolBoxLabel{
 	-fx-text-fill : #001166;
 	-fx-font-size: 20px;

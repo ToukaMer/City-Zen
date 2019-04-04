@@ -6,8 +6,8 @@ import javafx.scene.layout.HBox;
 public class Toolbar extends HBox {
 
 	private final static double MAX_HEIGHT = 1.00;
-	private final static double TOOLBAR_LEFT_WIDTH = 0.50;
-	private final static double TOOLBAR_RIGHT_WIDTH = 0.50;
+	private final static double TOOLBAR_LEFT_WIDTH = 0.30;
+	private final static double TOOLBAR_RIGHT_WIDTH = 0.70;
 
 	private BlockSize blockSize;
 	private ToolbarLeft toolbarLeft;
