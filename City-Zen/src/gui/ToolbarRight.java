@@ -41,6 +41,14 @@ public class ToolbarRight extends HBox {
 					ToolBox.setBuildDistricts(0);
 				}
 				else if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
+					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.GENERAL_MAP);
+					ToolBox.setDestroyDistrict(0);
+					ToolBox.setDestroyRailway(0);
+					ToolBox.setDestroyStation(0);
+					ToolBox.setBuildRailway(0);
+					ToolBox.setBuildDistricts(0);
+				}
+				else if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.GENERAL_MAP) {
 					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
 					ToolBox.setDestroyDistrict(0);
 					ToolBox.setDestroyRailway(0);

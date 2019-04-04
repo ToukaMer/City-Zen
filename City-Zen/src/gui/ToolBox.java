@@ -101,7 +101,7 @@ public class ToolBox extends VBox{
 		getBuildResidencialButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
-					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
+					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.GENERAL_MAP);
 				}
 				setDestroyDistrict(0);
 				setDestroyRailway(0);
@@ -120,7 +120,7 @@ public class ToolBox extends VBox{
 		getBuildCommercialButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
-					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
+					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.GENERAL_MAP);
 				}
 				setDestroyDistrict(0);
 				setDestroyRailway(0);
@@ -139,7 +139,7 @@ public class ToolBox extends VBox{
 		getBuildAdministrativeButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
-					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
+					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.GENERAL_MAP);
 				}
 				setDestroyDistrict(0);
 				setDestroyRailway(0);
@@ -158,7 +158,7 @@ public class ToolBox extends VBox{
 		getBuildStationButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
-					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
+					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.GENERAL_MAP);
 				}
 				setDestroyDistrict(0);
 				setDestroyRailway(0);
@@ -177,7 +177,7 @@ public class ToolBox extends VBox{
 		getBuildRailWayButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
-					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
+					root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.GENERAL_MAP);
 				}
 				setDestroyDistrict(0);
 				setDestroyRailway(0);
@@ -196,7 +196,7 @@ public class ToolBox extends VBox{
 		getDestroyDistrictButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.RAIL_NETWORK_MAP) {
-					Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.DISTRICT_MAP);
+					Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.GENERAL_MAP);
 				}
 				setDestroyDistrict(1);
 				setDestroyRailway(0);
@@ -215,7 +215,7 @@ public class ToolBox extends VBox{
 		getDestroyStationButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
-					Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
+					Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.GENERAL_MAP);
 				}
 				setDestroyDistrict(0);
 				setDestroyRailway(0);
@@ -234,7 +234,7 @@ public class ToolBox extends VBox{
 		getDestroyRailwayButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
-					Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.RAIL_NETWORK_MAP);
+					Root.getINSTANCE().getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().setCurrentMap(GuiConstants.GENERAL_MAP);
 				}
 				setDestroyDistrict(0);
 				setDestroyRailway(1);

@@ -82,7 +82,7 @@ public class MapCanvas extends Canvas {
 		setDraggingRailroad(false);
 		setDisplayGrid(true);
 		initializeSprites();
-		setCurrentMap(GuiConstants.DISTRICT_MAP);
+		setCurrentMap(GuiConstants.GENERAL_MAP);
 		
 		setMap(getGraphicsContext2D());
 		animatedMap(playableGrid);
@@ -159,7 +159,7 @@ public class MapCanvas extends Canvas {
 				displayOverviewRailroad();
 				
 				//Display district map
-				if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
+				if(getCurrentMap()==GuiConstants.DISTRICT_MAP || getCurrentMap()==GuiConstants.GENERAL_MAP) {
 					while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
 						while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
 							if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
@@ -180,7 +180,7 @@ public class MapCanvas extends Canvas {
 				}
 				
 				//Display rail network map
-				else if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP) {
+				if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP || getCurrentMap()==GuiConstants.GENERAL_MAP) {
 					while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
 						while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
 							if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
@@ -235,7 +235,7 @@ public class MapCanvas extends Canvas {
 		}.start();
 	}
 	public void displayBackgroundMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
-		if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
+		if(getCurrentMap()==GuiConstants.DISTRICT_MAP || getCurrentMap()==GuiConstants.GENERAL_MAP) {
 			getMap().drawImage(getDistrictSprite(), columnPosition, rowPosition);
 		}
 		else if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP) {
@@ -310,7 +310,7 @@ public class MapCanvas extends Canvas {
 							System.out.println("X = "+mouseX+" Y = "+mouseY+" | square = ("+squareX+", "+squareY+")");
 							setOneSquareSelected(true);
 							setSelectedSquare(new Coordinates(squareY, squareX));
-							if(getCurrentMap()==GuiConstants.DISTRICT_MAP) {
+							if(getCurrentMap()==GuiConstants.DISTRICT_MAP || getCurrentMap()==GuiConstants.GENERAL_MAP) {
 								System.out.println("Quartier :"+Game.getINSTANCE().getDistrictMap()[squareX][squareY].getTypeName());
 								if(ToolBox.getBuildDistricts()==Constants.RESIDENCIAL) {
 									DistrictManager.buildDistrict(new Residencial(new Coordinates(squareY, squareX)));
@@ -329,7 +329,7 @@ public class MapCanvas extends Canvas {
 									ToolBox.setDestroyDistrict(0);
 								}
 							}
-							else if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP){
+							if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP || getCurrentMap()==GuiConstants.GENERAL_MAP){
 								System.out.println("Station :"+Game.getINSTANCE().getRailSquareMap()[squareX][squareY].getTypeName());
 								if(ToolBox.getBuildRailway()==Constants.STATION) {
 									RailWayManager.addStation(new Coordinates(squareY, squareX));
