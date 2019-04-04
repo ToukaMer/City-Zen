@@ -5,7 +5,7 @@ import java.util.HashMap;
 import data.Coordinates;
 import data.districtData.TripPath;
 
-public class District {
+public abstract class District {
 	 private int type;
 	 private String typeName;
 	 private int price;

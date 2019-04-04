@@ -1,6 +1,7 @@
 package data.railRoadData;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import data.Constants;
 import data.Coordinates;
@@ -22,6 +23,19 @@ public class Station extends RailSquare{
 	}
 	public Station(Coordinates coordinates, int[] direction) {
 		this(coordinates, 0, Constants.NB_USER_MAX_STATION, 0, direction, new HashMap<Coordinates, RailWay>());
+	}
+	
+	public String toString_rails() {
+		String data = new String();
+		for (Map.Entry<Coordinates, RailWay> entry : railWays.entrySet()) {			
+			data.concat(this.getCoordinates().toString());	
+		    data.concat(entry.getValue().toString_rails_list());
+			data.concat(entry.getKey().toString());
+			data.concat("\n");
+		}
+
+		data.concat("\n");
+		return data;
 	}
 
 	public int getNbUsers() {
