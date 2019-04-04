@@ -2,13 +2,18 @@ package engine.managers;
 
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import data.Calendar;
 import data.Constants;
+import data.Coordinates;
 import data.districtData.Administrative;
 import data.districtData.Commercial;
 import data.districtData.District;
 import data.districtData.Residencial;
+import data.railRoadData.RailWay;
+import data.railRoadData.Station;
 import engine.Game;
 import gui.PlayableGrid;
 import gui.Root;
@@ -125,4 +130,32 @@ public final class RealTimeManager {
 			}
 		}
 	}
+	
+	public static void updateCost_Gains() {
+		int new_monthlyrevenues = 0;
+		int new_monthlyExpences = 0;
+		int nbrails = 0;
+		HashMap<Coordinates, RailWay> hm = new HashMap<>();
+		for (int i = 0; i < GuiConstants.SQUARE_PER_ROW; i++) {
+			for (int j = 0; j < GuiConstants.SQUARE_PER_COLUMN; j++) {
+				if (Game.getINSTANCE().getDistrictMap()[j][i].getType()!=Constants.WILDERNESS) {
+					new_monthlyrevenues += Game.getINSTANCE().getDistrictMap()[j][i].getRevenues();
+					if (Game.getINSTANCE().getRailSquareMap()[j][i].getType() == Constants.STATION) {
+						new_monthlyrevenues+=((Station)Game.getINSTANCE().getRailSquareMap()[j][i]).getRevenues();
+						
+						hm = ((Station)Game.getINSTANCE().getRailSquareMap()[j][i]).getRailWays();
+						for (Entry<Coordinates, RailWay> entry : hm.entrySet()) {
+							nbrails += entry.getValue().rails.size()+1;							
+						}
+						
+						new_monthlyExpences += Constants.RAIL_COST*nbrails;
+						
+					}
+				}
+			}
+		}
+		Game.getINSTANCE().getStats().setMonthlyExpences(new_monthlyExpences);
+		Game.getINSTANCE().getStats().setMonthlyRevenues(new_monthlyrevenues);
+	}
+	
 }
