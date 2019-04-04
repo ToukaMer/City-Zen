@@ -143,7 +143,7 @@ public class Stats {
 		return money + "" + monthlyRevenues + "_" + monthlyExpences
 				+ "_" + nbHab + "_" + nbMaxHab + "_" + nbWorkersAdministrative
 				+ "_" + nbWorkersCommercial + "_" + nbResidencial
-				+ ", nbCommercial=" + nbCommercial + "_" + nbAdministrative + "_"
+				+ "_" + nbCommercial + "_" + nbAdministrative + "_"
 				+ nbStations + "_" + maxMoney + "_" + gainsPerCommercialWorker
 				+ "_" + costsPerAdministrative + "_"
 				+ costsPerAdministrativeWorker ;
