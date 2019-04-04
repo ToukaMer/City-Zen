@@ -300,7 +300,7 @@ public class MapCanvas extends Canvas {
 				
 				//If the click is a left click
 				if(mouseEvent.getButton() == MouseButton.PRIMARY) {
-					if(positionX >= 0 && positionX <= GuiConstants.SQUARE_PER_COLUMN*GuiConstants.SQUARE_WIDTH && positionY >= 0 && positionY <= GuiConstants.SQUARE_PER_ROW*GuiConstants.SQUARE_HEIGHT) {
+					if(positionX >= 0 && positionX <= GuiConstants.SQUARE_PER_ROW*GuiConstants.SQUARE_WIDTH && positionY >= 0 && positionY <= GuiConstants.SQUARE_PER_COLUMN*GuiConstants.SQUARE_HEIGHT) {
 	
 						//Calculate the coordinates of the clicked square
 						int squareX = (int)(positionX/GuiConstants.SQUARE_WIDTH);
@@ -332,17 +332,23 @@ public class MapCanvas extends Canvas {
 							else if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP){
 								System.out.println("Station :"+Game.getINSTANCE().getRailSquareMap()[squareX][squareY].getTypeName());
 								if(ToolBox.getBuildRailway()==Constants.STATION) {
-									RailWayManager.addStation(squareY, squareX);
+									RailWayManager.addStation(new Coordinates(squareY, squareX));
 									ToolBox.setBuildRailway(0);
 								}
 								else if(ToolBox.getDestroyStation() > 0) {
-									RailWayManager.destroyStation(squareY, squareX);
+									RailWayManager.destroyStation(new Coordinates(squareY, squareX));
 									ToolBox.setDestroyStation(0);
 								}
-	//							else if(ToolBox.getDestroy()==1) {
-	//								RailWayManager.destroyRailWay(startingStation, arrivalStation);
-	//								ToolBox.setDestroy(0);
-	//							}
+								else if(ToolBox.getDestroyRailway()==1) {
+									setStartingStation(new Coordinates(squareY, squareX));
+									ToolBox.setDestroyRailway(2);
+								}
+								else if(ToolBox.getDestroyRailway()==2) {
+									setEndingStation(new Coordinates(squareY, squareX));
+									RailWayManager.destroyRailWay(getStartingStation(), getEndingStation());
+									RailWayManager.destroyRailWay(getEndingStation(), getStartingStation());
+									ToolBox.setDestroyRailway(0);
+								}
 							}
 						}
 						else {
@@ -419,11 +425,6 @@ public class MapCanvas extends Canvas {
 								getRailroad().remove(getEndingStation());
 							}
 							RailWayManager.addRailWay(getRailroad(), getStartingStation(), getEndingStation());
-							ArrayList<Coordinates> reversedRailroad = new ArrayList<Coordinates>();
-							for(int i = getRailroad().size()-1; i >= 0; i--) {
-								reversedRailroad.add(getRailroad().get(i));
-							}
-							RailWayManager.addRailWay(reversedRailroad, getEndingStation(), getStartingStation());
 						}
 						
 					}

@@ -94,6 +94,12 @@ public final class DistrictManager {
 				break;
 			}
 		}
+//		for(int i = 0 ; i < GuiConstants.SQUARE_PER_COLUMN; i++) {
+//			for(int j = 0 ; j < GuiConstants.SQUARE_PER_ROW; j++) {
+//				System.out.print(Game.getINSTANCE().getDistrictMap()[j][i].getType());
+//			}
+//			System.out.println();
+//		}
 	}
 	
 	public static void destroyDistrict(Coordinates coordinates) {
@@ -118,7 +124,7 @@ public final class DistrictManager {
 		}
 		Game.getINSTANCE().getDistrictMap()[coordinates.getColumn()][coordinates.getRow()] = new Wilderness(coordinates);
 		if(Game.getINSTANCE().getRailSquareMap()[coordinates.getColumn()][coordinates.getRow()].getType() == Constants.STATION) {
-			RailWayManager.destroyStation(coordinates.getRow(), coordinates.getColumn());
+			RailWayManager.destroyStation(coordinates);
 		}
 	}
 	
