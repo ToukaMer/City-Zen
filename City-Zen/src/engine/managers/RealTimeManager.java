@@ -17,7 +17,7 @@ import javafx.animation.AnimationTimer;
 
 public final class RealTimeManager {
 	
-	public static void realTime(PlayableGrid playableGrid) {
+	public static void realTime(final PlayableGrid playableGrid) {
 		Game.getINSTANCE().setClock(new Date());
 		Game.getINSTANCE().setLastFrame(Game.getINSTANCE().getClock().getTime());
 		Game.getINSTANCE().setLastDay(Game.getINSTANCE().getClock().getTime());
@@ -41,6 +41,7 @@ public final class RealTimeManager {
 						}
 					}
 					playableGrid.getGameBlock().getMapZone().getMapCanvas().animatedMap(playableGrid);
+					playableGrid.getGameBlock().getMapZone().getInteractivityZone().getDataDisplayer().updateBlock();
 				}
 			}
 		}.start();

@@ -33,23 +33,22 @@ public class DataDisplayer extends VBox {
 		initializeDefaultBlock();
 	}
 	
+	public void updateBlock() {
+		getNbResidentialLabel().setText("Nb residential:"+Game.getINSTANCE().getStats().getNbResidencial());
+		getNbAdministrativeLabel().setText("Nb administrative:"+Game.getINSTANCE().getStats().getNbAdministrative());
+		getNbCommercialLabel().setText("Nb commercial:"+Game.getINSTANCE().getStats().getNbCommercial());
+	}
+	
 	public void initializeDefaultBlock() {
 		initializeTitleLabel();
-		initializeMoneyLabel();
-		initializeMonthlyEarningsLabel();
-		initializeMonthlyExpencesLabel();
 		initializeNbResidencialLabel();
 		initializeNbCommercialLabel();
 		initializeNbAdministrativeLabel();
-		initializeNbStationLabel();
 		getChildren().add(getTitleLabel());
-		getChildren().add(getMoneyLabel());
-		getChildren().add(getMonthlyEarnings());
-		getChildren().add(getMonthlyExpences());
 		getChildren().add(getNbResidentialLabel());
 		getChildren().add(getNbCommercialLabel());
 		getChildren().add(getNbAdministrativeLabel());
-		getChildren().add(getNbStationLabel());
+		
 	}
 	
 	public void initializeResidentialBlock() {

@@ -308,6 +308,7 @@ public class MapCanvas extends Canvas {
 							setSelectedSquare(new Coordinates(squareY, squareX));
 							if(getCurrentMap()==GuiConstants.DISTRICT_MAP || getCurrentMap()==GuiConstants.GENERAL_MAP) {
 								System.out.println("Quartier :"+Game.getINSTANCE().getDistrictMap()[squareX][squareY].getTypeName());
+								
 								if(ToolBox.getBuildDistricts()==Constants.RESIDENCIAL) {
 									DistrictManager.buildDistrict(new Residencial(new Coordinates(squareY, squareX)));
 									ToolBox.setBuildDistricts(0);
