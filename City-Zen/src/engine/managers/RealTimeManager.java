@@ -7,6 +7,7 @@ import data.districtData.Commercial;
 import data.districtData.District;
 import data.districtData.Residencial;
 import engine.Game;
+import gui.Root;
 import gui_data.GuiConstants;
 
 public final class RealTimeManager {
@@ -51,6 +52,9 @@ public final class RealTimeManager {
 		}
 		calendar.setDayName(Constants.DAYS[calendar.getDayNumber()-1]);
 		calendar.setMonthName(Constants.MONTHS[calendar.getMonthNumber()-1]);
+		Game.getINSTANCE().getStats().setCalendar(calendar);
+
+		Root.getINSTANCE().getPlayableGrid().getGameBlock().getToolbar().getToolbarRight().updateCalendarLabel(calendar);
 	}
 	
 	public static void updateInBuildingDistricts() {

@@ -87,7 +87,12 @@ public class ToolbarRight extends HBox {
 		setCalendarLabel(new Label());
 		getCalendarLabel().setId("calendarLabel");
 		Calendar calendar = Game.getINSTANCE().getStats().getCalendar();
-		getCalendarLabel().setText(calendar.getDayName()+", "+calendar.getMonthName()+" "+calendar.getDayNumber()+", "+calendar.getYearNumber());
+		getCalendarLabel().setText(calendar.getDayName()+", "+calendar.getMonthName()+" "+calendar.getDayNumber()+", Year "+calendar.getYearNumber());
+	}
+	
+	public void updateCalendarLabel(Calendar calendar) {
+		getCalendarLabel().setText(calendar.getDayName()+", "+calendar.getMonthName()+" "+calendar.getDayNumber()+", Year "+calendar.getYearNumber());
+	
 	}
 
 	public BlockSize getBlockSize() {
