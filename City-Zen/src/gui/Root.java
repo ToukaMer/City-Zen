@@ -1,5 +1,6 @@
 package gui;
 
+import data.Save;
 import engine.Game;
 import gui_data.BlockSize;
 import javafx.scene.layout.StackPane;
@@ -43,6 +44,7 @@ public class Root extends StackPane {
 		//getStartMenu().setVisible(true);
 		//getPlayableGrid().setVisible(false);
 		getPause().setVisible(false);
+		
 	}
 
 	public static Root getINSTANCE() {
@@ -69,7 +71,7 @@ public class Root extends StackPane {
 		getPlayableGrid().toFront();
 	}
 
-	public void switchToStartGame() {
+	public void startGame() {
 		getStartMenu().setVisible(false);
 		getStartMenu().toBack();
 		getPlayableGrid().setVisible(true);
@@ -84,6 +86,15 @@ public class Root extends StackPane {
 		getPause().setVisible(false);
 		getPause().toBack();
 		Game.getINSTANCE().reinitializeGame();
+	}
+	
+	public void quitGame() {
+		getScene().getWindow().hide();
+	}
+	
+	public void loadGame() {
+		Save.Load();
+		startGame();
 	}
 	
 	public BlockSize getBlockSize() {
