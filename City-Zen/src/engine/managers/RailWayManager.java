@@ -30,8 +30,9 @@ public final class RailWayManager
 //	}
 //	
 //	
-	public static RailSquare[][] initRailSquareMap(){
-		
+	public static RailSquare[][] initRailSquareMap()
+	
+	{
 		RailSquare railSquare[][] = new RailSquare[GuiConstants.SQUARE_PER_COLUMN][GuiConstants.SQUARE_PER_ROW];
 		for(int column = 0; column<GuiConstants.SQUARE_PER_ROW; column++) 
 		{

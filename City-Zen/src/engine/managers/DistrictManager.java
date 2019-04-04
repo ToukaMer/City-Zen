@@ -25,8 +25,6 @@ public final class DistrictManager {
 		
 	}
 	
-	
-	
 	public static District[][] initDistrictMap()
 	{
 		District[][] district = new District[GuiConstants.SQUARE_PER_COLUMN][GuiConstants.SQUARE_PER_ROW]; 

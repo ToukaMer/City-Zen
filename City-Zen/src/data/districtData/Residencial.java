@@ -14,12 +14,12 @@ public class Residencial extends District{
 	private int nbResidentMax=0;
 	private HashMap<District, RailWay> railways;
 	private boolean station;
-	
+
 	public Residencial(int price, int revenues, int usingTime, int satisfaction,
 			Coordinates coordinates, boolean inConstruction, int constructionTime, int constructionTimeLeft,
 			int turnCount, int nbHab, int administrationWorkers, int commercialWorkers, int nbResidentMax,
-			HashMap<District, RailWay> railways, boolean station) {
-		
+			HashMap<District, RailWay> railways, boolean station) 
+	{
 		super(Constants.RESIDENCIAL, Constants.RESIDENCIAL_NAME, price, revenues, usingTime, satisfaction, coordinates, inConstruction, constructionTime,
 				constructionTimeLeft, turnCount);
 		this.nbHab = nbHab;

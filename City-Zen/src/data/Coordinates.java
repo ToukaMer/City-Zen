@@ -54,6 +54,7 @@ public class Coordinates {
 		if (row != other.row)
 			return false;
 		return true;
+		
 	}
 	
 	
