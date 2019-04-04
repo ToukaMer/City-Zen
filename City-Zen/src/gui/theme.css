@@ -36,19 +36,25 @@ DataDisplayer{
 }
 /* O T H E R*/
 
+.root {
+	-fx-spacing :30;
+	-fx-background-color : #0e3a6b;
+	-fx-padding: 120px;
+}
 .button {
 	-fx-background-color : #2a78b2;
 	-fx-font-family: "Courier New";
     -fx-font-weight: bold;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: white;
+	-fx-font-size : 16px;
 }
 .button:hover {
     -fx-background-color: linear-gradient(#184981, #1b67a1);
 }
 .label{
-	-fx-font-size: 32px;
-   	-fx-font-family: "Courier New";
-   	-fx-fill: white;
-   	-fx-effect: innershadow( three-pass-box , rgba(255,255,255,0.9) , 6, 0.0 , 0 , 2 );
+	-fx-font-size: 46px;
+   -fx-font-family: "Courier New";
+   -fx-fill: white;
+   -fx-effect: innershadow( three-pass-box , rgba(255,255,255,0.9) , 6, 0.0 , 0 , 2 );
 }
