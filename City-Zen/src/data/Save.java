@@ -2,6 +2,7 @@ package data;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -288,7 +289,7 @@ public final class Save {
 	public static void Save_() {
 		try {
 			//BufferedWriter writer = new BufferedWriter(new FileWriter("memory.txt"));
-			FileOutputStream outputStream = new FileOutputStream("memory.txt");
+			FileOutputStream outputStream = new FileOutputStream(new File("memory.txt"));
 		    
 			String data = new String("");
 			String district = new String("");

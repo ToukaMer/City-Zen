@@ -31,14 +31,17 @@ public class Root extends StackPane {
 		setPause(new Pause(width*PAUSE_WIDTH, height*PAUSE_HEIGHT));
 		
 		getPause().getStyleClass().remove("button");
+		getPause().getStyleClass().add("menuButton");
 		getPause().getStyleClass().add("pause");
 		
 		getChildren().add(getStartMenu());
 		getChildren().add(getPlayableGrid());
 		getChildren().add(getPause());
 
-		getStartMenu().setVisible(true);
-		getPlayableGrid().setVisible(false);
+		getStartMenu().setVisible(false);
+        getPlayableGrid().setVisible(true);
+		//getStartMenu().setVisible(true);
+		//getPlayableGrid().setVisible(false);
 		getPause().setVisible(false);
 	}
 

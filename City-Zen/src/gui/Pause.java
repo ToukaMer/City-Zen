@@ -1,5 +1,6 @@
 package gui;
 
+import data.Save;
 import gui_data.BlockSize;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -25,6 +26,8 @@ public class Pause extends VBox{
 
 		initializeButtons();
 		initializeBackToGame();
+		initializeSave();
+		initializeLoad();
 		
 		setSpacing(20);
 		
@@ -42,6 +45,11 @@ public class Pause extends VBox{
 		setLoad(new Button("Load"));
 		setQuit(new Button("Quit game"));
 		
+		getBackToGame().getStyleClass().add("menuButton");
+		getSave().getStyleClass().add("menuButton");
+		getLoad().getStyleClass().add("menuButton");
+		getQuit().getStyleClass().add("menuButton");
+		
 		getBackToGame().getStyleClass().add("backToGame");
 		getSave().getStyleClass().add("save");
 		getLoad().getStyleClass().add("load");
@@ -52,6 +60,22 @@ public class Pause extends VBox{
 		getBackToGame().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				Root.getINSTANCE().switchToGame();
+		    }
+		});
+	}
+	
+	public void initializeSave() {
+		getSave().setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent mouseEvent) {
+				Save.Save_();
+		    }
+		});
+	}
+	
+	public void initializeLoad() {
+		getLoad().setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent mouseEvent) {
+				Save.Load();
 		    }
 		});
 	}
