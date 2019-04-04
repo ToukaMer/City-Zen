@@ -1,8 +1,6 @@
 package data;
 
 import java.util.ArrayList;
-import java.util.Map.Entry;
-
 import data.districtData.District;
 import data.districtData.TripPath;
 import engine.Game;
@@ -22,7 +20,7 @@ public class Floyd {
 				
 				if (Game.getINSTANCE().getDistrictMap()[j][i].getType() != Constants.WILDERNESS) {
 					list.add(Game.getINSTANCE().getDistrictMap()[j][i]);
-					System.out.println(Game.getINSTANCE().getDistrictMap()[j][i].getCoordinates());
+					
 				}
 			}
 		}
@@ -48,39 +46,37 @@ public class Floyd {
 			}
 			P[i][i]= i;
 			D[i][i] = 0;				
-		}
+		}		
 		
-		
-		
-		System.out.println("D");
-		System.out.print("\t");
-		for (District entry : list) {
-			System.out.print(entry.getCoordinates().toString()+"|\t");
-			
-		}System.out.println();
-		for (int k = 0; k < list.size(); k++) {
-			System.out.print(list.get(k).getCoordinates()+"|\t");
-			for (int l = 0; l < list.size(); l++) {
-				System.out.print(D[k][l]+"|\t");
-			}
-			System.out.println();
-		}
-
-		System.out.println("P");
-		System.out.print("\t");
-		for (District entry : list) {
-			System.out.print(entry.getCoordinates().toString()+"|\t");
-			
-		}System.out.println();
-		for (int k = 0; k < list.size(); k++) {
-			System.out.print(list.get(k).getCoordinates()+"|\t");
-			for (int l = 0; l < list.size(); l++) {
-				System.out.print(P[k][l]+"|\t");
-			}
-			System.out.println();
-		}
-		System.out.println("_______________________________________________________________________");
-		
+//		System.out.println("D");
+//		System.out.print("\t");
+//		for (District entry : list) {
+//			System.out.print(entry.getCoordinates().toString()+"|\t");
+//			
+//		}System.out.println();
+//		for (int k = 0; k < list.size(); k++) {
+//			System.out.print(list.get(k).getCoordinates()+"|\t");
+//			for (int l = 0; l < list.size(); l++) {
+//				System.out.print(D[k][l]+"|\t");
+//			}
+//			System.out.println();
+//		}
+//
+//		System.out.println("P");
+//		System.out.print("\t");
+//		for (District entry : list) {
+//			System.out.print(entry.getCoordinates().toString()+"|\t");
+//			
+//		}System.out.println();
+//		for (int k = 0; k < list.size(); k++) {
+//			System.out.print(list.get(k).getCoordinates()+"|\t");
+//			for (int l = 0; l < list.size(); l++) {
+//				System.out.print(P[k][l]+"|\t");
+//			}
+//			System.out.println();
+//		}
+//		System.out.println("_______________________________________________________________________");
+//		
 				
 		for (int k = 0; k < list.size(); k++) {
 			for (int s = 0; s < list.size(); s++) {
@@ -90,70 +86,92 @@ public class Floyd {
 						D[s][t] = tmp;
 						P[s][t] = P[k][t];
 					}
-					///////////////////////////
-					System.out.println("_______________________________________________________________________");
-					System.out.println("D");
-					System.out.print("\t");
-					for (District entry : list) {
-						System.out.print(entry.getCoordinates().toString()+"|\t");
-						
-					}System.out.println();
-					for (int w = 0; w < list.size(); w++) {
-						System.out.print(list.get(w).getCoordinates()+"|\t");
-						for (int l = 0; l < list.size(); l++) {
-							System.out.print(D[w][l]+"|\t");
-						}
-						System.out.println();
-					}
-
-					System.out.println("P");
-					System.out.print("\t");
-					for (District entry : list) {
-						System.out.print(entry.getCoordinates().toString()+"|\t");
-						
-					}System.out.println();
-					for (int w = 0; w < list.size(); w++) {
-						System.out.print(list.get(w).getCoordinates()+"|\t");
-						for (int l = 0; l < list.size(); l++) {
-							System.out.print(P[w][l]+"|\t");
-						}
-						System.out.println();
-					}
-					////////////////////////////////
+					
 					
 				}
 			}
 		}
 		
 		
-		System.out.println("D");
-		System.out.print("\t");
-		for (District entry : list) {
-			System.out.print(entry.getCoordinates().toString()+"|\t");
-			
-		}System.out.println();
+//		System.out.println("D");
+//		System.out.print("\t");
+//		for (District entry : list) {
+//			System.out.print(entry.getCoordinates().toString()+"|\t");
+//			
+//		}System.out.println();
+//		for (int k = 0; k < list.size(); k++) {
+//			System.out.print(list.get(k).getCoordinates()+"|\t");
+//			for (int l = 0; l < list.size(); l++) {
+//				System.out.print(D[k][l]+"|\t");
+//			}
+//			System.out.println();
+//		}
+//
+//		System.out.println("P");
+//		System.out.print("\t");
+//		for (District entry : list) {
+//			System.out.print(entry.getCoordinates().toString()+"|\t");
+//			
+//		}System.out.println();
+//		for (int k = 0; k < list.size(); k++) {
+//			System.out.print(list.get(k).getCoordinates()+"|\t");
+//			for (int l = 0; l < list.size(); l++) {
+//				System.out.print(P[k][l]+"|\t");
+//			}
+//			System.out.println();
+//		}
+		
+		
 		for (int k = 0; k < list.size(); k++) {
-			System.out.print(list.get(k).getCoordinates()+"|\t");
-			for (int l = 0; l < list.size(); l++) {
-				System.out.print(D[k][l]+"|\t");
-			}
-			System.out.println();
-		}
-
-		System.out.println("P");
-		System.out.print("\t");
-		for (District entry : list) {
-			System.out.print(entry.getCoordinates().toString()+"|\t");
-			
-		}System.out.println();
-		for (int k = 0; k < list.size(); k++) {
-			System.out.print(list.get(k).getCoordinates()+"|\t");
-			for (int l = 0; l < list.size(); l++) {
-				System.out.print(P[k][l]+"|\t");
-			}
-			System.out.println();
+			getShortestPath(P,D,k,list);
 		}
 		
+		
+		
+	}
+
+	public static ArrayList<Coordinates> getShortestPath(int [][]P,int[][]D ,int index, ArrayList<District>districts){
+		ArrayList<Coordinates> path = new ArrayList<>();
+		ArrayList<Coordinates> tmp = new ArrayList<>();
+		int index_tmp = -1;
+		for (int i = 0; i <districts.size(); i++) {
+			if (index != i) {			
+			
+			index_tmp = P[index][i];
+			if (index_tmp>=0) {
+				
+			
+			//System.out.println("path from ["+districts.get(index).getCoordinates()+":"+districts.get(i).getCoordinates()+"]");
+			
+			path.addAll(districts.get(index_tmp).getTripPaths().get(districts.get(i).getCoordinates()).getSquares());
+			
+			
+			while (index_tmp !=index) {
+				//System.out.println(index_tmp+"----"+districts.indexOf(districts.get(index_tmp))+"-----"+P[index][districts.indexOf(districts.get(index_tmp))]);
+							
+				 
+				tmp.addAll(0,districts.get(P[index][districts.indexOf(districts.get(index_tmp))]).getTripPaths().get(districts.get(index_tmp).getCoordinates()).getSquares());
+				tmp.add(districts.get(index_tmp).getCoordinates());
+				index_tmp = P[index][districts.indexOf(districts.get(index_tmp))];
+				//System.out.println("tmp : "+tmp);
+				
+			}
+			tmp.addAll(path);
+			
+			
+			Game.getINSTANCE().getDistrictMap()	[districts.get(index).getCoordinates().getColumn()]
+												[districts.get(index).getCoordinates().getRow()].getTripPaths().
+												put(districts.get(i).getCoordinates(), new TripPath(tmp, D[index][i]));
+			
+			//System.out.println(tmp);
+			path = new ArrayList<>();
+			tmp = new ArrayList<>();
+			}
+			}
+		}
+		
+		
+		return path;
 		
 	}
 }
