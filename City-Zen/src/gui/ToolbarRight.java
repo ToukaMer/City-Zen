@@ -35,6 +35,7 @@ public class ToolbarRight extends HBox {
 	public void initializeSwitchMapButton(final Root root) {
 		setSwitchMapButton(new Button());
 		getSwitchMapButton().setText("Switch map");
+		getSwitchMapButton().getStyleClass().add("menuButton");
 		getSwitchMapButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().getCurrentMap() == GuiConstants.DISTRICT_MAP) {
@@ -67,6 +68,7 @@ public class ToolbarRight extends HBox {
 	public void initializeSwitchDisplayGridButton(final Root root) {
 		setSwitchDisplayGridButton(new Button());
 		getSwitchDisplayGridButton().setText("Display grid");
+		getSwitchDisplayGridButton().getStyleClass().add("menuButton");
 		getSwitchDisplayGridButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				if(root.getPlayableGrid().getGameBlock().getMapZone().getMapCanvas().isDisplayGrid()) {

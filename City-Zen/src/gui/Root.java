@@ -31,7 +31,6 @@ public class Root extends StackPane {
 		setPause(new Pause(width*PAUSE_WIDTH, height*PAUSE_HEIGHT));
 		
 		getPause().getStyleClass().remove("button");
-		getPause().getStyleClass().add("menuButton");
 		getPause().getStyleClass().add("pause");
 		
 		getChildren().add(getStartMenu());

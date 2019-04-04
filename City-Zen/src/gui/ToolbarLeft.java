@@ -25,6 +25,7 @@ public class ToolbarLeft extends HBox {
 	public void initializeMenuButton(final Root root) {
 		setMenuButton(new Button());
 		getMenuButton().setText("Menu");
+		getMenuButton().getStyleClass().add("menuButton");
 		getMenuButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				Root.getINSTANCE().switchToPause();
