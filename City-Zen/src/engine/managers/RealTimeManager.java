@@ -17,7 +17,7 @@ import javafx.animation.AnimationTimer;
 
 public final class RealTimeManager {
 	
-	public static void realTime(PlayableGrid playableGrid) {
+	public static void realTime(final PlayableGrid playableGrid) {
 		Game.getINSTANCE().setClock(new Date());
 		Game.getINSTANCE().setLastFrame(Game.getINSTANCE().getClock().getTime());
 		Game.getINSTANCE().setLastDay(Game.getINSTANCE().getClock().getTime());
