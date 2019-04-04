@@ -22,11 +22,13 @@ public class Stats {
 	public int costsPerAdministrative;
 	public int costsPerAdministrativeWorker;
 	
+	public double satisfaction;
+	
 	public Calendar calendar;
 	
 	public Stats(int money, int monthlyRevenues, int monthlyExpences, int nbHab,
 			int nbWorkersAdministrative, int nbWorkersCommercial, int nbResidencial, int nbCommercial,
-			int nbAdministrative, int nbStations, Calendar calendar) {
+			int nbAdministrative, int nbStations, Calendar calendar, double satisfaction) {
 		super();
 		this.money = money;
 		this.monthlyRevenues = monthlyRevenues;
@@ -44,9 +46,10 @@ public class Stats {
 		this.costsPerAdministrative = Constants.COSTS_PER_ADMINISTRATIVE;
 		this.costsPerAdministrativeWorker = Constants.COSTS_PER_ADMINISTRATIVE_WORKER;
 		this.calendar = calendar;
+		this.satisfaction = satisfaction;
 	}
 	public Stats() {
-		this(Constants.STARTING_MONEY, 0, 0, 0, 0, 0, 0, 0, 1, 0, new Calendar());
+		this(Constants.STARTING_MONEY, 0, 0, 0, 0, 0, 0, 0, 1, 0, new Calendar(), 0.5);
 	}
 	
 	
@@ -157,7 +160,13 @@ public class Stats {
 	public void setCalendar(Calendar calendar) {
 		this.calendar = calendar;
 	}
-	
+
+	public double getSatisfaction() {
+		return satisfaction;
+	}
+	public void setSatisfaction(double satisfaction) {
+		this.satisfaction = satisfaction;
+	}
 	
 	
 }
