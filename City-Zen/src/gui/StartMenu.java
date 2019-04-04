@@ -24,7 +24,6 @@ public class StartMenu extends VBox{
 	private Button startButton;
 	private Button loadButton;
 	private Button quitButton;
-	private Button guideButton;
 	
 	private static final double BUTTONS_GAP = 0.15;
 	
@@ -41,16 +40,11 @@ public class StartMenu extends VBox{
 		initializeStartGame();
 		initializeQuitGame();
 		initializeLoadGame();
-		initializeGuide();
-		
-		HBox hbox = new HBox(getBlockSize().getHeight()*BUTTONS_GAP);
-		hbox.getChildren().addAll(getGuideButton(),getQuitButton());
-		hbox.setAlignment(Pos.CENTER);
 		
 		getChildren().add(getLbl_cityzen());
 		getChildren().add(getStartButton());
 		getChildren().add(getLoadButton());
-		getChildren().add(hbox);
+		getChildren().add(getQuitButton());
 		setVisible(false);
 	}
 	
@@ -68,11 +62,8 @@ public class StartMenu extends VBox{
 		getLoadButton().setPrefWidth(getBlockSize().getWidth());
 		getLoadButton().setPrefHeight(getBlockSize().getWidth()*BUTTONS_GAP);
 		setQuitButton(new Button("Quit"));
-		getQuitButton().setPrefWidth((getBlockSize().getWidth()/2)-(getBlockSize().getHeight()*BUTTONS_GAP/2));
+		getQuitButton().setPrefWidth(getBlockSize().getWidth());
 		getQuitButton().setPrefHeight(getBlockSize().getWidth()*BUTTONS_GAP);
-		setGuideButton(new Button("Guide"));
-		getGuideButton().setPrefWidth((getBlockSize().getWidth()/2)-(getBlockSize().getHeight()*BUTTONS_GAP/2));
-		getGuideButton().setPrefHeight(getBlockSize().getWidth()*BUTTONS_GAP);
 	}
 	
 	public void initializeStartGame() {
@@ -95,14 +86,6 @@ public class StartMenu extends VBox{
 		getLoadButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				//method to load a game
-		    }
-		});
-	}
-	
-	public void initializeGuide() {
-		getGuideButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent mouseEvent) {
-				//method to open guide
 		    }
 		});
 	}
@@ -172,20 +155,6 @@ public class StartMenu extends VBox{
 
 	public void setQuitButton(Button quitButton) {
 		this.quitButton = quitButton;
-	}
-
-
-
-
-	public Button getGuideButton() {
-		return guideButton;
-	}
-
-
-
-
-	public void setGuideButton(Button guideButton) {
-		this.guideButton = guideButton;
 	}
 
 }
