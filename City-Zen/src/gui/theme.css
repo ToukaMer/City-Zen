@@ -39,13 +39,32 @@ DataDisplayer{
 	-fx-padding: 10;
 }
 
-/* O T H E R*/
-
-.root {
+StartMenu {
 	-fx-spacing :30;
 	-fx-background-color : #0e3a6b;
 	-fx-padding: 120px;
 }
+
+.backToGame{
+	-fx-alignment: center ;
+	-fx-padding: 20 52 20 52;
+}
+.save{
+	-fx-alignment: center ;
+	-fx-padding: 20 90 20 90;
+}
+.load{
+	-fx-alignment: center ;
+	-fx-padding: 20 90 20 90;
+}
+.quit{
+	-fx-alignment: center ;
+	-fx-padding: 20 65 20 65;
+}
+
+/* GENERAL */
+
+
 .button {
 	-fx-background-color : #2a78b2;
 	-fx-font-family: "Courier New";
@@ -62,20 +81,4 @@ DataDisplayer{
    -fx-font-family: "Courier New";
    -fx-fill: white;
    -fx-effect: innershadow( three-pass-box , rgba(255,255,255,0.9) , 6, 0.0 , 0 , 2 );
-}
-.backToGame{
-	-fx-alignment: center ;
-	-fx-padding: 20 52 20 52;
-}
-.save{
-	-fx-alignment: center ;
-	-fx-padding: 20 90 20 90;
-}
-.load{
-	-fx-alignment: center ;
-	-fx-padding: 20 90 20 90;
-}
-.quit{
-	-fx-alignment: center ;
-	-fx-padding: 20 65 20 65;
 }

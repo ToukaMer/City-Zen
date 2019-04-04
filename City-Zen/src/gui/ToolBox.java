@@ -209,7 +209,7 @@ public class ToolBox extends VBox{
 	
 	public void initializeDestroyStationButton() {
 		setDestroyStationButton(new Button());
-		getDestroyStationButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.DESTROY_ICON).toString())));
+		getDestroyStationButton().setGraphic(new ImageView(new Image(getClass().getResource(SpritePaths.DESTROY_STATION_ICON).toString())));
 		getDestroyStationButton().getStyleClass().remove("button");
 		getDestroyStationButton().getStyleClass().add("toolBoxButton");
 		getDestroyStationButton().setOnMouseClicked(new EventHandler<MouseEvent>() {

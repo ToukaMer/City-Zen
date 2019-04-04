@@ -14,6 +14,7 @@ public abstract class SpritePaths {
 	public static final String STATION_BUILD_ICON = "\\sprites\\station_build_icon.png";
 	public static final String RAIL_BUILD_ICON = "\\sprites\\rail_build_icon.png";
 	public static final String DESTROY_ICON = "\\sprites\\destroy_icon.png";
+	public static final String DESTROY_STATION_ICON = "\\sprites\\destroy_station_icon.png";
 	public static final String DESTROY_RAILWAY_ICON = "\\sprites\\destroy_railway_icon.png";
 	public static final String RAIL_EAST_SPRITE = "\\sprites\\rail_east.png";
 	public static final String RAIL_WEST_SPRITE = "\\sprites\\rail_west.png";
