@@ -225,6 +225,10 @@ public final class RailWayManager
 							Game.getINSTANCE().getDistrictMap()[stationDepart.getColumn()][stationDepart.getRow()].getTripPaths().put(stationArrivee, tripPath);
 						}
 					}
+					else {
+						TripPath tripPath = new TripPath(coordinates, railWay.getTripTime());
+						Game.getINSTANCE().getDistrictMap()[stationDepart.getColumn()][stationDepart.getRow()].getTripPaths().put(stationArrivee, tripPath);
+					}
 					
 					//Create also the reversed railway, starting from the arrival station
 					ArrayList<Coordinates> reversedCoordinates = new ArrayList<Coordinates>();
@@ -235,9 +239,13 @@ public final class RailWayManager
 					((Station)Game.getINSTANCE().getRailSquareMap()[stationArrivee.getColumn()][stationArrivee.getRow()]).getRailWays().put(stationDepart, reversedRailWay);
 					if(Game.getINSTANCE().getDistrictMap()[stationDepart.getColumn()][stationDepart.getRow()].getTripPaths().containsKey(stationDepart)) {
 						if(railWay.getTripTime() < Game.getINSTANCE().getDistrictMap()[stationDepart.getColumn()][stationDepart.getRow()].getTripPaths().get(stationArrivee).getTripTime()) {
-							TripPath tripPath = new TripPath(coordinates, railWay.getTripTime());
-							Game.getINSTANCE().getDistrictMap()[stationDepart.getColumn()][stationDepart.getRow()].getTripPaths().put(stationArrivee, tripPath);
+							TripPath tripPath = new TripPath(reversedCoordinates, railWay.getTripTime());
+							Game.getINSTANCE().getDistrictMap()[stationArrivee.getColumn()][stationArrivee.getRow()].getTripPaths().put(stationDepart, tripPath);
 						}
+					}
+					else {
+						TripPath tripPath = new TripPath(reversedCoordinates, railWay.getTripTime());
+						Game.getINSTANCE().getDistrictMap()[stationArrivee.getColumn()][stationArrivee.getRow()].getTripPaths().put(stationDepart, tripPath);
 					}
 				}
 			}
