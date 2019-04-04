@@ -425,6 +425,11 @@ public class MapCanvas extends Canvas {
 								getRailroad().remove(getEndingStation());
 							}
 							RailWayManager.addRailWay(getRailroad(), getStartingStation(), getEndingStation());
+							ArrayList<Coordinates> reversedCoordinates = new ArrayList<Coordinates>();
+							for(int i = getRailroad().size()-1; i >= 0; i--) {
+								reversedCoordinates.add(getRailroad().get(i));
+							}
+							RailWayManager.addRailWay(reversedCoordinates, getEndingStation(), getStartingStation());
 						}
 						
 					}
