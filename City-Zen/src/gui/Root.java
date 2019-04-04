@@ -74,6 +74,15 @@ public class Root extends StackPane {
 		getPlayableGrid().setVisible(true);
 		getPlayableGrid().toFront();
 	}
+
+	public void switchToMainMenu() {
+		getStartMenu().setVisible(true);
+		getStartMenu().toFront();
+		getPlayableGrid().setVisible(false);
+		getPlayableGrid().toBack();
+		getPause().setVisible(false);
+		getPause().toBack();
+	}
 	
 	public BlockSize getBlockSize() {
 		return blockSize;

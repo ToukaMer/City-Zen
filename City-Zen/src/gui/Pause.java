@@ -28,6 +28,7 @@ public class Pause extends VBox{
 		initializeBackToGame();
 		initializeSave();
 		initializeLoad();
+		initializeQuit();
 		
 		setSpacing(20);
 		
@@ -76,6 +77,14 @@ public class Pause extends VBox{
 		getLoad().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				Save.Load();
+		    }
+		});
+	}
+	
+	public void initializeQuit() {
+		getQuit().setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent mouseEvent) {
+				Root.getINSTANCE().switchToMainMenu();
 		    }
 		});
 	}
