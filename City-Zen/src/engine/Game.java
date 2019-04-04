@@ -1,6 +1,8 @@
 package engine;
 
 
+import java.util.Date;
+
 import data.*;
 import data.districtData.District;
 import data.railRoadData.RailSquare;
@@ -13,6 +15,10 @@ public class Game {
 	private RailSquare[][] railSquareMap;
 	private Stats stats;
 	
+	private Date clock;
+	private long lastFrame;
+	private long lastDay;
+	
 	private Game() {
 		super();
 		setStats(new Stats());
@@ -20,6 +26,10 @@ public class Game {
 		setRailSquareMap(RailWayManager.initRailSquareMap());
 		getStats().setNbAdministrative(1);
 		getStats().setNbWorkersAdministrative(Constants.STARTING_NUMBER_OF_ADMINISTRATIVE_WORKERS);
+		
+		setClock(new Date());
+		setLastFrame(0);
+		setLastDay(0);
 	}
 	 
 	public void reinitializeGame() {
@@ -52,6 +62,30 @@ public class Game {
 
 	public void setRailSquareMap(RailSquare[][] railSquareMap) {
 		this.railSquareMap = railSquareMap;
+	}
+
+	public long getLastFrame() {
+		return lastFrame;
+	}
+
+	public void setLastFrame(long lastFrame) {
+		this.lastFrame = lastFrame;
+	}
+
+	public Date getClock() {
+		return clock;
+	}
+
+	public void setClock(Date clock) {
+		this.clock = clock;
+	}
+
+	public long getLastDay() {
+		return lastDay;
+	}
+
+	public void setLastDay(long lastDay) {
+		this.lastDay = lastDay;
 	}
 
 }

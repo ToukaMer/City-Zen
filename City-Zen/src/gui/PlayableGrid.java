@@ -1,6 +1,7 @@
 package gui;
 
 import engine.Game;
+import engine.managers.RealTimeManager;
 import gui_data.BlockSize;
 import gui_data.CameraPosition;
 import gui_data.GuiConstants;
@@ -57,6 +58,8 @@ public class PlayableGrid extends GridPane {
 		add(getWestTracking(), 0, 1);
 		
 		add(getGameBlock(), 1, 1);
+		
+		RealTimeManager.realTime(this);
 	}
 	
 	

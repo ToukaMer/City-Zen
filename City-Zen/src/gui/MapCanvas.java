@@ -109,40 +109,59 @@ public class MapCanvas extends Canvas {
 		setSelectedSquareSprite(new Image(getClass().getResource(SpritePaths.SELECTED_SQUARE_SPRITE).toString()));
 	}
 	public void animatedMap(final PlayableGrid playableGrid) {
-		new AnimationTimer() {
-			public void handle(long now) {
-				getMap().setFill(GuiConstants.BACKGROUND);
-				getMap().fillRect(0, 0, getWidth(), getHeight());
-				
-				if(getTracking().getX() > 0 && getCameraPosition().getX() < GuiConstants.MAX_SIZE_WIDTH - getBlockSize().getWidth() + GuiConstants.OUTLAND) {
-					getCameraPosition().setX(getCameraPosition().getX()+getTracking().getX());
-				}
-				else if(getTracking().getX() < 0 && getCameraPosition().getX() > 0 - GuiConstants.OUTLAND) {
-					getCameraPosition().setX(getCameraPosition().getX()+getTracking().getX());
-				}
-				
-				if(getTracking().getY() > 0 && getCameraPosition().getY() < GuiConstants.MAX_SIZE_HEIGHT - getBlockSize().getHeight() + GuiConstants.OUTLAND) {
-					getCameraPosition().setY(getCameraPosition().getY()+getTracking().getY());
-				}
-				else if(getTracking().getY() < 0 && getCameraPosition().getY() > 0 - GuiConstants.OUTLAND) {
-					getCameraPosition().setY(getCameraPosition().getY()+getTracking().getY());
-				}
-				
-				double columnModulus = getCameraPosition().getX()%GuiConstants.SQUARE_WIDTH;
-				double rowModulus = getCameraPosition().getY()%GuiConstants.SQUARE_HEIGHT;
-				double columnPosition = -columnModulus;
-				double rowPosition = -rowModulus;
-				
-				int firstColumn = (int)getCameraPosition().getX()/GuiConstants.SQUARE_WIDTH;
-				int firstRow = (int)getCameraPosition().getY()/GuiConstants.SQUARE_HEIGHT;
-				int currentRow = firstRow;
-				int currentColumn = firstColumn;
+			getMap().setFill(GuiConstants.BACKGROUND);
+			getMap().fillRect(0, 0, getWidth(), getHeight());
+			
+			if(getTracking().getX() > 0 && getCameraPosition().getX() < GuiConstants.MAX_SIZE_WIDTH - getBlockSize().getWidth() + GuiConstants.OUTLAND) {
+				getCameraPosition().setX(getCameraPosition().getX()+getTracking().getX());
+			}
+			else if(getTracking().getX() < 0 && getCameraPosition().getX() > 0 - GuiConstants.OUTLAND) {
+				getCameraPosition().setX(getCameraPosition().getX()+getTracking().getX());
+			}
+			
+			if(getTracking().getY() > 0 && getCameraPosition().getY() < GuiConstants.MAX_SIZE_HEIGHT - getBlockSize().getHeight() + GuiConstants.OUTLAND) {
+				getCameraPosition().setY(getCameraPosition().getY()+getTracking().getY());
+			}
+			else if(getTracking().getY() < 0 && getCameraPosition().getY() > 0 - GuiConstants.OUTLAND) {
+				getCameraPosition().setY(getCameraPosition().getY()+getTracking().getY());
+			}
+			
+			double columnModulus = getCameraPosition().getX()%GuiConstants.SQUARE_WIDTH;
+			double rowModulus = getCameraPosition().getY()%GuiConstants.SQUARE_HEIGHT;
+			double columnPosition = -columnModulus;
+			double rowPosition = -rowModulus;
+			
+			int firstColumn = (int)getCameraPosition().getX()/GuiConstants.SQUARE_WIDTH;
+			int firstRow = (int)getCameraPosition().getY()/GuiConstants.SQUARE_HEIGHT;
+			int currentRow = firstRow;
+			int currentColumn = firstColumn;
 
-				//Display background
+			//Display background
+			while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
+				while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
+					if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
+						displayBackgroundMap(columnPosition, rowPosition, currentColumn, currentRow);
+					}
+					currentColumn++;
+					columnPosition += GuiConstants.SQUARE_WIDTH;
+				}
+				currentColumn = firstColumn;
+				columnPosition = -columnModulus;
+				currentRow++;
+				rowPosition += GuiConstants.SQUARE_HEIGHT;
+			}
+			columnPosition = -columnModulus;
+			rowPosition = -rowModulus;
+			currentRow = firstRow;
+			currentColumn = firstColumn;
+			displayOverviewRailroad();
+			
+			//Display district map
+			if(getCurrentMap()==GuiConstants.DISTRICT_MAP || getCurrentMap()==GuiConstants.GENERAL_MAP) {
 				while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
 					while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
 						if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
-							displayBackgroundMap(columnPosition, rowPosition, currentColumn, currentRow);
+							displayDistrictMap(columnPosition, rowPosition, currentColumn, currentRow);
 						}
 						currentColumn++;
 						columnPosition += GuiConstants.SQUARE_WIDTH;
@@ -156,83 +175,60 @@ public class MapCanvas extends Canvas {
 				rowPosition = -rowModulus;
 				currentRow = firstRow;
 				currentColumn = firstColumn;
-				displayOverviewRailroad();
-				
-				//Display district map
-				if(getCurrentMap()==GuiConstants.DISTRICT_MAP || getCurrentMap()==GuiConstants.GENERAL_MAP) {
-					while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
-						while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
-							if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
-								displayDistrictMap(columnPosition, rowPosition, currentColumn, currentRow);
-							}
-							currentColumn++;
-							columnPosition += GuiConstants.SQUARE_WIDTH;
-						}
-						currentColumn = firstColumn;
-						columnPosition = -columnModulus;
-						currentRow++;
-						rowPosition += GuiConstants.SQUARE_HEIGHT;
-					}
-					columnPosition = -columnModulus;
-					rowPosition = -rowModulus;
-					currentRow = firstRow;
-					currentColumn = firstColumn;
-				}
-				
-				//Display rail network map
-				if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP || getCurrentMap()==GuiConstants.GENERAL_MAP) {
-					while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
-						while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
-							if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
-								displayRailNetworkMap(columnPosition, rowPosition, currentColumn, currentRow);
-							}
-							currentColumn++;
-							columnPosition += GuiConstants.SQUARE_WIDTH;
-						}
-						currentColumn = firstColumn;
-						columnPosition = -columnModulus;
-						currentRow++;
-						rowPosition += GuiConstants.SQUARE_HEIGHT;
-					}
-					columnPosition = -columnModulus;
-					rowPosition = -rowModulus;
-					currentRow = firstRow;
-					currentColumn = firstColumn;
-				}
-				
-				//Display map's grid
-				if(isDisplayGrid()) {
-					while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
-						while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
-							if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
-								getMap().drawImage(getGridSprite(), columnPosition, rowPosition);
-							}
-							currentColumn++;
-							columnPosition += GuiConstants.SQUARE_WIDTH;
-						}
-						currentColumn = firstColumn;
-						columnPosition = -columnModulus;
-						currentRow++;
-						rowPosition += GuiConstants.SQUARE_HEIGHT;
-					}
-					columnPosition = -columnModulus;
-					rowPosition = -rowModulus;
-					currentRow = firstRow;
-					currentColumn = firstColumn;
-				}
-				if(isOneSquareSelected()) {
-					if(getSelectedSquare().getColumn() >= firstColumn && getSelectedSquare().getColumn() < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
-						if(getSelectedSquare().getRow() >= firstRow && getSelectedSquare().getColumn() < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
-							double positionX = getSelectedSquare().getColumn()*GuiConstants.SQUARE_WIDTH - getCameraPosition().getX();
-				            double positionY = getSelectedSquare().getRow()*GuiConstants.SQUARE_HEIGHT - getCameraPosition().getY();
-							getMap().drawImage(getSelectedSquareSprite(), positionX, positionY);
-						}
-					}
-				}
-				initializeSquareClicks(firstRow, firstColumn, rowModulus, columnModulus, playableGrid);
-				displayOverviewBuilding();
 			}
-		}.start();
+			
+			//Display rail network map
+			if(getCurrentMap()==GuiConstants.RAIL_NETWORK_MAP || getCurrentMap()==GuiConstants.GENERAL_MAP) {
+				while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
+					while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
+						if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
+							displayRailNetworkMap(columnPosition, rowPosition, currentColumn, currentRow);
+						}
+						currentColumn++;
+						columnPosition += GuiConstants.SQUARE_WIDTH;
+					}
+					currentColumn = firstColumn;
+					columnPosition = -columnModulus;
+					currentRow++;
+					rowPosition += GuiConstants.SQUARE_HEIGHT;
+				}
+				columnPosition = -columnModulus;
+				rowPosition = -rowModulus;
+				currentRow = firstRow;
+				currentColumn = firstColumn;
+			}
+			
+			//Display map's grid
+			if(isDisplayGrid()) {
+				while(rowPosition < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
+					while(columnPosition < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
+						if(currentColumn >= 0 && currentRow >= 0 && currentColumn < GuiConstants.SQUARE_PER_ROW && currentRow < GuiConstants.SQUARE_PER_COLUMN) {
+							getMap().drawImage(getGridSprite(), columnPosition, rowPosition);
+						}
+						currentColumn++;
+						columnPosition += GuiConstants.SQUARE_WIDTH;
+					}
+					currentColumn = firstColumn;
+					columnPosition = -columnModulus;
+					currentRow++;
+					rowPosition += GuiConstants.SQUARE_HEIGHT;
+				}
+				columnPosition = -columnModulus;
+				rowPosition = -rowModulus;
+				currentRow = firstRow;
+				currentColumn = firstColumn;
+			}
+			if(isOneSquareSelected()) {
+				if(getSelectedSquare().getColumn() >= firstColumn && getSelectedSquare().getColumn() < getBlockSize().getWidth()-columnModulus+GuiConstants.SQUARE_WIDTH) {
+					if(getSelectedSquare().getRow() >= firstRow && getSelectedSquare().getColumn() < getBlockSize().getHeight()-rowModulus+GuiConstants.SQUARE_HEIGHT) {
+						double positionX = getSelectedSquare().getColumn()*GuiConstants.SQUARE_WIDTH - getCameraPosition().getX();
+			            double positionY = getSelectedSquare().getRow()*GuiConstants.SQUARE_HEIGHT - getCameraPosition().getY();
+						getMap().drawImage(getSelectedSquareSprite(), positionX, positionY);
+					}
+				}
+			}
+			initializeSquareClicks(firstRow, firstColumn, rowModulus, columnModulus, playableGrid);
+			displayOverviewBuilding();
 	}
 	public void displayBackgroundMap(double columnPosition, double rowPosition, int currentColumn, int currentRow) {
 		if(getCurrentMap()==GuiConstants.DISTRICT_MAP || getCurrentMap()==GuiConstants.GENERAL_MAP) {
