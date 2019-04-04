@@ -20,7 +20,7 @@ public class RailWay{
 	}
 	
 	public RailWay(ArrayList<Coordinates> rails, int tripTime) {
-		this(new ArrayList<Coordinates>(), tripTime, 0);
+		this(rails, tripTime, 0);
 	}
 	
 	public String toString_rails_list() {
@@ -64,6 +64,12 @@ public class RailWay{
 
 	public void setNbUserMax(int nbUserMax) {
 		this.nbUserMax = nbUserMax;
+	}
+
+	@Override
+	public String toString() {
+		return "RailWay [rails=" + rails + ", tripTime=" + tripTime + ", nbUser=" + nbUser + ", nbUserMax=" + nbUserMax
+				+ "]";
 	}
 	
 	

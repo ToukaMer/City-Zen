@@ -4,11 +4,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 
+import data.Coordinates;
 import data.Stats;
+import data.districtData.Commercial;
 import data.districtData.District;
+import data.railRoadData.*;
 import engine.managers.DistrictManager;
 import engine.managers.RailWayManager;
 
@@ -17,7 +21,17 @@ public class MainEngine {
 
 	public static void main(String[] args) {
 	
-		
+		DistrictManager.buildDistrict(new Commercial(new Coordinates(3, 4)));
+        DistrictManager.buildDistrict(new Commercial(new Coordinates(3, 7)));
+        RailWayManager.addStation(new Coordinates(3,4));
+        RailWayManager.addStation(new Coordinates(3,7));
+
+        ArrayList<Coordinates> railss = new ArrayList<>();
+        railss.add(new Coordinates(3, 5));
+        railss.add(new Coordinates(3, 6));
+        RailWayManager.addRailWay(railss, new Coordinates(3, 4), new Coordinates(3, 7));
+        System.out.println("ah booon "+((Station)Game.getINSTANCE().getRailSquareMap()[4][3]).getRailWays().get(new Coordinates(3,7)).rails.toString());
+        //RailWayManager.destroyStation(new Coordinates(3,4));
 	}
 //	public void firstTurnChecks(int type, DistrictManager districtmanager, District[][] district) {
 //		 Stats.monthlyExpences=(Stats.nbAdministrative*Stats.expencesPerAdministrativeBuildings)+(Stats.nbWorkersAdministrative*Stats.expencesPerAdministrativeWorker);
