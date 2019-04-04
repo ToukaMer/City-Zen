@@ -2,6 +2,7 @@ package gui;
 
 import gui_data.BlockSize;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -20,13 +21,18 @@ public class Pause extends VBox{
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 
+		setAlignment(Pos.CENTER);
+
 		initializeButtons();
 		initializeBackToGame();
+		
+		setSpacing(20);
 		
 		getChildren().add(getBackToGame());
 		getChildren().add(getSave());
 		getChildren().add(getLoad());
 		getChildren().add(getQuit());
+		
 		setVisible(false);
 	}
 	
@@ -35,6 +41,11 @@ public class Pause extends VBox{
 		setSave(new Button("Save"));
 		setLoad(new Button("Load"));
 		setQuit(new Button("Quit game"));
+		
+		getBackToGame().getStyleClass().add("backToGame");
+		getSave().getStyleClass().add("save");
+		getLoad().getStyleClass().add("load");
+		getQuit().getStyleClass().add("quit");
 	}
 	
 	public void initializeBackToGame() {

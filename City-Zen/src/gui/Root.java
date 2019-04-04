@@ -30,6 +30,9 @@ public class Root extends StackPane {
 		setPlayableGrid(new PlayableGrid(width, height, this));
 		setPause(new Pause(width*PAUSE_WIDTH, height*PAUSE_HEIGHT));
 		
+		getPause().getStyleClass().remove("button");
+		getPause().getStyleClass().add("pause");
+		
 		getChildren().add(getStartMenu());
 		getChildren().add(getPlayableGrid());
 		getChildren().add(getPause());

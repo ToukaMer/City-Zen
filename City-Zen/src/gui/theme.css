@@ -34,6 +34,11 @@ ToolBox{
 DataDisplayer{
 	-fx-background-color: #716965;
 }
+.pause{
+	-fx-background-color: rgba(76, 76, 76, 0.6);
+	-fx-padding: 10;
+}
+
 /* O T H E R*/
 
 .root {
@@ -57,4 +62,20 @@ DataDisplayer{
    -fx-font-family: "Courier New";
    -fx-fill: white;
    -fx-effect: innershadow( three-pass-box , rgba(255,255,255,0.9) , 6, 0.0 , 0 , 2 );
+}
+.backToGame{
+	-fx-alignment: center ;
+	-fx-padding: 20 52 20 52;
+}
+.save{
+	-fx-alignment: center ;
+	-fx-padding: 20 90 20 90;
+}
+.load{
+	-fx-alignment: center ;
+	-fx-padding: 20 90 20 90;
+}
+.quit{
+	-fx-alignment: center ;
+	-fx-padding: 20 65 20 65;
 }
