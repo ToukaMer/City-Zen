@@ -128,26 +128,4 @@ public final class DistrictManager {
 	}
 	
 
-	
-	public static void updateDistrict(District[][] district) {
-		for(int column =0; column<GuiConstants.SQUARE_PER_ROW; column++) {
-			for(int row=0; row<GuiConstants.SQUARE_PER_COLUMN; row++) {
-				switch(district[column][row].getTypeName()) {
-					case "Residence" : 
-						((Residencial)district[column][row]).setTurnCount(((Residencial)district[column][row]).getTurnCount());
-						break;
-					case "Administrative" :
-						((Administrative)district[column][row]).setTurnCount(((Administrative)district[column][row]).getTurnCount());
-						break;
-					case "Commercial" :
-						((Commercial)district[column][row]).setTurnCount(((Commercial)district[column][row]).getTurnCount());
-						break;
-					case "Wilderness" :
-						break;
-				}
-			}
-		}
-	}
-	
-
 }

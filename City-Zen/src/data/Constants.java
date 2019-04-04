@@ -99,4 +99,7 @@ public class Constants {
 
 	public static final int MAX_HAB = 1000000;
 
+	/* CONSTANTS FOR CALENDAR */
+	public static final String DAYS[] = {"Monday", "Thursday", "Wednesday", "Tuesday", "Friday", "Saturday", "Sunday"};
+	public static final String MONTHS[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 }
