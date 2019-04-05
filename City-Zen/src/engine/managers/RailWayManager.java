@@ -401,6 +401,7 @@ public final class RailWayManager
 				direction[0] = direction[1] = direction[2] = direction[3] = 0;
 				Station station = new Station(coordinates, direction);
 				Game.getINSTANCE().getRailSquareMap()[coordinates.getColumn()][coordinates.getRow()] = station;
+				incrementNbStation();
 				/***** FAIRE DIJKSTRA *****/
 			}
 			else {
@@ -425,6 +426,7 @@ public final class RailWayManager
 				destroyRailWay(entry.getKey(), coordinates);
 			}
 			Game.getINSTANCE().getRailSquareMap()[coordinates.getColumn()][coordinates.getRow()] = new NotRailed(coordinates);
+			decrementNbStation();
 			/***** FAIRE DIJKSTRA *****/
 		}
 		else {
