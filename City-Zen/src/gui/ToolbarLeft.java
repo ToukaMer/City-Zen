@@ -5,6 +5,7 @@ import gui_data.BlockSize;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
@@ -15,6 +16,8 @@ public class ToolbarLeft extends HBox {
 	private Button menuButton;
 	
 	private ProgressIndicator satisfactionCircle;
+	
+	private Tooltip satisfactionTooltip;
 
 	public ToolbarLeft(double width, double height, Root root) {
 		super();
@@ -23,6 +26,7 @@ public class ToolbarLeft extends HBox {
 		
 		initializeMenuButton(root);
 		initializeSatisfactionCircle(root);
+		initializeSatisfactionTooltip();
 
 		getChildren().add(getMenuButton());
 		getChildren().add(getSatisfactionCircle());
@@ -43,6 +47,12 @@ public class ToolbarLeft extends HBox {
 		
 		setSatisfactionCircle(new ProgressIndicator(Game.getINSTANCE().getStats().getSatisfaction()));
 		getSatisfactionCircle().getStyleClass().add("satisfaction");
+	}
+	
+	public void initializeSatisfactionTooltip() {
+		setSatisfactionTooltip(new Tooltip());
+		getSatisfactionTooltip().setText("Satisfaction gauge");
+		getSatisfactionCircle().setTooltip(getSatisfactionTooltip());
 	}
 
 	public BlockSize getBlockSize() {
@@ -68,4 +78,14 @@ public class ToolbarLeft extends HBox {
 	public void setSatisfactionCircle(ProgressIndicator satisfactionCircle) {
 		this.satisfactionCircle = satisfactionCircle;
 	}
+
+	public Tooltip getSatisfactionTooltip() {
+		return satisfactionTooltip;
+	}
+
+	public void setSatisfactionTooltip(Tooltip satisfactionTooltip) {
+		this.satisfactionTooltip = satisfactionTooltip;
+	}
+	
+	
 }

@@ -37,17 +37,29 @@ public class DataDisplayer extends VBox {
 		getNbResidentialLabel().setText("Nb residential:"+Game.getINSTANCE().getStats().getNbResidencial());
 		getNbAdministrativeLabel().setText("Nb administrative:"+Game.getINSTANCE().getStats().getNbAdministrative());
 		getNbCommercialLabel().setText("Nb commercial:"+Game.getINSTANCE().getStats().getNbCommercial());
+		getMoneyLabel().setText("Money :"+Game.getINSTANCE().getStats().getMoney());
+		getNbStationLabel().setText("Nb Station :"+Game.getINSTANCE().getStats().getNbStations());
+		getMonthlyEarnings().setText("Monthly earnings :"+Game.getINSTANCE().getStats().getMonthlyRevenues());
+		getMonthlyExpences().setText("Monthly expences :"+Game.getINSTANCE().getStats().getMonthlyExpences());
 	}
 	
 	public void initializeDefaultBlock() {
 		initializeTitleLabel();
-		initializeNbResidencialLabel();
+		initializeMoneyLabel();
+		initializeMonthlyEarningsLabel();
+		initializeMonthlyExpencesLabel();
+		initializeNbResidentialLabel();
 		initializeNbCommercialLabel();
 		initializeNbAdministrativeLabel();
+		initializeNbStationLabel();
 		getChildren().add(getTitleLabel());
+		getChildren().add(getMoneyLabel());
+		getChildren().add(getMonthlyEarnings());
+		getChildren().add(getMonthlyExpences());
 		getChildren().add(getNbResidentialLabel());
 		getChildren().add(getNbCommercialLabel());
 		getChildren().add(getNbAdministrativeLabel());
+		getChildren().add(getNbStationLabel());
 		
 	}
 	
@@ -92,7 +104,7 @@ public class DataDisplayer extends VBox {
 		getMoneyLabel().getStyleClass().add("dataLabel");
 	}
 	
-	public void initializeNbResidencialLabel() {
+	public void initializeNbResidentialLabel() {
 		setNbResidentialLabel(new Label());
 		getNbResidentialLabel().setText("Nb residential :"+Game.getINSTANCE().getStats().getNbResidencial());
 		getNbResidentialLabel().getStyleClass().remove("label");
