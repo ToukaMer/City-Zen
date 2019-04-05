@@ -30,7 +30,7 @@ public final class SatisfactionManager
 			}
 			column++;
 		}
-		satisfaction = satisfaction/Game.getINSTANCE().getStats().nbHab;
+		satisfaction = satisfaction/Game.getINSTANCE().getStats().getNbHab();
 		return satisfaction;
 	}
 }
