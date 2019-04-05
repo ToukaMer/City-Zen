@@ -37,7 +37,6 @@ public final class RealTimeManager {
 							nextDay();
 							updateInBuildingDistricts();
 							updateDistricts();
-							//satisfaction ici
 							if(Game.getINSTANCE().getStats().getCalendar().getDayNumber() == 1) {
 								int money = Game.getINSTANCE().getStats().getMoney();
 								money += Game.getINSTANCE().getStats().getMonthlyRevenues()-Game.getINSTANCE().getStats().getMonthlyExpences();
@@ -139,20 +138,22 @@ public final class RealTimeManager {
 		int new_monthlyExpences = 0;
 		int nbrails = 0;
 		HashMap<Coordinates, RailWay> hm = new HashMap<>();
-		for (int i = 0; i < GuiConstants.SQUARE_PER_ROW; i++) {
-			for (int j = 0; j < GuiConstants.SQUARE_PER_COLUMN; j++) {
-				if (Game.getINSTANCE().getDistrictMap()[j][i].getType()!=Constants.WILDERNESS) {
+		for (int i = 0; i < GuiConstants.SQUARE_PER_ROW; i++) 
+		{
+			for (int j = 0; j < GuiConstants.SQUARE_PER_COLUMN; j++) 
+			{
+				if (Game.getINSTANCE().getDistrictMap()[j][i].getType()!=Constants.WILDERNESS) 
+				{
 					new_monthlyrevenues += Game.getINSTANCE().getDistrictMap()[j][i].getRevenues();
-					if (Game.getINSTANCE().getRailSquareMap()[j][i].getType() == Constants.STATION) {
+					if (Game.getINSTANCE().getRailSquareMap()[j][i].getType() == Constants.STATION) 
+					{
 						new_monthlyrevenues+=((Station)Game.getINSTANCE().getRailSquareMap()[j][i]).getRevenues();
-						
 						hm = ((Station)Game.getINSTANCE().getRailSquareMap()[j][i]).getRailWays();
-						for (Entry<Coordinates, RailWay> entry : hm.entrySet()) {
+						for (Entry<Coordinates, RailWay> entry : hm.entrySet()) 
+						{
 							nbrails += entry.getValue().rails.size()+1;							
 						}
-						
 						new_monthlyExpences += Constants.RAIL_COST*nbrails;
-						
 					}
 				}
 			}
