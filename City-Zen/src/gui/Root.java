@@ -1,5 +1,6 @@
 package gui;
 
+import data.Calendar;
 import data.Save;
 import engine.Game;
 import gui_data.BlockSize;
@@ -64,11 +65,13 @@ public class Root extends StackPane {
 	public void switchToPause() {
 		getPause().setVisible(true);
 		getPause().toFront();
+		Game.getINSTANCE().setPlaying(false);
 	}
 	
 	public void switchToGame() {
 		getPause().setVisible(false);
 		getPlayableGrid().toFront();
+		Game.getINSTANCE().setPlaying(true);
 	}
 
 	public void startGame() {
@@ -76,6 +79,9 @@ public class Root extends StackPane {
 		getStartMenu().toBack();
 		getPlayableGrid().setVisible(true);
 		getPlayableGrid().toFront();
+		Game.getINSTANCE().setPlaying(true);
+		Game.getINSTANCE().reinitializeGame();
+		Game.getINSTANCE().getStats().setCalendar(new Calendar());
 	}
 
 	public void switchToMainMenu() {
@@ -85,7 +91,7 @@ public class Root extends StackPane {
 		getPlayableGrid().toBack();
 		getPause().setVisible(false);
 		getPause().toBack();
-		Game.getINSTANCE().reinitializeGame();
+		Game.getINSTANCE().setPlaying(false);
 	}
 	
 	public void quitGame() {

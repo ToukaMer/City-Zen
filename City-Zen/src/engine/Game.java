@@ -18,6 +18,7 @@ public class Game {
 	private Date clock;
 	private long lastFrame;
 	private long lastDay;
+	private boolean playing;
 	
 	private Game() {
 		super();
@@ -30,6 +31,7 @@ public class Game {
 		setClock(new Date());
 		setLastFrame(0);
 		setLastDay(0);
+		setPlaying(true);
 	}
 	 
 	public void reinitializeGame() {
@@ -86,6 +88,14 @@ public class Game {
 
 	public void setLastDay(long lastDay) {
 		this.lastDay = lastDay;
+	}
+
+	public boolean isPlaying() {
+		return playing;
+	}
+
+	public void setPlaying(boolean playing) {
+		this.playing = playing;
 	}
 
 }

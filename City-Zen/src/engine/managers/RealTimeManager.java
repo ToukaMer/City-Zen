@@ -28,25 +28,27 @@ public final class RealTimeManager {
 		Game.getINSTANCE().setLastDay(Game.getINSTANCE().getClock().getTime());
 		new AnimationTimer() {
 			public void handle(long now) {
-				Game.getINSTANCE().setClock(new Date());
-				if((Game.getINSTANCE().getClock().getTime() - Game.getINSTANCE().getLastFrame()) > ((double)1000)/GuiConstants.FRAME_PER_SECOND){
-					Game.getINSTANCE().setLastFrame(Game.getINSTANCE().getClock().getTime());
-					if((Game.getINSTANCE().getClock().getTime() - Game.getINSTANCE().getLastDay()) > ((double)1000)/GuiConstants.DAY_PER_SECOND){
-						Game.getINSTANCE().setLastDay(Game.getINSTANCE().getClock().getTime());
-						nextDay();
-						updateInBuildingDistricts();
-						updateDistricts();
-						if(Game.getINSTANCE().getStats().getCalendar().getDayNumber() == 1) {
-							int money = Game.getINSTANCE().getStats().getMoney();
-							money += Game.getINSTANCE().getStats().getMonthlyRevenues()-Game.getINSTANCE().getStats().getMonthlyExpences();
-							if(money > Game.getINSTANCE().getStats().getMaxMoney()) {
-								money = Game.getINSTANCE().getStats().getMaxMoney();
+				if(Game.getINSTANCE().isPlaying()) {
+					Game.getINSTANCE().setClock(new Date());
+					if((Game.getINSTANCE().getClock().getTime() - Game.getINSTANCE().getLastFrame()) > ((double)1000)/GuiConstants.FRAME_PER_SECOND){
+						Game.getINSTANCE().setLastFrame(Game.getINSTANCE().getClock().getTime());
+						if((Game.getINSTANCE().getClock().getTime() - Game.getINSTANCE().getLastDay()) > ((double)1000)/GuiConstants.DAY_PER_SECOND){
+							Game.getINSTANCE().setLastDay(Game.getINSTANCE().getClock().getTime());
+							nextDay();
+							updateInBuildingDistricts();
+							updateDistricts();
+							if(Game.getINSTANCE().getStats().getCalendar().getDayNumber() == 1) {
+								int money = Game.getINSTANCE().getStats().getMoney();
+								money += Game.getINSTANCE().getStats().getMonthlyRevenues()-Game.getINSTANCE().getStats().getMonthlyExpences();
+								if(money > Game.getINSTANCE().getStats().getMaxMoney()) {
+									money = Game.getINSTANCE().getStats().getMaxMoney();
+								}
+								Game.getINSTANCE().getStats().setMoney(money);
 							}
-							Game.getINSTANCE().getStats().setMoney(money);
 						}
+						playableGrid.getGameBlock().getMapZone().getMapCanvas().animatedMap(playableGrid);
+						playableGrid.getGameBlock().getMapZone().getInteractivityZone().getDataDisplayer().updateBlock();
 					}
-					playableGrid.getGameBlock().getMapZone().getMapCanvas().animatedMap(playableGrid);
-					playableGrid.getGameBlock().getMapZone().getInteractivityZone().getDataDisplayer().updateBlock();
 				}
 			}
 		}.start();
