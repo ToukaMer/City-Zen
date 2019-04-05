@@ -40,10 +40,8 @@ public class Root extends StackPane {
 		getChildren().add(getPlayableGrid());
 		getChildren().add(getPause());
 
-		getStartMenu().setVisible(false);
-        getPlayableGrid().setVisible(true);
-		//getStartMenu().setVisible(true);
-		//getPlayableGrid().setVisible(false);
+		getStartMenu().setVisible(true);
+		getPlayableGrid().setVisible(false);
 		getPause().setVisible(false);
 		
 	}
@@ -100,7 +98,11 @@ public class Root extends StackPane {
 	
 	public void loadGame() {
 		Save.Load();
-		startGame();
+		getStartMenu().setVisible(false);
+		getStartMenu().toBack();
+		getPlayableGrid().setVisible(true);
+		getPlayableGrid().toFront();
+		Game.getINSTANCE().setPlaying(true);
 	}
 	
 	public BlockSize getBlockSize() {
