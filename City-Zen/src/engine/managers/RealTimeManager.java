@@ -37,6 +37,7 @@ public final class RealTimeManager {
 							nextDay();
 							updateInBuildingDistricts();
 							updateDistricts();
+							//satisfaction ici
 							if(Game.getINSTANCE().getStats().getCalendar().getDayNumber() == 1) {
 								int money = Game.getINSTANCE().getStats().getMoney();
 								money += Game.getINSTANCE().getStats().getMonthlyRevenues()-Game.getINSTANCE().getStats().getMonthlyExpences();
