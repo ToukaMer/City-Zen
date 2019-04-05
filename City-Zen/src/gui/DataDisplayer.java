@@ -10,7 +10,7 @@ public class DataDisplayer extends VBox {
 	private BlockSize blockSize;
 	private Label titleLabel;
 	private Label moneyLabel;
-	private Label nbResidentialLabel;
+	private Label nbResidencialLabel;
 	private Label nbCommercialLabel;
 	private Label nbAdministrativeLabel;
 	private Label nbStationLabel;
@@ -34,7 +34,7 @@ public class DataDisplayer extends VBox {
 	}
 	
 	public void updateBlock() {
-		getNbResidentialLabel().setText("Nb residential:"+Game.getINSTANCE().getStats().getNbResidencial());
+		getNbResidencialLabel().setText("Nb residencial:"+Game.getINSTANCE().getStats().getNbResidencial());
 		getNbAdministrativeLabel().setText("Nb administrative:"+Game.getINSTANCE().getStats().getNbAdministrative());
 		getNbCommercialLabel().setText("Nb commercial:"+Game.getINSTANCE().getStats().getNbCommercial());
 		getMoneyLabel().setText("Money :"+Game.getINSTANCE().getStats().getMoney());
@@ -56,7 +56,7 @@ public class DataDisplayer extends VBox {
 		getChildren().add(getMoneyLabel());
 		getChildren().add(getMonthlyEarnings());
 		getChildren().add(getMonthlyExpences());
-		getChildren().add(getNbResidentialLabel());
+		getChildren().add(getNbResidencialLabel());
 		getChildren().add(getNbCommercialLabel());
 		getChildren().add(getNbAdministrativeLabel());
 		getChildren().add(getNbStationLabel());
@@ -105,10 +105,10 @@ public class DataDisplayer extends VBox {
 	}
 	
 	public void initializeNbResidentialLabel() {
-		setNbResidentialLabel(new Label());
-		getNbResidentialLabel().setText("Nb residential :"+Game.getINSTANCE().getStats().getNbResidencial());
-		getNbResidentialLabel().getStyleClass().remove("label");
-		getNbResidentialLabel().getStyleClass().add("dataLabel");
+		setNbResidencialLabel(new Label());
+		getNbResidencialLabel().setText("Nb residential :"+Game.getINSTANCE().getStats().getNbResidencial());
+		getNbResidencialLabel().getStyleClass().remove("label");
+		getNbResidencialLabel().getStyleClass().add("dataLabel");
 	}
 	
 	public void initializeNbCommercialLabel() {
@@ -196,14 +196,6 @@ public class DataDisplayer extends VBox {
 
 	public void setMoneyLabel(Label moneyLabel) {
 		this.moneyLabel = moneyLabel;
-	}
-
-	public Label getNbResidentialLabel() {
-		return nbResidentialLabel;
-	}
-
-	public void setNbResidentialLabel(Label nbResidentialLabel) {
-		this.nbResidentialLabel = nbResidentialLabel;
 	}
 
 	public Label getNbCommercialLabel() {
@@ -308,5 +300,13 @@ public class DataDisplayer extends VBox {
 
 	public void setExpencesPerAdministrativeWorker(Label expencesPerAdministrativeWorker) {
 		this.expencesPerAdministrativeWorker = expencesPerAdministrativeWorker;
+	}
+
+	public Label getNbResidencialLabel() {
+		return nbResidencialLabel;
+	}
+
+	public void setNbResidencialLabel(Label nbResidencialLabel) {
+		this.nbResidencialLabel = nbResidencialLabel;
 	}
 }

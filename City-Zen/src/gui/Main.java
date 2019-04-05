@@ -40,7 +40,7 @@ public class Main extends Application {
 			root.getChildren().add(getRoot());
 			
 			primaryStage.show();
-			//primaryStage.setFullScreen(true);
+			primaryStage.setFullScreen(true);
 
 		} catch(Exception e) {
 			e.printStackTrace();
