@@ -18,7 +18,12 @@ public final class SatisfactionManager
 		double satisfaction;
 		satisfaction = 0;
 		//satisfaction = Game.getINSTANCE().getStats().getSatisfaction() + 0.01;
-		 satisfaction = 	Game.getINSTANCE().getStats().getMonthlyRevenues()/Game.getINSTANCE().getStats().getNbHab();
+		if(Game.getINSTANCE().getStats().getNbHab()!=0) {
+		 satisfaction = (Game.getINSTANCE().getStats().getMonthlyRevenues()/Game.getINSTANCE().getStats().getNbHab());
+		}
+		else {
+			satisfaction = 0.5;
+		}
 		 Game.getINSTANCE().getStats().setSatisfaction(satisfaction);
 		 Root.getINSTANCE().getPlayableGrid().getGameBlock().getToolbar().getToolbarLeft().updateSatisfactionGauge();
 		 //		return satisfaction;

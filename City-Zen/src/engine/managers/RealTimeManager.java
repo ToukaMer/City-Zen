@@ -128,13 +128,12 @@ public final class RealTimeManager {
                     break;
                 case Constants.ADMINISTRATIVE :
                     ((Administrative)Game.getINSTANCE().getDistrictMap()[column][row]).setTurnCount(((Administrative)Game.getINSTANCE().getDistrictMap()[column][row]).getTurnCount());
-                    if(Game.getINSTANCE().getStats().nbHab < ((Game.getINSTANCE().getStats().nbWorkersAdministrative)+(Game.getINSTANCE().getStats().nbWorkersCommercial)))
-                        Game.getINSTANCE().getStats().setNbWorkersAdministrative(Game.getINSTANCE().getStats().getNbWorkersAdministrative()+1);
+                    
+               
                         break;
                 case Constants.COMMERCIAL :
                     ((Commercial)Game.getINSTANCE().getDistrictMap()[column][row]).setTurnCount(((Commercial)Game.getINSTANCE().getDistrictMap()[column][row]).getTurnCount());
-                    if(Game.getINSTANCE().getStats().nbHab < ((Game.getINSTANCE().getStats().nbWorkersAdministrative)+(Game.getINSTANCE().getStats().nbWorkersCommercial)))
-                        Game.getINSTANCE().getStats().setNbWorkersCommercial((Game.getINSTANCE().getStats().getNbWorkersCommercial()+1));
+                    
 
                     break;
 					case Constants.WILDERNESS :
@@ -215,9 +214,15 @@ public final class RealTimeManager {
                         Game.getINSTANCE().getStats().setNbHab(Game.getINSTANCE().getStats().getNbHab()+((Residencial)Game.getINSTANCE().getDistrictMap()[column][row]).getNbHab());
                         break;
                     case Constants.ADMINISTRATIVE :
+                    	if(Game.getINSTANCE().getStats().nbHab > ((Game.getINSTANCE().getStats().nbWorkersAdministrative)+(Game.getINSTANCE().getStats().nbWorkersCommercial))) {
+                            Game.getINSTANCE().getStats().setNbWorkersAdministrative(Game.getINSTANCE().getStats().getNbWorkersAdministrative()+1);
+                        }
 
                         break;
                     case Constants.COMMERCIAL :
+                    	
+                    	if(Game.getINSTANCE().getStats().nbHab > ((Game.getINSTANCE().getStats().nbWorkersAdministrative)+(Game.getINSTANCE().getStats().nbWorkersCommercial)))
+                            Game.getINSTANCE().getStats().setNbWorkersCommercial((Game.getINSTANCE().getStats().getNbWorkersCommercial()+1));
 
                         break;
                     case Constants.WILDERNESS :
