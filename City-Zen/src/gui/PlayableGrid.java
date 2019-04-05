@@ -1,6 +1,7 @@
 package gui;
 
 import engine.Game;
+import engine.managers.RealTimeManager;
 import gui_data.BlockSize;
 import gui_data.CameraPosition;
 import gui_data.GuiConstants;
@@ -8,10 +9,10 @@ import javafx.scene.layout.GridPane;
 
 public class PlayableGrid extends GridPane {
 
-	private final static double MAX_WIDTH_BOX = 0.94;
-	private final static double MAX_HEIGHT_BOX = 0.94;
-	private final static double MIN_WIDTH_BOX = 0.03;
-	private final static double MIN_HEIGHT_BOX = 0.03;
+	private final static double MAX_WIDTH_BOX = 0.99;
+	private final static double MAX_HEIGHT_BOX = 0.98;
+	private final static double MIN_WIDTH_BOX = 0.005;
+	private final static double MIN_HEIGHT_BOX = 0.01;
 	
 	private BlockSize blockSize;
 	private CameraPosition tracking;
@@ -57,6 +58,8 @@ public class PlayableGrid extends GridPane {
 		add(getWestTracking(), 0, 1);
 		
 		add(getGameBlock(), 1, 1);
+		
+		RealTimeManager.realTime(this);
 	}
 	
 	

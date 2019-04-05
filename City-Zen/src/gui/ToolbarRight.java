@@ -9,8 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-public class ToolbarRight extends HBox {
+public class ToolbarRight extends VBox {
 
 	private BlockSize blockSize;
 	
@@ -19,7 +20,7 @@ public class ToolbarRight extends HBox {
 	private Button switchDisplayGridButton;
 
 	public ToolbarRight(double width, double height, Root root) {
-		super();
+		super(10);
 		setBlockSize(new BlockSize(width, height));
 		setPrefSize(getBlockSize().getWidth(), getBlockSize().getHeight());
 

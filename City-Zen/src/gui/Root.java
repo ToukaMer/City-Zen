@@ -1,5 +1,7 @@
 package gui;
 
+import data.Calendar;
+import data.Save;
 import engine.Game;
 import gui_data.BlockSize;
 import javafx.scene.layout.StackPane;
@@ -38,11 +40,10 @@ public class Root extends StackPane {
 		getChildren().add(getPlayableGrid());
 		getChildren().add(getPause());
 
-		getStartMenu().setVisible(false);
-        getPlayableGrid().setVisible(true);
-		//getStartMenu().setVisible(true);
-		//getPlayableGrid().setVisible(false);
+		getStartMenu().setVisible(true);
+		getPlayableGrid().setVisible(false);
 		getPause().setVisible(false);
+		
 	}
 
 	public static Root getINSTANCE() {
@@ -62,18 +63,23 @@ public class Root extends StackPane {
 	public void switchToPause() {
 		getPause().setVisible(true);
 		getPause().toFront();
+		Game.getINSTANCE().setPlaying(false);
 	}
 	
 	public void switchToGame() {
 		getPause().setVisible(false);
 		getPlayableGrid().toFront();
+		Game.getINSTANCE().setPlaying(true);
 	}
 
-	public void switchToStartGame() {
+	public void startGame() {
 		getStartMenu().setVisible(false);
 		getStartMenu().toBack();
 		getPlayableGrid().setVisible(true);
 		getPlayableGrid().toFront();
+		Game.getINSTANCE().setPlaying(true);
+		Game.getINSTANCE().reinitializeGame();
+		Game.getINSTANCE().getStats().setCalendar(new Calendar());
 	}
 
 	public void switchToMainMenu() {
@@ -83,7 +89,20 @@ public class Root extends StackPane {
 		getPlayableGrid().toBack();
 		getPause().setVisible(false);
 		getPause().toBack();
-		Game.getINSTANCE().reinitializeGame();
+		Game.getINSTANCE().setPlaying(false);
+	}
+	
+	public void quitGame() {
+		getScene().getWindow().hide();
+	}
+	
+	public void loadGame() {
+		Save.Load();
+		getStartMenu().setVisible(false);
+		getStartMenu().toBack();
+		getPlayableGrid().setVisible(true);
+		getPlayableGrid().toFront();
+		Game.getINSTANCE().setPlaying(true);
 	}
 	
 	public BlockSize getBlockSize() {

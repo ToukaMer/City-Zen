@@ -3,6 +3,9 @@ package gui_data;
 import javafx.scene.paint.Color;
 
 public class GuiConstants {
+	
+	public static final double FRAME_PER_SECOND = 100; 
+	public static final double DAY_PER_SECOND = 1; 
 
 	public static final double OUTLAND = 100;
 	public static final int SQUARE_WIDTH = 64;

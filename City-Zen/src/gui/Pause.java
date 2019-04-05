@@ -77,6 +77,7 @@ public class Pause extends VBox{
 		getLoad().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
 				Save.Load();
+				Root.getINSTANCE().switchToGame();
 		    }
 		});
 	}

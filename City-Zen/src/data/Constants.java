@@ -72,6 +72,7 @@ public class Constants {
 	public static final int NOT_RAILED = 0;
 	public static final int RAIL = 1;
 	public static final int STATION = 2;
+	public static final int RAIL_COST = 1;
 	
 	public static final String NOT_RAILED_NAME = "Not railed";
 	public static final String RAIL_NAME = "Rail";

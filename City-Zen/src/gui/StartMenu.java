@@ -3,6 +3,7 @@
  */
 package gui;
 
+import data.Save;
 import gui_data.BlockSize;
 import javafx.event.EventHandler;
 /**
@@ -49,7 +50,7 @@ public class StartMenu extends VBox{
 	}
 	
 	public void initializeLabel() {
-		setLbl_cityzen(new Label("City-Zen"));
+		setLbl_cityzen(new Label("CityZen"));
 		getLbl_cityzen().getStyleClass().remove("label");
 		getLbl_cityzen().getStyleClass().add("menuLabel");
 		getLbl_cityzen().setPrefWidth(getBlockSize().getWidth());
@@ -74,7 +75,7 @@ public class StartMenu extends VBox{
 	public void initializeStartGame() {
 		getStartButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
-				Root.getINSTANCE().switchToStartGame();
+				Root.getINSTANCE().startGame();
 		    }
 		});
 	}
@@ -82,7 +83,7 @@ public class StartMenu extends VBox{
 	public void initializeQuitGame() {
 		getQuitButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
-				//method to quit the game
+				Root.getINSTANCE().quitGame();
 		    }
 		});
 	}
@@ -90,7 +91,7 @@ public class StartMenu extends VBox{
 	public void initializeLoadGame() {
 		getLoadButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent mouseEvent) {
-				//method to load a game
+				Root.getINSTANCE().loadGame();
 		    }
 		});
 	}
