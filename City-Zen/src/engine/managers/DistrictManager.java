@@ -74,17 +74,24 @@ public final class DistrictManager {
 			switch (district.getType()) {
 			case Constants.RESIDENCIAL:
 				incrementNbResidencial();
+				if((Game.getINSTANCE().getStats().getNbHab())<((Game.getINSTANCE().getStats().nbResidencial)*Constants.MAX_NUMBER_OF_RESIDENTS)) {
+                    Game.getINSTANCE().getStats().setNbHab(Game.getINSTANCE().getStats().getNbHab()+1);
+                }
+				Game.getINSTANCE().getStats().money-=Constants.RESIDENCIAL_PRICE;
 				if (Constants.DEBUG_DISTRICT) System.out.println("Add residencial done");
 				
 				break;
 				
 			case Constants.ADMINISTRATIVE:
 				incrementNbAdministrative();
+				Game.getINSTANCE().getStats().setMonthlyExpences(Game.getINSTANCE().getStats().getMonthlyExpences()+Constants.COSTS_PER_ADMINISTRATIVE);
+				Game.getINSTANCE().getStats().money-=Constants.ADMINISTRATIVE_PRICE;
 				if (Constants.DEBUG_DISTRICT) System.out.println("Add administrative done");
 				break;
 
 			case Constants.COMMERCIAL: 
 				incrementNbCommercial();
+				Game.getINSTANCE().getStats().money-=Constants.COMMERCIAL_PRICE;
 				if (Constants.DEBUG_DISTRICT) System.out.println("Add commercial done");
 				break;
 			default:

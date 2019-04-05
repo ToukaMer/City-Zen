@@ -41,10 +41,14 @@ public class DataDisplayer extends VBox {
 		getNbStationLabel().setText("Nb Station :"+Game.getINSTANCE().getStats().getNbStations());
 		getMonthlyEarnings().setText("Monthly earnings :"+Game.getINSTANCE().getStats().getMonthlyRevenues());
 		getMonthlyExpences().setText("Monthly expences :"+Game.getINSTANCE().getStats().getMonthlyExpences());
+		getNbHabitant().setText("Nb habitants :"+Game.getINSTANCE().getStats().getNbHab());
+		getNbWorkersAdministrative().setText("Commercial workers :"+Game.getINSTANCE().getStats().getNbWorkersCommercial());
+		getNbWorkersCommercial().setText("Commercial workers :"+Game.getINSTANCE().getStats().getNbWorkersCommercial());
+		getNbWorkersAdministrative().setText("Administrative workers :"+Game.getINSTANCE().getStats().getNbWorkersAdministrative());
 	}
 	
 	public void initializeDefaultBlock() {
-		initializeTitleLabel();
+		//initializeTitleLabel();
 		initializeMoneyLabel();
 		initializeMonthlyEarningsLabel();
 		initializeMonthlyExpencesLabel();
@@ -52,7 +56,11 @@ public class DataDisplayer extends VBox {
 		initializeNbCommercialLabel();
 		initializeNbAdministrativeLabel();
 		initializeNbStationLabel();
-		getChildren().add(getTitleLabel());
+		initializeNbHabitantLabel();
+		initializeNbWorkersCommercialLabel();
+		initializeNbWorkersAdministrativeLabel();
+		
+		//getChildren().add(getTitleLabel());
 		getChildren().add(getMoneyLabel());
 		getChildren().add(getMonthlyEarnings());
 		getChildren().add(getMonthlyExpences());
@@ -60,6 +68,10 @@ public class DataDisplayer extends VBox {
 		getChildren().add(getNbCommercialLabel());
 		getChildren().add(getNbAdministrativeLabel());
 		getChildren().add(getNbStationLabel());
+		getChildren().add(getNbHabitant());
+		getChildren().add(getNbWorkersAdministrative());
+		getChildren().add(getNbWorkersCommercial());
+		
 		
 	}
 	
@@ -162,14 +174,14 @@ public class DataDisplayer extends VBox {
 	
 	public void initializeNbWorkersCommercialLabel() {
 		setNbWorkersCommercial(new Label());
-		getNbWorkersCommercial().setText("Nb workers :"+Game.getINSTANCE().getStats().getNbWorkersCommercial());
+		getNbWorkersCommercial().setText("Commercial workers :"+Game.getINSTANCE().getStats().getNbWorkersCommercial());
 		getNbWorkersCommercial().getStyleClass().remove("label");
 		getNbWorkersCommercial().getStyleClass().add("dataLabel");
 	}
 	
 	public void initializeNbWorkersAdministrativeLabel() {
 		setNbWorkersAdministrative(new Label());
-		getNbWorkersAdministrative().setText("Nb workers :"+Game.getINSTANCE().getStats().getNbWorkersAdministrative());
+		getNbWorkersAdministrative().setText("Administrative workers :"+Game.getINSTANCE().getStats().getNbWorkersAdministrative());
 		getNbWorkersAdministrative().getStyleClass().remove("label");
 		getNbWorkersAdministrative().getStyleClass().add("dataLabel");
 	}

@@ -35,8 +35,11 @@ public final class RealTimeManager {
 						if((Game.getINSTANCE().getClock().getTime() - Game.getINSTANCE().getLastDay()) > ((double)1000)/GuiConstants.DAY_PER_SECOND){
 							Game.getINSTANCE().setLastDay(Game.getINSTANCE().getClock().getTime());
 							nextDay();
+							SatisfactionManager.mathSatisfaction();
 							updateInBuildingDistricts();
 							updateDistricts();
+							updateMoney();
+							updateHabitants();
 							if(Game.getINSTANCE().getStats().getCalendar().getDayNumber() == 1) {
 								int money = Game.getINSTANCE().getStats().getMoney();
 								money += Game.getINSTANCE().getStats().getMonthlyRevenues()-Game.getINSTANCE().getStats().getMonthlyExpences();
@@ -117,15 +120,23 @@ public final class RealTimeManager {
 		for(int column =0; column<GuiConstants.SQUARE_PER_ROW; column++) {
 			for(int row=0; row<GuiConstants.SQUARE_PER_COLUMN; row++) {
 				switch(Game.getINSTANCE().getDistrictMap()[column][row].getType()) {
-					case Constants.RESIDENCIAL : 
-						((Residencial)Game.getINSTANCE().getDistrictMap()[column][row]).setTurnCount(((Residencial)Game.getINSTANCE().getDistrictMap()[column][row]).getTurnCount());
-						break;
-					case Constants.ADMINISTRATIVE :
-						((Administrative)Game.getINSTANCE().getDistrictMap()[column][row]).setTurnCount(((Administrative)Game.getINSTANCE().getDistrictMap()[column][row]).getTurnCount());
-						break;
-					case Constants.COMMERCIAL :
-						((Commercial)Game.getINSTANCE().getDistrictMap()[column][row]).setTurnCount(((Commercial)Game.getINSTANCE().getDistrictMap()[column][row]).getTurnCount());
-						break;
+				case Constants.RESIDENCIAL : 
+                    ((Residencial)Game.getINSTANCE().getDistrictMap()[column][row]).setTurnCount(((Residencial)Game.getINSTANCE().getDistrictMap()[column][row]).getTurnCount());
+                    if(((Residencial)Game.getINSTANCE().getDistrictMap()[column][row]).getNbHab()<Constants.MAX_NUMBER_OF_RESIDENTS) {
+                        ((Residencial)Game.getINSTANCE().getDistrictMap()[column][row]).setNbHab(((Residencial)Game.getINSTANCE().getDistrictMap()[column][row]).getNbHab()+1);
+                    }
+                    break;
+                case Constants.ADMINISTRATIVE :
+                    ((Administrative)Game.getINSTANCE().getDistrictMap()[column][row]).setTurnCount(((Administrative)Game.getINSTANCE().getDistrictMap()[column][row]).getTurnCount());
+                    if(Game.getINSTANCE().getStats().nbHab < ((Game.getINSTANCE().getStats().nbWorkersAdministrative)+(Game.getINSTANCE().getStats().nbWorkersCommercial)))
+                        Game.getINSTANCE().getStats().setNbWorkersAdministrative(Game.getINSTANCE().getStats().getNbWorkersAdministrative()+1);
+                        break;
+                case Constants.COMMERCIAL :
+                    ((Commercial)Game.getINSTANCE().getDistrictMap()[column][row]).setTurnCount(((Commercial)Game.getINSTANCE().getDistrictMap()[column][row]).getTurnCount());
+                    if(Game.getINSTANCE().getStats().nbHab < ((Game.getINSTANCE().getStats().nbWorkersAdministrative)+(Game.getINSTANCE().getStats().nbWorkersCommercial)))
+                        Game.getINSTANCE().getStats().setNbWorkersCommercial((Game.getINSTANCE().getStats().getNbWorkersCommercial()+1));
+
+                    break;
 					case Constants.WILDERNESS :
 						break;
 				}
@@ -136,6 +147,38 @@ public final class RealTimeManager {
 	public static void updateCost_Gains() {
 		int new_monthlyrevenues = 0;
 		int new_monthlyExpences = 0;
+		int nbrails = 0;
+		HashMap<Coordinates, RailWay> hm = new HashMap<>();
+		for (int i = 0; i < GuiConstants.SQUARE_PER_ROW; i++) {
+			for (int j = 0; j < GuiConstants.SQUARE_PER_COLUMN; j++) {
+				if (Game.getINSTANCE().getDistrictMap()[j][i].getType()!=Constants.WILDERNESS) {
+					new_monthlyrevenues += Game.getINSTANCE().getDistrictMap()[j][i].getRevenues();
+					if (Game.getINSTANCE().getRailSquareMap()[j][i].getType() == Constants.STATION) {
+						new_monthlyrevenues+=((Station)Game.getINSTANCE().getRailSquareMap()[j][i]).getRevenues();
+						
+						hm = ((Station)Game.getINSTANCE().getRailSquareMap()[j][i]).getRailWays();
+						for (Entry<Coordinates, RailWay> entry : hm.entrySet()) {
+							nbrails += entry.getValue().rails.size()+1;							
+						}
+						
+						new_monthlyExpences += Constants.RAIL_COST*nbrails;
+						
+					}
+				}
+			}
+		}
+		Game.getINSTANCE().getStats().setMonthlyExpences(new_monthlyExpences);
+		Game.getINSTANCE().getStats().setMonthlyRevenues(new_monthlyrevenues);
+	}
+	
+	public static void updateMoney() {
+		int new_monthlyrevenues = 0;
+		int new_monthlyExpences = 0;
+
+		
+		new_monthlyrevenues =((Game.getINSTANCE().getStats().nbHab*Constants.GAINS_PER_RESIDENT)+(Game.getINSTANCE().getStats().nbWorkersCommercial*Constants.GAINS_PER_COMMERCIAL_WORKER)+(Game.getINSTANCE().getStats().nbStations*Constants.STATION_REVENUES));
+		new_monthlyExpences = ((Game.getINSTANCE().getStats().nbWorkersAdministrative*Constants.COSTS_PER_ADMINISTRATIVE_WORKER)+(Game.getINSTANCE().getStats().nbAdministrative*Constants.COSTS_PER_ADMINISTRATIVE));
+
 		int nbrails = 0;
 		HashMap<Coordinates, RailWay> hm = new HashMap<>();
 		for (int i = 0; i < GuiConstants.SQUARE_PER_ROW; i++) 
@@ -158,8 +201,30 @@ public final class RealTimeManager {
 				}
 			}
 		}
+
 		Game.getINSTANCE().getStats().setMonthlyExpences(new_monthlyExpences);
 		Game.getINSTANCE().getStats().setMonthlyRevenues(new_monthlyrevenues);
 	}
+	
+	public static void updateHabitants() {
+        Game.getINSTANCE().getStats().setNbHab(0);
+        for(int column =0; column<GuiConstants.SQUARE_PER_ROW; column++) {
+            for(int row=0; row<GuiConstants.SQUARE_PER_COLUMN; row++) {
+                switch(Game.getINSTANCE().getDistrictMap()[column][row].getType()) {
+                    case Constants.RESIDENCIAL : 
+                        Game.getINSTANCE().getStats().setNbHab(Game.getINSTANCE().getStats().getNbHab()+((Residencial)Game.getINSTANCE().getDistrictMap()[column][row]).getNbHab());
+                        break;
+                    case Constants.ADMINISTRATIVE :
+
+                        break;
+                    case Constants.COMMERCIAL :
+
+                        break;
+                    case Constants.WILDERNESS :
+                        break;
+                }
+            }
+        }
+    }
 	
 }

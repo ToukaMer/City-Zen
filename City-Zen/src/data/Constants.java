@@ -10,7 +10,7 @@ public class Constants {
 	public static final int WILDERNESS = 0;
 	
 	public static final String ADMINISTRATIVE_NAME = "Administrative";
-	public static final int ADMINISTRATIVE_PRICE = 0;
+	public static final int ADMINISTRATIVE_PRICE = 300;
 	public static final int ADMINISTRATIVE_REVENUES = 0;
 	public static final int ADMINISTRATIVE_USING_TIME = 0;
 	public static final int ADMINISTRATIVE_SATISFACTION = 0;
@@ -19,7 +19,7 @@ public class Constants {
 	public static final int ADMINISTRATIVE_TURN_COUNT = 0;
 	
 	public static final String COMMERCIAL_NAME = "Commercial";
-	public static final int COMMERCIAL_PRICE = 0;
+	public static final int COMMERCIAL_PRICE = 200;
 	public static final int COMMERCIAL_REVENUES = 0;
 	public static final int COMMERCIAL_USING_TIME = 0;
 	public static final int COMMERCIAL_SATISFACTION = 0;
@@ -46,20 +46,20 @@ public class Constants {
 	public static final int WILDERNESS_TURN_COUNT = 0;
 	
 	//residencial
-	public static final int STARTING_NUMBER_OF_HABITANTS = 0;
+	public static final int STARTING_NUMBER_OF_HABITANTS = 1;
 	public static final int ADMINISTRATION_WORKERS = 0;
 	public static final int COMMERCIAL_WORKERS = 0;
-	public static final int MAX_NUMBER_OF_RESIDENTS = 0;
+	public static final int MAX_NUMBER_OF_RESIDENTS = 15;
 
 	//administrative
 	public static final int STARTING_NUMBER_OF_USERS = 0;
 	public static final int MAX_NUMBER_OF_USERS = 0;
 	public static final int STARTING_NUMBER_OF_ADMINISTRATIVE_WORKERS = 0;
-	public static final int MAX_NUMBER_OF_ADMINISTRATIVE_WORKERS = 0;
+	public static final int MAX_NUMBER_OF_ADMINISTRATIVE_WORKERS = 15;
 
 	//commercial
 	public static final int STARTING_NUMBER_OF_COMMERCIAL_WORKERS = 0;
-	public static final int MAX_NUMBER_OF_COMMERCIAL_WORKERS = 0;
+	public static final int MAX_NUMBER_OF_COMMERCIAL_WORKERS = 15;
 	
 	public static final boolean DEBUG_DISTRICT = false;
 	public static final boolean DEBUG_RAILROAD = false;
@@ -83,6 +83,10 @@ public class Constants {
 	
 	public static final int ORIENTATION_MAX = 4;
 	
+	public static final int STATION_PRICE=100;
+	public static final int STATION_REVENUES=75;
+	
+	
 	public static final int NORTH_DIRECTION = 0;
 	public static final int SOUTH_DIRECTION = 1;
 	public static final int EAST_DIRECTION = 2;
@@ -95,6 +99,7 @@ public class Constants {
 	public static final int STARTING_MONEY = 3000;
 	public static final int MAX_MONEY = 10000000;
 	public static final int GAINS_PER_COMMERCIAL_WORKER = 5;
+	public static final int GAINS_PER_RESIDENT = 5;
 	public static final int COSTS_PER_ADMINISTRATIVE = 100;
 	public static final int COSTS_PER_ADMINISTRATIVE_WORKER = 10;
 

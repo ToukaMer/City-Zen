@@ -54,6 +54,11 @@ public class ToolbarLeft extends HBox {
 		getSatisfactionTooltip().setText("Satisfaction gauge");
 		getSatisfactionCircle().setTooltip(getSatisfactionTooltip());
 	}
+	
+	public void updateSatisfactionGauge() {
+		System.out.println(Game.getINSTANCE().getStats().getSatisfaction());
+		getSatisfactionCircle().setProgress(Game.getINSTANCE().getStats().getSatisfaction());
+	}
 
 	public BlockSize getBlockSize() {
 		return blockSize;
